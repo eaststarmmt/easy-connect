@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".BoardActivity" >
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
