@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class Page_find_friends : AppCompatActivity() {
+    // 리사이클러뷰 구현해야 함 firestroe 사용 // 2021-04-15 04:39
 
     private var friend_adapter: FriendAdapter? = null
 

@@ -13,7 +13,8 @@ import com.google.firebase.firestore.auth.User
 
 
 class Page_signup : AppCompatActivity() {
-
+    // 현재 회원가입 한 페이지로 구현함
+    // UI의 편의성을 위해 signup2 사용여지 남아있음 !!!!!!!!!! 2021-04-15 04:39
     var firebaseAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,14 +86,14 @@ class Page_signup : AppCompatActivity() {
                                             Toast.makeText(this,"Authentication success.",Toast.LENGTH_SHORT).show()
 
                                             // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 저장
-                                            val userDTO = UserDTO()
-                                            userDTO.email = input_id
-                                            userDTO.password = input_password
-                                            userDTO.name = input_name
-                                            userDTO.phoneNumber = input_phoneNumber
+                                            val newUserDTO = UserDTO()
+                                            newUserDTO.email = input_id
+                                            newUserDTO.password = input_password
+                                            newUserDTO.name = input_name
+                                            newUserDTO.phoneNumber = input_phoneNumber
                                             // firestore에 저장
                                             db.collection("user_information").document(input_phoneNumber)
-                                                .set(userDTO).addOnCompleteListener(this) {
+                                                .set(newUserDTO).addOnCompleteListener(this) {
                                                     if (it.isSuccessful) {
                                                         Toast.makeText(this, "success", Toast.LENGTH_SHORT)
                                                             .show()

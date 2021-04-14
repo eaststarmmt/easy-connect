@@ -10,6 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 
 class Page_signup2 : AppCompatActivity() {
+    // UI 직관성 높이려면 회원가입할 때 나눠야 할 것 같아서 처음에 나누었음
+    // 하지만 데이터 받는데 불편해서 일단 하나로 통합
+    // 현재 사용 X !!!!!!!!!!!! 2021-04-15 04:39
 
     private val exist_id = "leehs"
     private var firebaseAuth: FirebaseAuth? = null

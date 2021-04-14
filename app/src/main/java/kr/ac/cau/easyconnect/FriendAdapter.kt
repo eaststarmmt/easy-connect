@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
 class FriendAdapter(private val context: Context, private val dataList: ArrayList<FriendItem_recyclerView>):
+    // 친구찾기 기능에서 사용할 리사이클러뷰 어댑터
     RecyclerView.Adapter<FriendAdapter.SearchViewHolder>() {
 
     private var dataSearchList: ArrayList<FriendItem_recyclerView>? = dataList

@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,8 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
 
-class Page_login : AppCompatActivity() {// DB로부터 받아와야 할 듯 함
-
+class Page_login : AppCompatActivity() {
+    // 로그인 구현 (완료)
     var firebaseAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,8 +96,6 @@ class Page_login : AppCompatActivity() {// DB로부터 받아와야 할 듯 함
             // val intentFindInfo = Intent(this, Page_findInfo::class.java)
             // startActivity(intentFindInfo)
         })
-
-
     }
 
     override fun onBackPressed(){

@@ -17,7 +17,7 @@ import com.google.firebase.firestore.auth.User
 import com.google.firebase.ktx.Firebase
 
 class Page_find_information : AppCompatActivity() {
-
+    // 로그인 정보 찾는 페이지 구현 (완료)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page_find_information)
