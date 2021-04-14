@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Page_menu">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:background="@color/gray"
+            >
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bt_goback"
+                android:background="@color/hardgray"
+                android:text="뒤로 가기"
+                >
+            </Button>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_find_friend"
+                android:layout_marginTop="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_menu"
+                android:text="친구 찾기"
+                >
+            </Button>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_setting"
+                android:layout_marginTop="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_menu"
+                android:text="환경 설정"
+                >
+            </Button>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_withdrawal"
+                android:layout_marginTop="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_menu"
+                android:text="회원 탈퇴"
+                >
+                // 버튼눌리면 알림메시지 띄워서 비밀번호 재입력 받고 탈퇴하게끔
+            </Button>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

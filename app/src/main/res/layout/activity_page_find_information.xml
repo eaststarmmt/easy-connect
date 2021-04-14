@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Page_find_information">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="100dp"
+                android:textSize="25dp"
+                android:text="아이디 찾기"/>
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/edit_check_name_fi"
+                android:maxLength="11"
+                android:hint="이름을 입력하세요."
+                android:textAlignment="center"></EditText>
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:id="@+id/edit_check_phonenumber_fi"
+                android:inputType="numberDecimal"
+                android:maxLength="11"
+                android:hint="휴대폰 번호를 입력하세요.('-' 제외)"
+                android:textAlignment="center"></EditText>
+
+            <Button
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_signup_id"
+                android:id="@+id/bt_find_id"
+                android:hint="아이디 찾기">
+            </Button>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:text="비밀번호 재설정"/>
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:id="@+id/edit_check_id_fi"
+                android:hint="아이디(이메일)를 입력하세요">
+            </EditText>
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:id="@+id/edit_check_phonenumber2_fi"
+                android:inputType="numberDecimal"
+                android:maxLength="11"
+                android:hint="휴대폰 번호를 입력하세요.('-' 제외)"
+                android:textAlignment="center"></EditText>
+
+            <Button
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_signup_id"
+                android:id="@+id/bt_find_password"
+                android:hint="비밀번호 재설정">
+            </Button>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
