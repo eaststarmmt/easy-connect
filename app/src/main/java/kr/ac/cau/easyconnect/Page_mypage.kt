@@ -36,6 +36,22 @@ class Page_mypage : AppCompatActivity() {
 
         button_change_password.setOnClickListener({
             // 비밀번호 변경 기능 2021-04-15 04:39
+            val dialog = UpdatePasswordDialog(this)
+            dialog.myDiag()
+            var input_password : String? = null
+
+            dialog.setOnClickedListener(object : UpdatePasswordDialog.ButtonClickListener{
+                override fun onClicked(password: String) {
+                    input_password = password
+                }
+            })
+            firebaseAuth.currentUser.updatePassword(input_password).addOnCompleteListener(this){
+                if(it.isSuccessful){
+                    // 비밀번호 변경 성공
+                    Toast.makeText(this, "비밀번호 변경 성공!!", Toast.LENGTH_SHORT).show()
+                    // 파이어스토어 변경
+                }
+            }
         })
 
         button_withdrawal.setOnClickListener({
@@ -56,6 +72,7 @@ class Page_mypage : AppCompatActivity() {
             builder.show()
 
             /////////////////////// 데이터베이스 firestore에서도 해당 회원 정보 삭제해야함!!!!!!!!!!!!!!!!!! 2021-04-15 04:39
+
         })
     }
 }
