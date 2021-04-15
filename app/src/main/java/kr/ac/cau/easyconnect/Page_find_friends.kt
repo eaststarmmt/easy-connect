@@ -46,7 +46,6 @@ class Page_find_friends : AppCompatActivity() {
         button_searchFriend.setOnClickListener({
             (friend_adapter as FriendAdapter).search(editText_searchFriend.text.toString(), userList)
         })
-
     }
 
 

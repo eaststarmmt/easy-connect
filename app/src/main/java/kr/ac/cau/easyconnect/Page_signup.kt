@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 
+
 class Page_signup : AppCompatActivity() {
     // 현재 회원가입 한 페이지로 구현함
     // UI의 편의성을 위해 signup2 사용여지 남아있음 !!!!!!!!!! 2021-04-15 04:39
