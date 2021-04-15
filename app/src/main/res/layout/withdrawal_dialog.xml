@@ -18,34 +18,19 @@
             android:textColor="#000000"
             android:text="회원 탈퇴"/>
         <EditText
-            android:id="@+id/content"
-            android:layout_width="320dp"
+            android:id="@+id/edit_current_password2"
+            android:layout_width="280dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
-            android:text="비밀번호를 입력하세요"/>
+            android:inputType="textPassword"
+            android:hint="사용중인 비밀번호를 입력하세요"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
-
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/ok"
-                android:layout_marginRight="20dp"
-                android:text="취소"/>
-
-            <Button
-                android:id="@+id/ok"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="40dp"
-                android:text="확인"/>
 
 
         </RelativeLayout>
