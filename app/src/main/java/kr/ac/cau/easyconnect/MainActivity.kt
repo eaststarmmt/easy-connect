@@ -7,7 +7,7 @@ import android.content.Intent
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-
+// 미완 ㅠ
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val button_menu : Button = findViewById(R.id.bt_menu)
 
-        // 메인 뷰 (자신의 글을 포토카드 형식으로 출력) / 마지막에 게시글 추가 버튼
+        // 메인 뷰 (자신의 글을 포토카드 형식으로 출력) / 마지막에 게시글 추가 버튼 !!!!!!!!!!!! 구현해야함 아직 아님
 
 
         button_menu.setOnClickListener({

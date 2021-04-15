@@ -12,7 +12,7 @@ import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+// 미완 ㅠ
 class Page_find_friends : AppCompatActivity() {
     // 리사이클러뷰 구현해야 함 firestroe 사용 // 2021-04-15 04:39
 
