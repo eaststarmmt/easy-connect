@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyConnect">
-        <activity android:name=".Page_mypage"></activity>
+
+        <activity android:name=".Page_mypage" />
         <activity android:name=".Page_signup2" />
         <activity android:name=".Page_find_information" />
         <activity android:name=".Page_sets" />
@@ -27,6 +28,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".WriteActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

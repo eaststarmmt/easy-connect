@@ -22,7 +22,10 @@ class MainActivity : AppCompatActivity() {
             val intentMenu = Intent(this, Page_menu::class.java)
             startActivity(intentMenu)
         })
-
+        findViewById<Button>(R.id.bt_post).setOnClickListener{
+            val intent = Intent(this, WriteActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onBackPressed(){
