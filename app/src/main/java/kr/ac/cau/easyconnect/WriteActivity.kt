@@ -1,5 +1,6 @@
 package kr.ac.cau.easyconnect
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -49,8 +50,9 @@ class WriteActivity : AppCompatActivity() {
                             Toast.makeText(this, "failed", Toast.LENGTH_SHORT)
                                     .show()
                         }
-                    }
-
+            }
+           val intent = Intent(this, DetailActivity::class.java)
+           startActivity(intent)
         }
     }
 }

@@ -10,8 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/gray"
-        >
+        android:background="@color/gray">
 
         <Button
             android:layout_width="80dp"
