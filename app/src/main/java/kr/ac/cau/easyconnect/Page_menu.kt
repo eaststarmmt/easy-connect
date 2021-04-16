@@ -4,8 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+
+// 환경설정 부분 구현 빼고는 다 한듯?
 
 class Page_menu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class Page_menu : AppCompatActivity() {
         })
 
 //        button_setting.setOnClickListener({
-//            // 버튼 눌렸을 때 셋팅(글자 크기, 알림 끄기 등) 페이지로 이동 !!!!!!!!!!!!!!!!!!!!!!!!! 요거까지 해야함 2021-04-15 04:39
+//            // 버튼 눌렸을 때 셋팅(글자 크기, 알림 끄기 등) 페이지로 이동 !!!!!!!!!! 개인정보 보호를 위해 검색 안되게 막는 것 기능으로 넣으면 좋을 듯
 //            val intentSets = Intent(this, Page_sets::class.java)
 //            startActivity(intentSets)
 //        })

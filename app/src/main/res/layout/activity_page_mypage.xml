@@ -38,32 +38,34 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_weight="3">
 
-<!--                    <Button-->
-<!--                        android:id="@+id/bt_take_img"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="20dp"-->
-<!--                        android:layout_alignParentLeft="true"-->
-<!--                        android:layout_marginTop="5dp"-->
-<!--                        android:layout_marginBottom="15dp"-->
-<!--                        android:text="촬영"/>-->
+                    <Button
+                        android:id="@+id/bt_take_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="촬영"/>
 
                     <Button
                         android:id="@+id/bt_choose_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="20dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
-                        android:text="이미지 변경하기"/>
+                        android:text="변경하기"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -81,7 +83,7 @@
 
                     <TextView
                         android:id="@+id/txt_name"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="100dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_width="match_parent"
@@ -90,6 +92,7 @@
 
                     <TextView
                         android:id="@+id/txt_phoneNumber"
+                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_width="match_parent"

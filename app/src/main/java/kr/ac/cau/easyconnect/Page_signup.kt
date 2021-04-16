@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 
+// UI만 손보면 될 듯!
 
 class Page_signup : AppCompatActivity() {
     // 현재 회원가입 한 페이지로 구현함
@@ -69,14 +70,15 @@ class Page_signup : AppCompatActivity() {
                     editText_check_password.setText("")
                     editText_check_password2.setText("")
                 } else {
-                    var userDTO : UserDTO? = null
+                    var userDTO : UserDTO? = null // 회원 가입 정보를 담아 둘 UserDTO 데이터 클래스 객체 생성
                     db.collection("user_information").whereEqualTo("phoneNumber", input_phoneNumber).get().addOnCompleteListener{
-                        if(it.isSuccessful){
+                        if(it.isSuccessful){ // query 잘 수행 되면 여기로 들어옴
                             for(dc in it.result!!.documents){
                                 userDTO = dc.toObject(UserDTO::class.java)
                                 break
                             }
                             if(userDTO == null){
+                                // 휴대폰 번호로 조회했을 때 이전에 가입되지 않은 번호라면 새로운 UserDTO 객체를 데이터베이스에 넣어줘야함
                                 // firebase - Auth의 createUserWithEmailAndPassword 메소드 이용하여 계정 생성
                                 firebaseAuth!!.createUserWithEmailAndPassword(input_id, input_password)
                                     .addOnCompleteListener(this) {
@@ -85,14 +87,17 @@ class Page_signup : AppCompatActivity() {
 //                                val user = firebaseAuth.currentUser
                                             Toast.makeText(this,"Authentication success.",Toast.LENGTH_SHORT).show()
 
-                                            // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 저장
+                                            // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 은 입력값, uid와 photo 는 기본값 저장
                                             val newUserDTO = UserDTO()
                                             newUserDTO.email = input_id
                                             newUserDTO.password = input_password
                                             newUserDTO.name = input_name
                                             newUserDTO.phoneNumber = input_phoneNumber
-                                            // firestore에 저장
-                                            db.collection("user_information").document(input_phoneNumber)
+                                            newUserDTO.photo = "base.jpg"
+                                            newUserDTO.uid = firebaseAuth!!.uid
+
+                                            // firestore에 newUserDTO 객체 저장
+                                            db.collection("user_information").document(firebaseAuth!!.uid.toString())
                                                 .set(newUserDTO).addOnCompleteListener(this) {
                                                     if (it.isSuccessful) {
                                                         Toast.makeText(this, "success", Toast.LENGTH_SHORT)
@@ -103,7 +108,7 @@ class Page_signup : AppCompatActivity() {
                                                     }
                                                 }
 
-                                            // 아이디 정보 가져가기
+                                            // 아이디 정보 가져가기 (로그인 페이지와 공유함)
                                             val id = input_id
                                             val sharedPreference = getSharedPreferences("other", 0)
                                             val editor = sharedPreference.edit()
@@ -115,7 +120,7 @@ class Page_signup : AppCompatActivity() {
                                             startActivity(intentLogin)
                                             finish()
                                         } else {
-                                            // 이미 등록된 이메일의 경우
+                                            // 이미 등록된 이메일의 경우!!
                                             Toast.makeText(
                                                 this,
                                                 "Authentication failed.",
@@ -128,7 +133,7 @@ class Page_signup : AppCompatActivity() {
                                             builder3.setPositiveButton("확인", null)
                                             builder3.show()
 
-                                            // 이메일 다시 입력
+                                            // 이메일 다시 입력 받도록 이메일 입력 칸 비워줌
                                             editText_check_id.setText("")
                                         }
                                     }
