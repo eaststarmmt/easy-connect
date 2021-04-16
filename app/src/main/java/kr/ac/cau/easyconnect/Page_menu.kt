@@ -14,7 +14,7 @@ class Page_menu : AppCompatActivity() {
 
         val button_goback : Button = findViewById(R.id.bt_goback)
         val button_find_friend : Button = findViewById(R.id.bt_find_friend)
-        val button_setting : Button = findViewById(R.id.bt_setting)
+//        val button_setting : Button = findViewById(R.id.bt_setting)
         val button_logout : Button = findViewById(R.id.bt_logout)
         val button_mypage : Button = findViewById(R.id.bt_mypage)
 
@@ -35,11 +35,11 @@ class Page_menu : AppCompatActivity() {
             startActivity(intentFindFriends)
         })
 
-        button_setting.setOnClickListener({
-            // 버튼 눌렸을 때 셋팅(글자 크기, 알림 끄기 등) 페이지로 이동 !!!!!!!!!!!!!!!!!!!!!!!!! 요거까지 해야함 2021-04-15 04:39
-            val intentSets = Intent(this, Page_sets::class.java)
-            startActivity(intentSets)
-        })
+//        button_setting.setOnClickListener({
+//            // 버튼 눌렸을 때 셋팅(글자 크기, 알림 끄기 등) 페이지로 이동 !!!!!!!!!!!!!!!!!!!!!!!!! 요거까지 해야함 2021-04-15 04:39
+//            val intentSets = Intent(this, Page_sets::class.java)
+//            startActivity(intentSets)
+//        })
 
         button_logout.setOnClickListener({
             // 버튼 눌렸을 때 비밀번호 확인하고 로그아웃 (완료)

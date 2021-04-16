@@ -43,6 +43,11 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
+    implementation 'com.google.firebase:firebase-storage'
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0"
 

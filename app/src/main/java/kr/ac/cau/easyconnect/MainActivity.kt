@@ -7,6 +7,8 @@ import android.content.Intent
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import java.util.jar.Manifest
+
 // 미완 ㅠ
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
