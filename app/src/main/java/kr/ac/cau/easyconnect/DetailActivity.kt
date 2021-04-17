@@ -2,13 +2,14 @@ package kr.ac.cau.easyconnect
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class DetailActivity : AppCompatActivity() {
-
+    //테스트용. 삭제할 페이지
     var firebaseAuth: FirebaseAuth? = null
     var storage : FirebaseStorage? = null
 
@@ -28,7 +29,7 @@ class DetailActivity : AppCompatActivity() {
                 storage = FirebaseStorage.getInstance()
                 val storageReference = storage!!.reference
 
-                for(dc in it.result!!.documents) {
+                for(dc in it.result!!.documents.reversed()) {
                     postDTO = dc.toObject(PostDTO::class.java)
                     break
                 }
@@ -38,6 +39,9 @@ class DetailActivity : AppCompatActivity() {
                     content.text = postDTO!!.content
                 }
             }
+        }
+        findViewById<Button>(R.id.cancel).setOnClickListener {
+
         }
     }
 }
