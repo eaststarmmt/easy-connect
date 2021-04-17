@@ -85,7 +85,7 @@ class Page_signup : AppCompatActivity() {
                                         if (it.isSuccessful) {
                                             // 올바르게 생성
 //                                val user = firebaseAuth.currentUser
-                                            Toast.makeText(this,"Authentication success.",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this,"계정이 생성되었습니다.",Toast.LENGTH_SHORT).show()
 
                                             // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 은 입력값, uid와 photo 는 기본값 저장
                                             val newUserDTO = UserDTO()
@@ -97,16 +97,7 @@ class Page_signup : AppCompatActivity() {
                                             newUserDTO.uid = firebaseAuth!!.uid
 
                                             // firestore에 newUserDTO 객체 저장
-                                            db.collection("user_information").document(firebaseAuth!!.uid.toString())
-                                                .set(newUserDTO).addOnCompleteListener(this) {
-                                                    if (it.isSuccessful) {
-                                                        Toast.makeText(this, "success", Toast.LENGTH_SHORT)
-                                                            .show()
-                                                    } else {
-                                                        Toast.makeText(this, "failed", Toast.LENGTH_SHORT)
-                                                            .show()
-                                                    }
-                                                }
+                                            db.collection("user_information").document(firebaseAuth!!.uid.toString()).set(newUserDTO)
 
                                             // 아이디 정보 가져가기 (로그인 페이지와 공유함)
                                             val id = input_id
@@ -121,12 +112,6 @@ class Page_signup : AppCompatActivity() {
                                             finish()
                                         } else {
                                             // 이미 등록된 이메일의 경우!!
-                                            Toast.makeText(
-                                                this,
-                                                "Authentication failed.",
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
                                             var builder3 = AlertDialog.Builder(this)
                                             builder3.setTitle("이미 등록된 이메일입니다.")
                                             builder3.setIcon(R.mipmap.ic_launcher)

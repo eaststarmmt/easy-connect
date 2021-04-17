@@ -35,7 +35,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="60dp"
                 android:id="@+id/edit_name"
-                android:maxLength="11"
                 android:hint="이름을 입력하세요."
                 android:textAlignment="center"></EditText>
 
@@ -47,6 +46,7 @@
                 android:id="@+id/edit_phoneNumber"
                 android:inputType="numberDecimal"
                 android:maxLength="11"
+                android:digits="0123456789"
                 android:hint="휴대폰 번호를 입력하세요.('-' 제외)"
                 android:textAlignment="center"></EditText>
 

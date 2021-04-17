@@ -51,6 +51,7 @@ class Page_mypage : AppCompatActivity() {
         // xml 파일의 버튼과 텍스트, 그리고 이미지뷰에 연결!
         val button_take_img : Button = findViewById(R.id.bt_take_img)
         val button_choose_img : Button = findViewById(R.id.bt_choose_img)
+        val button_change_info : Button = findViewById(R.id.bt_change_information)
         val button_change_password : Button = findViewById(R.id.bt_change_password)
         val button_withdrawal : Button = findViewById(R.id.bt_withdrawal)
         val textView_id : TextView = findViewById(R.id.txt_id)
@@ -105,6 +106,73 @@ class Page_mypage : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, REQUEST_GALLERY_TAKE)
+        })
+
+        button_change_info.setOnClickListener({
+            // 이름이나 휴대폰 번호 변경하기!
+            // 기본 정보를 그대로 띄워주고 변경할거면 입력하게끔!
+
+
+            var builder = AlertDialog.Builder(this)
+            builder.setView(layoutInflater.inflate(R.layout.update_information_dialog, null))
+
+            // 현재 접속중인 정보는 이미 화면을 띄울 때 userDTO 객체에 담아 두었으니 이를 이용
+//            if (userDTO != null) {
+//                // 현재 접속중인 계정 정보로 세팅
+//                input_change_name!!.setText(userDTO!!.name)
+//                input_change_phoneNumber!!.setText(userDTO!!.phoneNumber)
+//            }
+
+            var listener = DialogInterface.OnClickListener { p0, _ ->
+                var dialog = p0 as AlertDialog
+                var input_change_name : EditText? = dialog.findViewById(R.id.edit_change_name)
+                var input_change_phoneNumber: EditText? = dialog.findViewById(R.id.edit_change_phoneNumber)
+
+                // 파이어스토어 업데이트!!
+                if(userDTO != null){
+                    if(input_change_name!!.text.toString().isNullOrEmpty()){
+                        if(input_change_phoneNumber!!.text.toString().isNullOrEmpty()){
+                            // 둘다 비어있음 -> 기존정보 출력
+                        }else {
+                            // 이름만 비어있음 -> 전화번호만 변경 (단 전화번호가 10자리 미만이면 입력 오류로 받아들일 것!)
+                            if (input_change_phoneNumber!!.text.toString().length < 10) {
+                                Toast.makeText(this, "10자리 이상의 전화번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                userDTO!!.phoneNumber = input_change_phoneNumber!!.text.toString()
+                            }
+                        }
+                    }else{
+                        if(input_change_phoneNumber!!.text.toString().isNullOrEmpty()){
+                            // 전화번호만 비어있음 -> 이름만 변경
+                            userDTO!!.name = input_change_name!!.text.toString()
+                        }else{
+                            // 둘 다 비어있지 않음 -> 둘 다 변경 (단 전화번호가 10자리 미만이면 입력 오류로 받아들일 것!)
+                            if (input_change_phoneNumber!!.text.toString().length < 10) {
+                                Toast.makeText(this, "10자리 이상의 전화번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                userDTO!!.name = input_change_name!!.text.toString()
+                                userDTO!!.phoneNumber = input_change_phoneNumber!!.text.toString()
+                            }
+                        }
+                    }
+
+                    // 파이어스토어의 현재 회원 정보 삭제 및 추가 (업데이트)
+                    db.collection("user_information").document(
+                            userDTO!!.uid.toString()
+                    ).delete()
+                    db.collection("user_information").document(
+                            userDTO!!.uid.toString()
+                    ).set(userDTO!!)
+
+                    // 변경된 정보로 다시 mypage 정보 바꿔주기
+                    textView_name.setText(userDTO!!.name)
+                    textView_phoneNumber.setText(userDTO!!.phoneNumber)
+                }
+            }
+
+            builder.setPositiveButton("변경", listener)
+            builder.setNegativeButton("취소", null)
+            builder.show()
         })
 
         button_change_password.setOnClickListener({

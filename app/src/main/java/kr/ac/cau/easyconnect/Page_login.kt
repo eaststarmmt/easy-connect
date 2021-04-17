@@ -67,7 +67,7 @@ class Page_login : AppCompatActivity() {
                     if (it.isSuccessful) {
                         // 로그인 정보가 맞을 때 동작
                         //val user = firebaseAuth?.currentUser
-                        Toast.makeText(this, "SignInWithEmail success.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "로그인에 성공하였습니다", Toast.LENGTH_SHORT).show()
 
                         val saved_id = id
                         val editor = sharedPreference.edit()

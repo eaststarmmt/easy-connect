@@ -124,7 +124,7 @@ class Page_find_information : AppCompatActivity() {
                             firebaseAuth.sendPasswordResetEmail(emailAddress)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
-                                        Toast.makeText(this, "비밀번호 재설정!!", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, "비밀번호 재설정 메일 전송", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                         } else {
