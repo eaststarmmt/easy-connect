@@ -66,20 +66,25 @@ class Page_login : AppCompatActivity() {
                 ).addOnCompleteListener(this) {
                     if (it.isSuccessful) {
                         // 로그인 정보가 맞을 때 동작
-                        //val user = firebaseAuth?.currentUser
-                        Toast.makeText(this, "로그인에 성공하였습니다", Toast.LENGTH_SHORT).show()
+                        // 현재 인증된 계정인지 확인하는 것 필요함
+                        if (firebaseAuth!!.currentUser.isEmailVerified) {
+                            Toast.makeText(this, "로그인에 성공하였습니다", Toast.LENGTH_SHORT).show()
 
-                        val saved_id = id
-                        val editor = sharedPreference.edit()
-                        editor.clear()
-                        editor.putString("id", saved_id)
-                        editor.apply()
+                            val saved_id = id
+                            val editor = sharedPreference.edit()
+                            editor.clear()
+                            editor.putString("id", saved_id)
+                            editor.apply()
 
-                        // 메인 페이지로 이동 (나의 글 목록 포토카드로 보여주는 페이지)
-                        val intentMain = Intent(this, MainActivity::class.java)
-                        startActivity(intentMain)
-                        finish()
-                        //updateUI(user)
+                            // 메인 페이지로 이동 (나의 글 목록 포토카드로 보여주는 페이지)
+                            val intentMain = Intent(this, MainActivity::class.java)
+                            startActivity(intentMain)
+                            finish()
+                            //updateUI(user)
+                        }else{
+                            // 인증이 되지 않았다!
+                            Toast.makeText(this, "이메일 인증 후 이용 가능합니다", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         // 아이디가 잘못 되었는지 ? 비밀번호가 잘못 되었는지 판단하는 부분
                         var userDTO : UserDTO? = null

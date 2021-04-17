@@ -28,6 +28,14 @@
                 android:hint="사용할 이메일 주소를 입력하세요."
                 android:id="@+id/edit_check_id"
                 android:textAlignment="center"></EditText>
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#FF0000"
+                android:textSize="18dp"
+                android:text="!! 해당 이메일로 이메일 인증을 요청합니다 !!"/>
 
             <EditText
                 android:layout_width="350dp"

@@ -83,33 +83,37 @@ class Page_signup : AppCompatActivity() {
                                 firebaseAuth!!.createUserWithEmailAndPassword(input_id, input_password)
                                     .addOnCompleteListener(this) {
                                         if (it.isSuccessful) {
-                                            // 올바르게 생성
-//                                val user = firebaseAuth.currentUser
-                                            Toast.makeText(this,"계정이 생성되었습니다.",Toast.LENGTH_SHORT).show()
+                                            // 올바르게 생성 되었다!
 
-                                            // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 은 입력값, uid와 photo 는 기본값 저장
-                                            val newUserDTO = UserDTO()
-                                            newUserDTO.email = input_id
-                                            newUserDTO.password = input_password
-                                            newUserDTO.name = input_name
-                                            newUserDTO.phoneNumber = input_phoneNumber
-                                            newUserDTO.photo = "base.jpg"
-                                            newUserDTO.uid = firebaseAuth!!.uid
+                                            // 하지만 이메일이 실제 사용되는 건가에 대한 인증이 필요함
+                                            firebaseAuth!!.currentUser.sendEmailVerification().addOnCompleteListener { verifiTask ->
+                                                if (verifiTask.isSuccessful) {
+                                                    Toast.makeText(this, "이메일 인증후 이용 가능합니다.", Toast.LENGTH_SHORT).show()
+                                                    // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 은 입력값, uid와 photo 는 기본값 저장
+                                                    val newUserDTO = UserDTO()
+                                                    newUserDTO.email = input_id
+                                                    newUserDTO.password = input_password
+                                                    newUserDTO.name = input_name
+                                                    newUserDTO.phoneNumber = input_phoneNumber
+                                                    newUserDTO.photo = "base.jpg"
+                                                    newUserDTO.uid = firebaseAuth!!.uid
 
-                                            // firestore에 newUserDTO 객체 저장
-                                            db.collection("user_information").document(firebaseAuth!!.uid.toString()).set(newUserDTO)
+                                                    // firestore에 newUserDTO 객체 저장
+                                                    db.collection("user_information").document(firebaseAuth!!.uid.toString()).set(newUserDTO)
 
-                                            // 아이디 정보 가져가기 (로그인 페이지와 공유함)
-                                            val id = input_id
-                                            val sharedPreference = getSharedPreferences("other", 0)
-                                            val editor = sharedPreference.edit()
-                                            editor.putString("id", id)
-                                            editor.apply()
+                                                    // 아이디 정보 가져가기 (로그인 페이지와 공유함)
+                                                    val id = input_id
+                                                    val sharedPreference = getSharedPreferences("other", 0)
+                                                    val editor = sharedPreference.edit()
+                                                    editor.putString("id", id)
+                                                    editor.apply()
 
-                                            // 로그인 페이지로 화면 전환
-                                            val intentLogin = Intent(this, Page_login::class.java)
-                                            startActivity(intentLogin)
-                                            finish()
+                                                    // 로그인 페이지로 화면 전환
+                                                    val intentLogin = Intent(this, Page_login::class.java)
+                                                    startActivity(intentLogin)
+                                                    finish()
+                                                }
+                                            }
                                         } else {
                                             // 이미 등록된 이메일의 경우!!
                                             var builder3 = AlertDialog.Builder(this)
