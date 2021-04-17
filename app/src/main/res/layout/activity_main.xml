@@ -14,7 +14,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@color/gray"
             >
 
             <Button
@@ -22,18 +21,17 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:id="@+id/bt_menu"
-                android:background="@color/hardgray"
+                android:textSize="21dp"
+                android:background="@drawable/button_back"
                 android:text="메뉴" />
 
-            <Button
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:id="@+id/bt_alarm"
-                android:background="@color/hardgray"
-                android:text="알림" />
-
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -48,6 +46,11 @@
             android:scrollbarSize="5dp"
             android:scrollbarThumbVertical="@color/gray"
             android:scrollbars="vertical"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package kr.ac.cau.easyconnect
 
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -23,6 +24,7 @@ class Page_find_information : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         // xml 버튼, 텍스트 아이디 연결
+        val button_goback : Button = findViewById(R.id.bt_goback)
         val button_find_id : Button = findViewById(R.id.bt_find_id)
         val button_find_password : Button = findViewById(R.id.bt_find_password)
         val editText_check_phonenumber_fi : EditText = findViewById(R.id.edit_check_phonenumber_fi)
@@ -32,6 +34,12 @@ class Page_find_information : AppCompatActivity() {
 
         var user_name : String
         var user_email : String
+
+        button_goback.setOnClickListener({
+            val intentLogin = Intent(this, Page_login::class.java)
+            startActivity(intentLogin)
+            finish()
+        })
 
         button_find_id.setOnClickListener({
             // 아이디 찾기 버튼이 눌렸을 때의 동작 (휴대폰 번호와 이름으로 찾아온다!)
@@ -50,7 +58,6 @@ class Page_find_information : AppCompatActivity() {
                         // 해당 휴대폰 번호로 가입한 정보가 존재하지 않을 때
                         var builder = AlertDialog.Builder(this)
                         builder.setTitle("일치하는 휴대폰 정보가 없습니다.")
-                        builder.setIcon(R.mipmap.ic_launcher)
                         builder.setPositiveButton("확인", null)
                         builder.show()
                         editText_check_phonenumber_fi.setText("")
@@ -63,8 +70,7 @@ class Page_find_information : AppCompatActivity() {
                             // 만약 이름까지 같다면 아이디(이메일) 정보 띄워서 알려줌
                             // Dialog return ID
                             var builder = AlertDialog.Builder(this)
-                            builder.setTitle("아이디 = " + user_email)
-                            builder.setIcon(R.mipmap.ic_launcher)
+                            builder.setTitle("아이디 : " + user_email)
 
                             var listener = DialogInterface.OnClickListener { p0, _ ->
                                 editText_check_id_fi.setText(user_email)
@@ -80,7 +86,6 @@ class Page_find_information : AppCompatActivity() {
                             // 이름 정보가 잘못 되었을 때!
                             var builder = AlertDialog.Builder(this)
                             builder.setTitle("휴대폰 정보와 일치하지 않는 이름입니다.")
-                            builder.setIcon(R.mipmap.ic_launcher)
                             builder.setPositiveButton("확인", null)
                             builder.show()
                             editText_check_name_fi.setText("")
@@ -109,7 +114,6 @@ class Page_find_information : AppCompatActivity() {
                         // 해당 휴대폰 번호로 가입한 정보가 존재하지 않을 때
                         var builder = AlertDialog.Builder(this)
                         builder.setTitle("일치하는 휴대폰 정보가 없습니다.")
-                        builder.setIcon(R.mipmap.ic_launcher)
                         builder.setPositiveButton("확인", null)
                         builder.show()
                         editText_check_phonenumber2_fi.setText("")
@@ -131,7 +135,6 @@ class Page_find_information : AppCompatActivity() {
                             // 아이디(이메일) 정보가 휴대폰 정보와 일치하지 않을 때
                             var builder = AlertDialog.Builder(this)
                             builder.setTitle("아이디와 휴대폰 정보가 일치하지 않습니다.")
-                            builder.setIcon(R.mipmap.ic_launcher)
                             builder.setPositiveButton("확인", null)
                             builder.show()
                             editText_check_id_fi.setText("")
@@ -143,5 +146,12 @@ class Page_find_information : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onBackPressed(){
+        // 클릭 시 이전 페이지인 로그인으로!
+        val intentLogin = Intent(this, Page_login::class.java)
+        startActivity(intentLogin)
+        finish()
     }
 }

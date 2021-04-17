@@ -1,5 +1,6 @@
 package kr.ac.cau.easyconnect
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
@@ -8,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -37,6 +40,7 @@ class Page_find_friends : AppCompatActivity() {
         var searchOption = "name"
 
         val recycler_view: RecyclerView = findViewById(R.id.recycler_friend)
+        val button_goback : Button = findViewById(R.id.bt_goback)
         val spinner_Item: Spinner = findViewById(R.id.spinner)
         val button_searchFriend: Button = findViewById(R.id.bt_searchFriend)
         val editText_searchFriend: EditText = findViewById(R.id.edit_searchFriend)
@@ -67,6 +71,12 @@ class Page_find_friends : AppCompatActivity() {
                 }
             }
         }
+
+        button_goback.setOnClickListener({
+            val intentMenu = Intent(this, Page_menu::class.java)
+            startActivity(intentMenu)
+            finish()
+        })
 
         button_searchFriend.setOnClickListener({
             (recycler_view.adapter as FriendAdapter).search(
@@ -167,5 +177,12 @@ class Page_find_friends : AppCompatActivity() {
                 }
         }
 
+    }
+
+    override fun onBackPressed(){
+        // 클릭 시 이전 페이지인 메뉴로!
+        val intentMenu = Intent(this, Page_menu::class.java)
+        startActivity(intentMenu)
+        finish()
     }
 }

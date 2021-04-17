@@ -49,6 +49,7 @@ class Page_mypage : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         // xml 파일의 버튼과 텍스트, 그리고 이미지뷰에 연결!
+        val button_goback : Button = findViewById(R.id.bt_goback)
         val button_take_img : Button = findViewById(R.id.bt_take_img)
         val button_choose_img : Button = findViewById(R.id.bt_choose_img)
         val button_change_info : Button = findViewById(R.id.bt_change_information)
@@ -95,6 +96,11 @@ class Page_mypage : AppCompatActivity() {
             }
         }
 
+        button_goback.setOnClickListener({
+            val intentMenu = Intent(this, Page_menu::class.java)
+            startActivity(intentMenu)
+            finish()
+        })
 
         button_take_img.setOnClickListener({
             // 사진을 직접 촬영하기!
@@ -115,13 +121,6 @@ class Page_mypage : AppCompatActivity() {
 
             var builder = AlertDialog.Builder(this)
             builder.setView(layoutInflater.inflate(R.layout.update_information_dialog, null))
-
-            // 현재 접속중인 정보는 이미 화면을 띄울 때 userDTO 객체에 담아 두었으니 이를 이용
-//            if (userDTO != null) {
-//                // 현재 접속중인 계정 정보로 세팅
-//                input_change_name!!.setText(userDTO!!.name)
-//                input_change_phoneNumber!!.setText(userDTO!!.phoneNumber)
-//            }
 
             var listener = DialogInterface.OnClickListener { p0, _ ->
                 var dialog = p0 as AlertDialog
@@ -399,5 +398,12 @@ class Page_mypage : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    override fun onBackPressed(){
+        // 클릭 시 이전 페이지인 메인으로!
+        val intentMenu = Intent(this, Page_menu::class.java)
+        startActivity(intentMenu)
+        finish()
     }
 }

@@ -12,6 +12,27 @@
         android:orientation="vertical"
         >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            >
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/bt_goback"
+                android:textSize="21dp"
+                android:background="@drawable/button_back"
+                android:text="뒤로" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,15 +42,17 @@
             >
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="30dp"
                 android:hint="사용할 이메일 주소를 입력하세요."
                 android:id="@+id/edit_check_id"
+                android:background="@drawable/edit_round"
                 android:textAlignment="center"></EditText>
+
             <TextView
-                android:layout_width="350dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -38,24 +61,26 @@
                 android:text="!! 해당 이메일로 이메일 인증을 요청합니다 !!"/>
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="30dp"
                 android:id="@+id/edit_name"
                 android:hint="이름을 입력하세요."
+                android:background="@drawable/edit_round"
                 android:textAlignment="center"></EditText>
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="40dp"
                 android:id="@+id/edit_phoneNumber"
                 android:inputType="numberDecimal"
                 android:maxLength="11"
                 android:digits="0123456789"
                 android:hint="휴대폰 번호를 입력하세요.('-' 제외)"
+                android:background="@drawable/edit_round"
                 android:textAlignment="center"></EditText>
 
         </LinearLayout>
@@ -65,38 +90,41 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_weight="2"
+            android:layout_weight="3"
             >
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
                 android:textAlignment="center"
                 android:id="@+id/edit_check_password"
                 android:inputType="textPassword"
+                android:background="@drawable/edit_round"
                 android:hint="비밀번호를 입력하세요 (6자리 이상)">
             </EditText>
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:textAlignment="center"
                 android:id="@+id/edit_check_password2"
                 android:inputType="textPassword"
+                android:background="@drawable/edit_round"
                 android:hint="비밀번호를 다시 한 번 입력하세요">
             </EditText>
 
+
             <Button
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/button_signup_fin"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_login"
                 android:id="@+id/bt_fin_signup"
+                android:textSize="21dp"
                 android:hint="가입 완료">
             </Button>
 

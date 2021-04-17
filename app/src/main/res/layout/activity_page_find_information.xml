@@ -12,6 +12,27 @@
         android:orientation="vertical"
         >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            >
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/bt_goback"
+                android:textSize="21dp"
+                android:background="@drawable/button_back"
+                android:text="뒤로" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,40 +42,43 @@
             >
 
             <TextView
-                android:layout_width="350dp"
-                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="30dp"
                 android:textSize="25dp"
                 android:text="아이디 찾기"/>
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:id="@+id/edit_check_name_fi"
                 android:maxLength="11"
                 android:hint="이름을 입력하세요."
+                android:background="@drawable/edit_round"
                 android:textAlignment="center"></EditText>
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:id="@+id/edit_check_phonenumber_fi"
                 android:inputType="numberDecimal"
                 android:maxLength="11"
                 android:hint="휴대폰 번호를 입력하세요.('-' 제외)"
+                android:background="@drawable/edit_round"
                 android:textAlignment="center"></EditText>
 
             <Button
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_signup_id"
+                android:layout_marginTop="10dp"
+                android:textSize="21dp"
+                android:background="@drawable/button_find"
                 android:id="@+id/bt_find_id"
                 android:hint="아이디 찾기">
             </Button>
@@ -72,39 +96,42 @@
             >
 
             <TextView
-                android:layout_width="350dp"
-                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="25dp"
                 android:text="비밀번호 재설정"/>
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:id="@+id/edit_check_id_fi"
+                android:background="@drawable/edit_round"
                 android:hint="아이디(이메일)를 입력하세요">
             </EditText>
 
             <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:id="@+id/edit_check_phonenumber2_fi"
                 android:inputType="numberDecimal"
                 android:maxLength="11"
                 android:hint="휴대폰 번호를 입력하세요.('-' 제외)"
+                android:background="@drawable/edit_round"
                 android:textAlignment="center"></EditText>
 
             <Button
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_signup_id"
+                android:layout_marginTop="10dp"
+                android:textSize="21dp"
+                android:background="@drawable/button_find"
                 android:id="@+id/bt_find_password"
                 android:hint="비밀번호 재설정">
             </Button>

@@ -54,7 +54,6 @@ class Page_login : AppCompatActivity() {
                 // 공백이 있을 때 오류 출력
                 var builder = AlertDialog.Builder(this)
                 builder.setTitle("입력 정보가 누락되었습니다.")
-                builder.setIcon(R.mipmap.ic_launcher)
                 builder.setPositiveButton("확인", null)
                 builder.show()
             }
@@ -132,7 +131,7 @@ class Page_login : AppCompatActivity() {
         // 클릭 시 종료 여부 체크하고 종료 버튼 누르면 앱 종료
         var builder_dialog = AlertDialog.Builder(this);
         builder_dialog.setTitle("종료할까요?"); // 다이얼로그 제목
-        builder_dialog.setIcon(R.mipmap.ic_launcher)
+        builder_dialog.setIcon(R.mipmap.easy_connect)
         var listener = DialogInterface.OnClickListener { dialog, which
             -> ActivityCompat.finishAffinity(this)
             System.exit(0)
