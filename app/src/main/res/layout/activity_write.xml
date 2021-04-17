@@ -9,16 +9,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/gray">
+        android:layout_height="80dp">
 
         <Button
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:id="@+id/back"
-            android:background="@color/hardgray"
-            android:text="뒤로가기" />
+            android:background="@drawable/button_back"
+            android:text="뒤로" />
 
     </RelativeLayout>
 
@@ -41,8 +40,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/gray">
+        android:layout_height="80dp">
 
         <Button
             android:id="@+id/post"
@@ -50,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="85dp"
-            android:background="@color/hardgray"
+            android:background="@drawable/button_back"
             android:text="게시" />
 
         <Button
@@ -59,7 +57,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="258dp"
-            android:background="@color/hardgray"
+            android:background="@drawable/button_back"
             android:text="취소" />
     </RelativeLayout>
 </LinearLayout>

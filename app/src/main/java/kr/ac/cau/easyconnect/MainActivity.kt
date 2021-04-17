@@ -7,9 +7,9 @@ import android.content.Intent
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import java.util.jar.Manifest
 
-// 미완 ㅠ
+// 미완 아직 개발 단계 아님
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         button_menu.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)
             startActivity(intentMenu)
+            finish()
         })
         findViewById<Button>(R.id.bt_post).setOnClickListener{
             val intent = Intent(this, WriteActivity::class.java)
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         // 클릭 시 종료 여부 체크하고 종료 버튼 누르면 앱 종료
         var builder_dialog = AlertDialog.Builder(this);
         builder_dialog.setTitle("종료할까요?"); // 다이얼로그 제목
-        builder_dialog.setIcon(R.mipmap.ic_launcher)
+        builder_dialog.setIcon(R.mipmap.easy_connect)
         var listener = DialogInterface.OnClickListener { dialog, which
             -> ActivityCompat.finishAffinity(this)
             System.exit(0)

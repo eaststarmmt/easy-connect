@@ -1,5 +1,6 @@
 package kr.ac.cau.easyconnect
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -40,8 +41,11 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
         }
-        findViewById<Button>(R.id.cancel).setOnClickListener {
-
+        findViewById<Button>(R.id.update).setOnClickListener {
+            val intent = Intent(this, UpdateActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
         }
     }
 }

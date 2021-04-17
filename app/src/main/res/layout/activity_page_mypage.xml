@@ -13,9 +13,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bt_goback"
+                android:background="@drawable/button_back"
+                android:textSize="21dp"
+                android:text="뒤로"
+                >
+            </Button>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="1.5">
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,32 +59,36 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_weight="3">
 
-<!--                    <Button-->
-<!--                        android:id="@+id/bt_take_img"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="20dp"-->
-<!--                        android:layout_alignParentLeft="true"-->
-<!--                        android:layout_marginTop="5dp"-->
-<!--                        android:layout_marginBottom="15dp"-->
-<!--                        android:text="촬영"/>-->
+                    <Button
+                        android:id="@+id/bt_take_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="21dp"
+                        android:text="촬영"/>
 
                     <Button
                         android:id="@+id/bt_choose_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="20dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
-                        android:text="이미지 변경하기"/>
+                        android:textSize="21dp"
+                        android:text=""/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -80,18 +105,35 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/txt_name"
-                        android:layout_marginTop="70dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="20dp"
+                        android:textSize="22dp"
+                        android:textColor="#000000"
+                        android:text="이름"/>
+                    <TextView
+                        android:id="@+id/txt_name"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_width="match_parent"
                         android:textSize="20dp"
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/txt_phoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="20dp"
+                        android:textSize="22dp"
+                        android:textColor="#000000"
+                        android:text="전화번호"/>
+                    <TextView
+                        android:id="@+id/txt_phoneNumber"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_width="match_parent"
                         android:textSize="20dp"
                         android:layout_height="wrap_content"/>
@@ -101,8 +143,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:orientation="vertical"
+                    android:layout_weight="3">
 
+                    <Button
+                        android:id="@+id/bt_change_information"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="20dp"
+                        android:text="사진앨범"/>
 
                 </LinearLayout>
 
@@ -111,6 +163,12 @@
 
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -126,9 +184,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="20dp"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textColor="#000000"
                     android:text="아이디(이메일 주소)"/>
 
@@ -141,6 +199,10 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/hardgray"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -153,8 +215,9 @@
                     android:layout_marginTop="50dp"
                     android:layout_marginLeft="30dp"
                     android:layout_alignParentLeft="true"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round"
                     android:id="@+id/bt_change_password"
+                    android:textSize="20dp"
                     android:text="비밀번호 변경"/>
 
                 <Button
@@ -163,8 +226,9 @@
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="30dp"
                     android:layout_alignParentRight="true"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round"
                     android:id="@+id/bt_withdrawal"
+                    android:textSize="20dp"
                     android:text="회원 탈퇴"/>
 
             </RelativeLayout>

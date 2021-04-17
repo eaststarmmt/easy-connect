@@ -75,7 +75,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/button_signup_fin"
+                android:background="@drawable/button_login"
                 android:id="@+id/bt_fin_signup"
                 android:hint="가입 완료">
             </Button>

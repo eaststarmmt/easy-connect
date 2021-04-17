@@ -15,17 +15,23 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
-            android:background="@color/gray"
             >
             <Button
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:id="@+id/bt_goback"
-                android:background="@color/hardgray"
-                android:text="뒤로 가기"
+                android:background="@drawable/button_back"
+                android:textSize="21dp"
+                android:text="뒤로"
                 >
             </Button>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,9 +43,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_mypage"
                 android:layout_marginTop="100dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_menu"
-                android:text="마이 페이지"
+                android:layout_marginLeft="20dp"
+                android:background="#00FF0000"
+                android:textSize="21dp"
+                android:text="• 마이 페이지"
                 >
             </Button>
 
@@ -48,9 +55,22 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_find_friend"
                 android:layout_marginTop="60dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_menu"
-                android:text="친구 찾기"
+                android:layout_marginLeft="20dp"
+                android:background="#00FF0000"
+                android:textSize="21dp"
+                android:text="• 친구 찾기"
+                >
+            </Button>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_setting"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="20dp"
+                android:background="#00FF0000"
+                android:textSize="21dp"
+                android:text="• 환경 설정"
                 >
             </Button>
 
@@ -59,9 +79,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_logout"
                 android:layout_marginTop="60dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_menu"
-                android:text="로그 아웃"
+                android:layout_marginLeft="20dp"
+                android:background="#00FF0000"
+                android:textSize="21dp"
+                android:text="• 로그아웃"
                 >
                 // 버튼눌리면 알림메시지 띄워서 비밀번호 재입력 받고 탈퇴하게끔
             </Button>
