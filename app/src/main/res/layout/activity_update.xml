@@ -21,6 +21,11 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hardgray"/>
+
     <EditText
         android:id="@+id/editTitle"
         android:layout_width="match_parent"

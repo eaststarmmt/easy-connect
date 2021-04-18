@@ -19,6 +19,11 @@ class MainActivity : AppCompatActivity() {
 
         // 메인 뷰 (자신의 글을 포토카드 형식으로 출력) / 마지막에 게시글 추가 버튼 !!!!!!!!!!!! 구현해야함 아직 아님
 
+        var builder_dialog = AlertDialog.Builder(this);
+        builder_dialog.setTitle("잘 안보인다면 글자 크기를 변경하세요!"); // 다이얼로그 제목
+        builder_dialog.setPositiveButton("확인", null)
+        builder_dialog.show(); // 다이얼로그 보이기
+
 
         button_menu.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)

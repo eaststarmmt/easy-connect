@@ -34,7 +34,7 @@ class WriteActivity : AppCompatActivity() {
         val content: EditText = findViewById(R.id.content)
         findViewById<Button>(R.id.back).setOnClickListener {
             val dialog = AlertDialog.Builder(this)
-            dialog.setTitle("작성된 내용이 저장되지 않을수 있습니다.\n종료하시겠습니까? ")
+            dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까? ")
             // 확인시 종료 처리 할 리스너
             var listener = DialogInterface.OnClickListener { dialog, i ->
                 finish()
@@ -46,7 +46,7 @@ class WriteActivity : AppCompatActivity() {
         // 취소버튼 눌렀을 때 구현
         findViewById<Button>(R.id.cancel).setOnClickListener {
             val dialog = AlertDialog.Builder(this)
-            dialog.setTitle("작성된 내용이 저장되지 않을수 있습니다.\n종료하시겠습니까? ")
+            dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까? ")
             // 확인시 종료 처리 할 리스너
             var listener = DialogInterface.OnClickListener { dialog, i ->
                 finish()
