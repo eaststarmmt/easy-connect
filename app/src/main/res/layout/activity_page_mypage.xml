@@ -69,7 +69,7 @@
                         android:id="@+id/bt_take_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
@@ -81,12 +81,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
                         android:textSize="21dp"
-                        android:text=""/>
+                        android:text="사진앨범"/>
 
                 </RelativeLayout>
 
@@ -107,7 +107,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="80dp"
+                        android:layout_marginTop="50dp"
                         android:layout_marginLeft="10dp"
                         android:textSize="22dp"
                         android:textColor="#000000"
@@ -135,7 +135,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_width="match_parent"
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
@@ -150,11 +150,10 @@
                         android:id="@+id/bt_change_information"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
                         android:textSize="20dp"
-                        android:text="사진앨범"/>
+                        android:text="정보변경"/>
 
                 </LinearLayout>
 
