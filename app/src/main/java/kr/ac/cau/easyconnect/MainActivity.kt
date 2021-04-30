@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.widget.Button
+import android.widget.TabHost
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 
@@ -17,6 +18,23 @@ class MainActivity : AppCompatActivity() {
 
         val button_menu : Button = findViewById(R.id.bt_menu)
 
+        val host : TabHost = findViewById(R.id.host)
+        host.setup()
+
+        val tabSpec1 : TabHost.TabSpec = host.newTabSpec("Tab Spec 1")
+        tabSpec1.setContent(R.id.content1)
+        tabSpec1.setIndicator("타임라인")
+        host.addTab(tabSpec1)
+
+        val tabSpec2 : TabHost.TabSpec = host.newTabSpec("Tab Spec 2")
+        tabSpec2.setContent(R.id.content2)
+        tabSpec2.setIndicator("친구들")
+        host.addTab(tabSpec2)
+
+        val tabSpec3 : TabHost.TabSpec = host.newTabSpec("Tab Spec 3")
+        tabSpec3.setContent(R.id.content3)
+        tabSpec3.setIndicator("추천 키워드")
+        host.addTab(tabSpec3)
         // 메인 뷰 (자신의 글을 포토카드 형식으로 출력) / 마지막에 게시글 추가 버튼 !!!!!!!!!!!! 구현해야함 아직 아님
 
         var builder_dialog = AlertDialog.Builder(this);
