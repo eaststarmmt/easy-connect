@@ -92,7 +92,9 @@ class Page_find_friends : AppCompatActivity() {
         var arrayUserDTO: ArrayList<UserDTO> = arrayListOf()
 
         init {
-            // 초기화! 처음엔 안 띄움  ////////////////////////////////////// 원한다면 모든 회원 정보 띄울 수 있음!! for문 주석만 없애면 된다!!
+            // 자신과 친구인 사람만 띄워야 함!! << 중요할 듯?
+
+            // 초기화! 처음엔 안 띄움 / 원한다면 모든 회원 정보 띄울 수 있음!! for문 주석만 없애면 된다!!
             db!!.collection("user_information")
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     // userDTO 리스트 초기화
