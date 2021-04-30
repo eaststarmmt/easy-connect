@@ -29,6 +29,8 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:paddingLeft="3dp"
         android:textSize="30sp"
         android:layout_weight="1"
         android:background="@drawable/border_layout"
@@ -38,6 +40,8 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:paddingLeft="3dp"
         android:textSize="30sp"
         android:layout_weight="15"
         android:background="@drawable/border_layout"
@@ -51,16 +55,18 @@
             android:id="@+id/update"
             android:layout_width="80dp"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
             android:layout_marginLeft="85dp"
-            android:background="@color/hardgray"
+            android:background="@drawable/button_back"
             android:text="수정" />
 
         <Button
             android:id="@+id/delete"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="258dp"
-            android:background="@color/hardgray"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="85dp"
+            android:background="@drawable/button_back"
             android:text="삭제" />
     </RelativeLayout>
 
