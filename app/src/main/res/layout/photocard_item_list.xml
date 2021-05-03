@@ -22,17 +22,31 @@
         />
 
     <TextView
-        android:id="@+id/name_of_post"
+        android:id="@+id/date_of_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/photo_of_post"
-        android:layout_marginTop="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:text="123"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/name_of_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/photo_of_post"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="30dp"
         android:textAlignment="center"
         android:text="123"
         android:textSize="20dp"
         android:textStyle="bold"/>
+
 
 
 

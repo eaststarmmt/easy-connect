@@ -16,10 +16,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.init
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import java.text.FieldPosition
+import java.time.LocalDateTime
 
 // 미완 아직 개발 단계 아님
 
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     var firebaseAuth: FirebaseAuth? = null
     var db: FirebaseFirestore? = null
+    var storage: FirebaseStorage? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +77,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-/*  현재 작성중인 코드!
     // post 관련 데이터베이스가 없어서 아직 미정입니다.
+
+//    var inputTitle = title.text.trim().toString()
+//    var inputContent = content.text.trim().toString()
+//    var name = firebaseAuth!!.currentUser.email.toString()
+//    var registered : String = LocalDateTime.now().toString()
+//    var modified : String = LocalDateTime.now().toString()
 
     inner class PhotoCardAdapter() : RecyclerView.Adapter<PhotoCardAdapter.PhotoCardViewHolder>(){
         // 로그인 한 유저의 작성 글 정보를 가져와서 배열에 담아두기 위한 것
@@ -83,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         init{
             // 파이어스토어에서 작성 글에 관한 데이터베이스 정보를 가져온다.
             // 전부 띄워줘야 하므로 받아와서 arrayPostDTO 에 저장할 것
-            db!!.collection('post_information').addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            db!!.collection("post").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 arrayPostDTO.clear()
 
                 // post_information에 있는 데이터 정보를 가져와서 각 정보마다 현재 로그인 한 유저의 글인지 비교해야함
@@ -91,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                     var post = snapshot.toObject(PostDTO::class.java)
 
                     // 이름으로 비교해야 할 듯? 아니면 현재 유저의 이메일 정보로 이름 찾아와서 비교하던지..
-                    if (post!!.name == firebaseAuth.currentUser.name) {
+                    if (post!!.name == firebaseAuth!!.currentUser.email) {
                         // 자신의 정보와 일치하는 글만 가져온다!
                         arrayPostDTO!!.add(post!!)
                     }
@@ -114,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: PhotoCardViewHolder, position: Int){
             val postDTO = arrayPostDTO[position]
             holder.apply{
-                bind(postDTO)
+                // bind(postDTO)
             }
         }
 
@@ -123,14 +132,31 @@ class MainActivity : AppCompatActivity() {
             var photoCardLayout: View = view.findViewById(R.id.layout_photoCard_item)
             var photoOfDetail: ImageView = view.findViewById(R.id.photo_of_post)
             var nameOfDetail: TextView = view.findViewById(R.id.name_of_post)
+            var dateOfDetail: TextView = view.findViewById(R.id.date_of_post)
+
+            /*
+
+            // 몇 일 전 게시글인지 보여주는!
+            var registered : String = LocalDateTime.now().toString()
 
             fun bind(item : PostDTO){
+                val storageReference = storage!!.reference
+                // storage에 있는 이미지 가져와서 띄워주는 부분 구현 예정
+                storageReference.child("post/" + item.imageOfDetail).downloadUrl.addOnSuccessListener {
+                    Glide.with(photoCardLayout /* context */)
+                            .load(it)
+                            .into(photoOfDetail)
+                }
+                // 날짜 수정 해야 함
+                dateOfDetail.setText()
+                nameOfDetail.setText(item.title
 
             }
+
+            */
         }
     }
 
-*/
 
     override fun onBackPressed(){
         // 회원탈퇴 후 뒤로가는 기능 막기 위함
