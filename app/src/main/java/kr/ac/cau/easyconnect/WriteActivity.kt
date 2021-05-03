@@ -32,6 +32,7 @@ class WriteActivity : AppCompatActivity() {
         // xml id 연결
         val title: EditText = findViewById(R.id.title)
         val content: EditText = findViewById(R.id.content)
+        // val img : ImageView = findViewById(R.id.) <- xml에 photo 추가하시고 여기도 수정!!!!!!!!!!!!!!!!!!!!!!!!!!!
         findViewById<Button>(R.id.back).setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까? ")
@@ -63,8 +64,9 @@ class WriteActivity : AppCompatActivity() {
             var name = firebaseAuth!!.currentUser.email.toString()
             var registered : String = LocalDateTime.now().toString()
             var modified : String = LocalDateTime.now().toString()
+            // var imgOfDetail : String = ?? 요기  /////////////////////////////////////////////////////////////////////////
 
-            val postDTO : PostDTO = PostDTO(inputTitle, inputContent, name, registered, modified)
+            val postDTO : PostDTO = PostDTO(inputTitle, inputContent, name, registered, modified) // 여기에 인자로 imgOfDetail 추가하시면 될듯! 없어서 터짐
 
            if (inputTitle.isNullOrEmpty()) {
                var builder = AlertDialog.Builder(this)
