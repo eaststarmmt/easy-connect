@@ -77,7 +77,7 @@ class WriteActivity : AppCompatActivity() {
                builder.setPositiveButton("확인", null)
                builder.show()
            } else {
-               db.collection("post").document(inputTitle).set(postDTO).addOnCompleteListener(this) {
+               db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this) {
                    //글이 정상적으로 작성 됐을 때
                    if (it.isSuccessful) {
                        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
