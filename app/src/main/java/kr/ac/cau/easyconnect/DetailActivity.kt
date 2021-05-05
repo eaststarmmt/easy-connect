@@ -14,6 +14,9 @@ class DetailActivity : AppCompatActivity() {
     var firebaseAuth: FirebaseAuth? = null
     var storage : FirebaseStorage? = null
 
+    // 형석
+//    lateinit var item : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -24,9 +27,30 @@ class DetailActivity : AppCompatActivity() {
         val title : TextView = findViewById(R.id.title)
         val content : TextView = findViewById(R.id.content)
         var postDTO : PostDTO? = null
+
+        // 형석
+//        item = intent.getStringExtra("data") as String
+//        var item_split = item.split(" ")
+//        var item_name = item_split[0]
+//        var item_modified = item_split[1]
+
         db.collection("post").whereEqualTo("name", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
             if(it.isSuccessful) {
                 // 파이어스토어에서 현재 게시글 정보 조회
+//                var thisData : PostDTO? = null
+//                for(dc in it.result!!.documents.reversed()) {
+//                    var data = dc.toObject(PostDTO::class.java)
+//                    if(data!!.modified == item_modified && data.name == item_name){
+//                        thisData = data
+//                        break
+//                    }
+//                }
+//
+//                if (thisData != null) {
+//                    title.text = thisData!!.title
+//                    content.text = thisData!!.content
+//                }
+
                 storage = FirebaseStorage.getInstance()
                 val storageReference = storage!!.reference
 
@@ -47,5 +71,12 @@ class DetailActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onBackPressed(){
+        // 클릭 시 이전 페이지인 메인으로!
+        val intentMain = Intent(this, MainActivity::class.java)
+        startActivity(intentMain)
+        finish()
     }
 }

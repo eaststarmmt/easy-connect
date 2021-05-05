@@ -36,87 +36,38 @@
             android:id="@+id/boundary_top"
             android:background="@color/hardgray"/>
 
-        <TabHost
-            android:id="@+id/host"
+        <com.google.android.material.tabs.TabLayout
             android:layout_below="@+id/top"
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/item1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="타임라인" />
 
-                <TabWidget
-                    android:id="@android:id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="친구들" />
 
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/item3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천 키워드" />
 
-                    <LinearLayout
-                        android:id="@+id/content1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+        </com.google.android.material.tabs.TabLayout>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:id="@+id/recycer_photocardView"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-                            android:scrollbarFadeDuration="0"
-                            android:scrollbarSize="5dp"
-                            android:scrollbarThumbVertical="@color/gray"
-                            android:scrollbars="vertical"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:id="@+id/recycler_friendView"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-                            android:scrollbarFadeDuration="0"
-                            android:scrollbarSize="5dp"
-                            android:scrollbarThumbVertical="@color/gray"
-                            android:scrollbars="vertical"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/content3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#8BC34A"
-                            android:gravity="center"
-                            android:padding="8dp"
-                            android:text="현재 뜨는 키워드" />
-                    </LinearLayout>
-
-                </FrameLayout>
-
-            </LinearLayout>
-        </TabHost>
+        <androidx.viewpager.widget.ViewPager
+            android:layout_below="@+id/tab_layout"
+            android:layout_above="@+id/bottom"
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
         <View
