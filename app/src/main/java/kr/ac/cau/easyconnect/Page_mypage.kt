@@ -49,7 +49,7 @@ class Page_mypage : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         // xml 파일의 버튼과 텍스트, 그리고 이미지뷰에 연결!
-        val button_goback : Button = findViewById(R.id.bt_goback)
+        val button_goback : ImageButton = findViewById(R.id.bt_goback)
         val button_take_img : Button = findViewById(R.id.bt_take_img)
         val button_choose_img : Button = findViewById(R.id.bt_choose_img)
         val button_change_info : Button = findViewById(R.id.bt_change_information)

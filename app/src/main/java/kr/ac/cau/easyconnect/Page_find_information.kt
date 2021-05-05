@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -24,7 +25,7 @@ class Page_find_information : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         // xml 버튼, 텍스트 아이디 연결
-        val button_goback : Button = findViewById(R.id.bt_goback)
+        val button_goback : ImageButton = findViewById(R.id.bt_goback)
         val button_find_id : Button = findViewById(R.id.bt_find_id)
         val button_find_password : Button = findViewById(R.id.bt_find_password)
         val editText_check_phonenumber_fi : EditText = findViewById(R.id.edit_check_phonenumber_fi)

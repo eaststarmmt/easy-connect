@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -33,7 +34,7 @@ class WriteActivity : AppCompatActivity() {
         val title: EditText = findViewById(R.id.title)
         val content: EditText = findViewById(R.id.content)
         // val img : ImageView = findViewById(R.id.) <- xml에 photo 추가하시고 여기도 수정!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        findViewById<Button>(R.id.back).setOnClickListener {
+        findViewById<ImageButton>(R.id.back).setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까? ")
             // 확인시 종료 처리 할 리스너

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button_menu : Button = findViewById(R.id.bt_menu)
+        val button_menu : ImageButton = findViewById(R.id.bt_menu)
         val pageAdapter = PagerAdapter(supportFragmentManager, 1)
         val fragmentList = arrayListOf(Timeline(), Friends(), Recommendation())
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         val tabLayout : TabLayout = findViewById(R.id.tab_layout)
         tabLayout.setupWithViewPager(viewPager)
+
 
         // 환경 설정부분
 

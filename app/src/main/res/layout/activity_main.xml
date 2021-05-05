@@ -15,17 +15,19 @@
             android:id="@+id/top"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             >
 
-            <Button
-                android:layout_width="80dp"
+            <ImageButton
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:id="@+id/bt_menu"
-                android:textSize="21dp"
-                android:background="@drawable/button_back"
-                android:text="메뉴" />
+                android:background="#00FF0000"
+                android:padding="5dp"
+                android:src="@drawable/menuicon"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
 
         </RelativeLayout>
 
@@ -46,18 +48,21 @@
                 android:id="@+id/item1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:tabTextAppearance="@style/tab_text"
                 android:text="타임라인" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/item2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:tabTextAppearance="@style/tab_text"
                 android:text="친구들" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/item3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:tabTextAppearance="@style/tab_text"
                 android:text="추천 키워드" />
 
         </com.google.android.material.tabs.TabLayout>

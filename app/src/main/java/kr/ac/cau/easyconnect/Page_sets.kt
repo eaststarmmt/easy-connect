@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 
 // 구현 할지 말지 미정
 
@@ -12,7 +13,7 @@ class Page_sets : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page_sets)
 
-        val button_goback : Button = findViewById(R.id.bt_goback)
+        val button_goback : ImageButton = findViewById(R.id.bt_goback)
 
         button_goback.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)

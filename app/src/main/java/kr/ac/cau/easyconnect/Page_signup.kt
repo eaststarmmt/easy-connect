@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +30,7 @@ class Page_signup : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         // xml id 연결
-        var button_goback : Button = findViewById(R.id.bt_goback)
+        var button_goback : ImageButton = findViewById(R.id.bt_goback)
         var button_fin_signup : Button = findViewById(R.id.bt_fin_signup)
         var editText_phoneNumber : EditText = findViewById(R.id.edit_phoneNumber)
         var editText_name : EditText = findViewById(R.id.edit_name)

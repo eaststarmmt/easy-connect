@@ -40,7 +40,7 @@ class Page_find_friends : AppCompatActivity() {
         var searchOption = "name"
 
         val recycler_view: RecyclerView = findViewById(R.id.recycler_friend)
-        val button_goback : Button = findViewById(R.id.bt_goback)
+        val button_goback : ImageButton = findViewById(R.id.bt_goback)
         val spinner_Item: Spinner = findViewById(R.id.spinner)
         val button_searchFriend: Button = findViewById(R.id.bt_searchFriend)
         val editText_searchFriend: EditText = findViewById(R.id.edit_searchFriend)
