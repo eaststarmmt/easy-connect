@@ -15,17 +15,30 @@
             android:id="@+id/top"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             >
 
-            <Button
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
                 android:id="@+id/bt_menu"
-                android:textSize="21dp"
-                android:background="@drawable/button_back"
-                android:text="메뉴" />
+                android:background="#00FF0000"
+                android:src="@drawable/menuicon"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:id="@+id/txt_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:textColor="#000000"
+                android:layout_marginLeft="17dp"
+                android:textSize="18dp"
+                android:text="메뉴"/>
 
         </RelativeLayout>
 
@@ -36,87 +49,41 @@
             android:id="@+id/boundary_top"
             android:background="@color/hardgray"/>
 
-        <TabHost
-            android:id="@+id/host"
+        <com.google.android.material.tabs.TabLayout
             android:layout_below="@+id/top"
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/item1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:tabTextAppearance="@style/tab_text"
+                android:text="타임라인" />
 
-                <TabWidget
-                    android:id="@android:id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tabTextAppearance="@style/tab_text"
+                android:text="친구들" />
 
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/item3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tabTextAppearance="@style/tab_text"
+                android:text="추천 키워드" />
 
-                    <LinearLayout
-                        android:id="@+id/content1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+        </com.google.android.material.tabs.TabLayout>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:id="@+id/recycer_photocardView"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-                            android:scrollbarFadeDuration="0"
-                            android:scrollbarSize="5dp"
-                            android:scrollbarThumbVertical="@color/gray"
-                            android:scrollbars="vertical"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:id="@+id/recycler_friendView"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-                            android:scrollbarFadeDuration="0"
-                            android:scrollbarSize="5dp"
-                            android:scrollbarThumbVertical="@color/gray"
-                            android:scrollbars="vertical"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/content3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#8BC34A"
-                            android:gravity="center"
-                            android:padding="8dp"
-                            android:text="현재 뜨는 키워드" />
-                    </LinearLayout>
-
-                </FrameLayout>
-
-            </LinearLayout>
-        </TabHost>
+        <androidx.viewpager.widget.ViewPager
+            android:layout_below="@+id/tab_layout"
+            android:layout_above="@+id/bottom"
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
         <View

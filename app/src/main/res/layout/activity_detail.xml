@@ -9,15 +9,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="60dp">
 
-        <Button
-            android:layout_width="80dp"
+        <ImageButton
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:id="@+id/back"
-            android:background="@drawable/button_back"
-            android:text="뒤로" />
+            android:background="#00FF0000"
+            android:padding="10dp"
+            android:src="@drawable/backicon"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
 
     </RelativeLayout>
 

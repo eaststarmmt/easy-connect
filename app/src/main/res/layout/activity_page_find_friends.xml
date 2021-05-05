@@ -14,20 +14,19 @@
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:orientation="horizontal"
             >
 
-            <Button
-                android:layout_width="80dp"
+            <ImageButton
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:id="@+id/bt_goback"
-                android:background="@drawable/button_back"
-                android:textSize="21dp"
-                android:text="뒤로"
-                >
-
-            </Button>
+                android:background="#00FF0000"
+                android:padding="10dp"
+                android:src="@drawable/backicon"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
         </LinearLayout>
 
         <View
@@ -64,7 +63,7 @@
                         android:layout_gravity="center"
                         android:gravity="center|bottom"
                         android:id="@+id/edit_searchFriend"
-                        android:hint=" 이름/전화번호 입력 "/>
+                        android:hint=" 이름/전화번호 "/>
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"

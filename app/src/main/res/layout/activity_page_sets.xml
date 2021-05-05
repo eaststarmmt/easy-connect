@@ -13,24 +13,35 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:orientation="horizontal"
             >
-            <Button
-                android:layout_width="80dp"
+            <ImageButton
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:id="@+id/bt_goback"
-                android:background="@drawable/button_back"
-                android:textSize="21dp"
-                android:text="뒤로"
-                >
-            </Button>
+                android:background="#00FF0000"
+                android:padding="10dp"
+                android:src="@drawable/backicon"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/hardgray"/>
+
+        <Switch
+            android:id="@+id/switch_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:background="#00FF0000"
+            android:textSize="20sp"
+            android:text="• 타인의 검색 허용" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
