@@ -119,11 +119,13 @@ class Timeline : Fragment() {
                 var detailDateFromNow_month : Int = parsing_now_date[1].toInt() - parsing_lastDate_date[1].toInt()
                 var detailDateFromNow_day : Int = parsing_now_date[2].toInt() - parsing_lastDate_date[2].toInt()
 
-                val storageReference = storage!!.reference
-                storageReference.child("post/" + item.imageOfDetail).downloadUrl.addOnSuccessListener {
-                    Glide.with(photoCardLayout /* context */)
-                        .load(it)
-                        .into(photoOfDetail)
+                if(!item.imageOfDetail.isNullOrEmpty()){
+                    val storageReference = storage!!.reference
+                    storageReference.child("post/" + item.imageOfDetail).downloadUrl.addOnSuccessListener {
+                        Glide.with(photoCardLayout /* context */)
+                                .load(it)
+                                .into(photoOfDetail)
+                    }
                 }
                 // 날짜 수정
                 if(detailDateFromNow_year > 0){
@@ -147,14 +149,14 @@ class Timeline : Fragment() {
 
                 nameOfDetail.setText(item.title)
 
-//                photoCardLayout.setOnClickListener{
-//                    val intentDetail = Intent(view.context, DetailActivity::class.java).apply{
-//                        val data = item.name + " " + item.modified
-//                        putExtra("data", data)
-//                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                    }
-//                    startActivity(intentDetail)
-//                }
+                photoCardLayout.setOnClickListener{
+                    val intentDetail = Intent(view.context, DetailMainActivity::class.java).apply{
+                        val data = item.name + " " + item.modified
+                        putExtra("data", data)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intentDetail)
+                }
             }
 
         }
