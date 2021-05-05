@@ -97,6 +97,7 @@ class WriteActivity : AppCompatActivity() {
         }
 
         // 게시버튼 눌렀을 때 구현
+<<<<<<< HEAD
         findViewById<Button>(R.id.post).setOnClickListener {
             var inputTitle = title.text.trim().toString()
             var inputContent = content.text.trim().toString()
@@ -135,6 +136,46 @@ class WriteActivity : AppCompatActivity() {
                 }
             }
         }
+=======
+       findViewById<Button>(R.id.post).setOnClickListener {
+           var inputTitle = title.text.trim().toString()
+           var inputContent = content.text.trim().toString()
+           var name = firebaseAuth!!.currentUser.email.toString()
+           var registered : String = LocalDateTime.now().toString()
+           var modified : String = LocalDateTime.now().toString()
+           var imgOfDetail : String? = imgFileName
+
+           val postDTO : PostDTO = PostDTO(inputTitle, inputContent, name, registered, modified, imgOfDetail)
+
+           if (inputTitle.isNullOrEmpty()) {
+               var builder = AlertDialog.Builder(this)
+               builder.setTitle("제목을 입력해주세요.")
+               builder.setPositiveButton("확인", null)
+               builder.show()
+           } else if (inputContent.isNullOrEmpty()) {
+               var builder = AlertDialog.Builder(this)
+               builder.setTitle("내용을 입력해주세요.")
+               builder.setPositiveButton("확인", null)
+               builder.show()
+           } else {
+               if (imgOfDetail != null)
+                    imageUpload()
+               db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this) {
+                   //글이 정상적으로 작성 됐을 때
+                   if (it.isSuccessful) {
+                       Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
+                       //현재 엑티비티 종료하고 내가 쓴 글 확인하는 액티비티로 이동. 추후에 수정 예정
+                       val intent = Intent(this, DetailActivity::class.java)
+                       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                       startActivity(intent)
+                       finish()
+                   } else {
+                       Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                   }
+               }
+           }
+       }
+>>>>>>> fad2e28d75dc91129eeccdec9c2ff920c4d0da9e
 
     }
     // 뒤로가기 구현
