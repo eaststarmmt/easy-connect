@@ -62,7 +62,8 @@ class Timeline : Fragment() {
             db!!.collection("post").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 arrayPostDTO.clear()
                 // post_information에 있는 데이터 정보를 가져와서 각 정보마다 현재 로그인 한 유저의 글인지 비교해야함
-                for (snapshot in querySnapshot!!.documents) {
+                for (snapshot in querySnapshot!!.documents.reversed()) {
+                    // 거꾸로 불러와야 가장 최신글이 제일 위에 뜰 수 있다! 게시일 기준으로 데이터베이스에 쌓이므로
                     var post = snapshot.toObject(PostDTO::class.java)
 
                     // 이름으로 비교해야 할 듯? 아니면 현재 유저의 이메일 정보로 이름 찾아와서 비교하던지..

@@ -37,7 +37,8 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:hint="변경할 이름을 입력하세요"/>
+                android:textSize="20dp"
+                android:hint="변경하실 이름을 입력하세요"/>
 
         </LinearLayout>
         <LinearLayout
@@ -61,9 +62,10 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:maxLength="11"
+                android:textSize="20dp"
                 android:inputType="numberDecimal"
                 android:digits="0123456789"
-                android:hint="변경할 전화번호를 입력하세요"/>
+                android:hint="변경하실 전화번호를 입력하세요"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
