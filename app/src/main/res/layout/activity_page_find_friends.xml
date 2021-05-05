@@ -63,7 +63,7 @@
                         android:layout_gravity="center"
                         android:gravity="center|bottom"
                         android:id="@+id/edit_searchFriend"
-                        android:hint=" 이름/전화번호 입력 "/>
+                        android:hint=" 이름/전화번호 "/>
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"

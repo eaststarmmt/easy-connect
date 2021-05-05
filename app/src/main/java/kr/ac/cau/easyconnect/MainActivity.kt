@@ -13,9 +13,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
+
+    var firebaseAuth = FirebaseAuth.getInstance()
+    var db = FirebaseFirestore.getInstance()
+    var userDTO : UserDTO = UserDTO()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +40,20 @@ class MainActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
 
 
-        // 환경 설정부분
-
-        var builder_dialog = AlertDialog.Builder(this);
-        builder_dialog.setTitle("잘 안보인다면 글자 크기를 변경하세요!"); // 다이얼로그 제목
-        builder_dialog.setPositiveButton("확인", null)
-        builder_dialog.show(); // 다이얼로그 보이기
-
+        // 환경 설정부분 (타인의 검색을 허용할 지에 대한 공유정보)
+        db.collection("user_information").whereEqualTo("email", firebaseAuth.currentUser.email).get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        for (dc in it.result!!.documents) {
+                            userDTO = dc.toObject(UserDTO::class.java)!!
+                            break
+                        }
+                        val sharedPreference = getSharedPreferences("searchBoolean", 0)
+                        val editor = sharedPreference.edit()
+                        editor.putBoolean("searchState", userDTO!!.search!!)
+                        editor.apply()
+                    }
+                }
 
         button_menu.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)

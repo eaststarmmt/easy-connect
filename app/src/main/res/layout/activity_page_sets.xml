@@ -32,5 +32,16 @@
             android:layout_height="1dp"
             android:background="@color/hardgray"/>
 
+        <Switch
+            android:id="@+id/switch_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:background="#00FF0000"
+            android:textSize="20sp"
+            android:text="• 타인의 검색 허용" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

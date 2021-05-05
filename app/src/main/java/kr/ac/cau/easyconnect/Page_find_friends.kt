@@ -100,14 +100,18 @@ class Page_find_friends : AppCompatActivity() {
                     // userDTO 리스트 초기화
                     arrayUserDTO!!.clear()
 
-//                    for (snapshot in querySnapshot!!.documents) {
-//                        var user = snapshot.toObject(UserDTO::class.java)
-//                        if(user.email != firebaseAuth.currentUser.email){
-//                            // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음
-//                            arrayUserDTO!!.add(user!!)
-//                        }
-//                    }
-//                    notifyDataSetChanged()
+                    for (snapshot in querySnapshot!!.documents) {
+                        var user = snapshot.toObject(UserDTO::class.java)
+                        if(user!!.email != firebaseAuth!!.currentUser.email){
+                            // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음
+                            if(user!!.search == false){
+                                // 검색 불허
+                            }else{
+                                arrayUserDTO!!.add(user!!)
+                            }
+                        }
+                    }
+                    notifyDataSetChanged()
                 }
         }
 
@@ -172,7 +176,11 @@ class Page_find_friends : AppCompatActivity() {
                         // searchWord로 들어온 정보가 포함된 계정을 리스트에 담는 과정!
                         if (snapshot.getString(option)!!.contains(serachWord)) {
                             var item = snapshot.toObject(UserDTO::class.java)
-                            arrayUserDTO!!.add(item!!)
+                            if(item!!.search == false){
+                                // 검색 불허
+                            }else{
+                                arrayUserDTO!!.add(item!!)
+                            }
                         }
                     }
                     notifyDataSetChanged()

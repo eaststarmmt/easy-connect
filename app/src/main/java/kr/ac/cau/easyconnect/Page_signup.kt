@@ -105,13 +105,14 @@ class Page_signup : AppCompatActivity() {
                                                 if (verifiTask.isSuccessful) {
                                                     Toast.makeText(this, "이메일 인증후 이용 가능합니다.", Toast.LENGTH_SHORT).show()
                                                     // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 은 입력값, uid와 photo 는 기본값 저장
-                                                    val newUserDTO = UserDTO()
+                                                    var newUserDTO = UserDTO()
                                                     newUserDTO.email = input_id
                                                     newUserDTO.password = input_password
                                                     newUserDTO.name = input_name
                                                     newUserDTO.phoneNumber = input_phoneNumber
                                                     newUserDTO.photo = "base.jpg"
                                                     newUserDTO.uid = firebaseAuth!!.uid
+                                                    newUserDTO.search = false
 
                                                     // firestore에 newUserDTO 객체 저장
                                                     db.collection("user_information").document(firebaseAuth!!.uid.toString()).set(newUserDTO)
