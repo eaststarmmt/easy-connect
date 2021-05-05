@@ -98,8 +98,8 @@ class WriteActivity : AppCompatActivity() {
            var inputTitle = title.text.trim().toString()
            var inputContent = content.text.trim().toString()
            var name = firebaseAuth!!.currentUser.email.toString()
-           var registered : String = SimpleDateFormat("yyyyMMdd_HHmmsss").format(Date())
-           var modified : String = SimpleDateFormat("yyyyMMdd_HHmmsss").format(Date())
+           var registered : String = LocalDateTime.now().toString()
+           var modified : String = LocalDateTime.now().toString()
            var imgOfDetail : String? = imgFileName
 
            val postDTO : PostDTO = PostDTO(inputTitle, inputContent, name, registered, modified, imgOfDetail)
@@ -115,7 +115,8 @@ class WriteActivity : AppCompatActivity() {
                builder.setPositiveButton("확인", null)
                builder.show()
            } else {
-               imageUpload()
+               if (imgOfDetail != null)
+                    imageUpload()
                db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this) {
                    //글이 정상적으로 작성 됐을 때
                    if (it.isSuccessful) {
