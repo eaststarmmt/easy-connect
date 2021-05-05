@@ -55,7 +55,6 @@ class Page_mypage : AppCompatActivity() {
         val button_change_info : Button = findViewById(R.id.bt_change_information)
         val button_change_password : Button = findViewById(R.id.bt_change_password)
         val button_withdrawal : Button = findViewById(R.id.bt_withdrawal)
-        val textView_id : TextView = findViewById(R.id.txt_id)
         val textView_phoneNumber : TextView = findViewById(R.id.txt_phoneNumber)
         val textView_name : TextView = findViewById(R.id.txt_name)
         imageView_me = findViewById(R.id.img_me)
@@ -75,7 +74,6 @@ class Page_mypage : AppCompatActivity() {
                 if (userDTO != null) {
                     // 현재 로그인한 정보가 있다면 해당 정보들을 변수에 저장
                     imgFileName = userDTO!!.photo
-                    textView_id.setText(userDTO!!.email)
                     textView_name.setText(userDTO!!.name)
                     textView_phoneNumber.setText(userDTO!!.phoneNumber)
 
