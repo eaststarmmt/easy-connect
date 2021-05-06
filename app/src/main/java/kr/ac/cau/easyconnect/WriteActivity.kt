@@ -232,6 +232,7 @@ class WriteActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         val db = FirebaseFirestore.getInstance()
 
+        // url 찾기 위해 참조!
         var riversRef = storage!!.reference.child("post").child(imgFileName!!)
         riversRef.putFile(uriPhoto!!).addOnSuccessListener {
             riversRef.downloadUrl.addOnSuccessListener { uri ->

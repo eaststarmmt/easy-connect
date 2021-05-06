@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -27,7 +29,7 @@ class DetailActivity : AppCompatActivity() {
         val title : TextView = findViewById(R.id.title)
         val content : TextView = findViewById(R.id.content)
         var postDTO : PostDTO? = null
-
+        val imgView : ImageView = findViewById(R.id.imgView)
         // 형석
 //        item = intent.getStringExtra("data") as String
 //        var item_split = item.split(" ")
@@ -62,6 +64,12 @@ class DetailActivity : AppCompatActivity() {
                 if (postDTO != null) {
                     title.text = postDTO!!.title
                     content.text = postDTO!!.content
+                    val imgName : String? = postDTO!!.imageOfDetail
+                    storageReference.child("post/test.jpg").downloadUrl.addOnSuccessListener {
+                        Glide.with(this)
+                            .load(it)
+                            .into(imgView)
+                    }
                 }
             }
         }

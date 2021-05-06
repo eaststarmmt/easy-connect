@@ -5,11 +5,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -311,6 +313,7 @@ class Page_mypage : AppCompatActivity() {
     }
 
     // 선택 (REQUEST_IMAGE_CAPTURE / REQUEST_GALLERY_TAKE)
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
