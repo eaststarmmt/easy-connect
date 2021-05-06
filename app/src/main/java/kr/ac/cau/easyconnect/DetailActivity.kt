@@ -15,7 +15,8 @@ class DetailActivity : AppCompatActivity() {
     //테스트용. 삭제할 페이지
     var firebaseAuth: FirebaseAuth? = null
     var storage : FirebaseStorage? = null
-
+    var imgFileName: String? = null
+    private lateinit var imgView : ImageView
     // 형석
 //    lateinit var item : String
 
@@ -29,7 +30,8 @@ class DetailActivity : AppCompatActivity() {
         val title : TextView = findViewById(R.id.title)
         val content : TextView = findViewById(R.id.content)
         var postDTO : PostDTO? = null
-        val imgView : ImageView = findViewById(R.id.imgView)
+        imgView = findViewById(R.id.imgView)
+
         // 형석
 //        item = intent.getStringExtra("data") as String
 //        var item_split = item.split(" ")
@@ -64,8 +66,8 @@ class DetailActivity : AppCompatActivity() {
                 if (postDTO != null) {
                     title.text = postDTO!!.title
                     content.text = postDTO!!.content
-                    val imgName : String? = postDTO!!.imageOfDetail
-                    storageReference.child("post/test.jpg").downloadUrl.addOnSuccessListener {
+                    imgFileName = postDTO!!.imageOfDetail
+                    storageReference.child("post/" + postDTO!!.imageOfDetail.toString()).downloadUrl.addOnSuccessListener {
                         Glide.with(this)
                             .load(it)
                             .into(imgView)
