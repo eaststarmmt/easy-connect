@@ -1,6 +1,7 @@
 package kr.ac.cau.easyconnect
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
@@ -127,8 +128,8 @@ class WriteActivity : AppCompatActivity() {
                         Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
                         //현재 엑티비티 종료하고 내가 쓴 글 확인하는 액티비티로 이동. 추후에 수정 예정
                         val intent = Intent(this, DetailActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)   Detail이 끝나고 바로 메인으로 가기 위해 만듬
+                        //startActivity(intent)
                         finish()
                     } else {
                         Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -237,8 +238,10 @@ class WriteActivity : AppCompatActivity() {
 
         // url 찾기 위해 참조!
         var riversRef = storage!!.reference.child("post").child(imgFileName!!)
-        riversRef.putFile(uriPhoto!!).addOnSuccessListener {
-            riversRef.downloadUrl.addOnSuccessListener { uri ->
+        riversRef.putFile(uriPhoto!!)
+            .addOnSuccessListener {
+
+                riversRef.downloadUrl.addOnSuccessListener { uri ->
                 db.collection("user_information")
                         .whereEqualTo("email", firebaseAuth!!.currentUser.email).get()
                         .addOnCompleteListener {
@@ -252,4 +255,5 @@ class WriteActivity : AppCompatActivity() {
             }
         }
     }
+
 }

@@ -18,7 +18,7 @@ class DetailActivity : AppCompatActivity() {
     var imgFileName: String? = null
     private lateinit var imgView : ImageView
     // 형석
-//    lateinit var item : String
+    lateinit var item : String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
                     title.text = postDTO!!.title
                     content.text = postDTO!!.content
                     imgFileName = postDTO!!.imageOfDetail
-                    storageReference.child("post/" + postDTO!!.imageOfDetail.toString()).downloadUrl.addOnSuccessListener {
+                    storageReference.child("post/" + imgFileName).downloadUrl.addOnSuccessListener {
                         Glide.with(this)
                             .load(it)
                             .into(imgView)
