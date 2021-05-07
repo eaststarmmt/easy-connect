@@ -182,7 +182,6 @@ class WriteActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private  fun createImageFile(): File {
         // Create an image file name
-        val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         imgFileName = "IMAGE_" + timestamp + "_.jpg"
 
