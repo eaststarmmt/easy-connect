@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/button_back_o"
+        android:drawable="@drawable/button_post_o"
         />
     <item
-        android:drawable="@drawable/button_back_x"
+        android:drawable="@drawable/button_post_x"
         />
 </selector>
