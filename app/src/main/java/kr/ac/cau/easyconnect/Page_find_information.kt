@@ -71,7 +71,8 @@ class Page_find_information : AppCompatActivity() {
                             // 만약 이름까지 같다면 아이디(이메일) 정보 띄워서 알려줌
                             // Dialog return ID
                             var builder = AlertDialog.Builder(this)
-                            builder.setTitle("아이디 : " + user_email)
+                            builder.setTitle("아이디")
+                            builder.setMessage(user_email)
 
                             var listener = DialogInterface.OnClickListener { p0, _ ->
                                 editText_check_id_fi.setText(user_email)

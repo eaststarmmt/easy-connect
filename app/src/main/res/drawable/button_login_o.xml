@@ -4,7 +4,7 @@
         android:radius="20dp"
         />
     <solid
-        android:color="@color/softskyblue"
+        android:color="@color/skyblue"
         />
     <size
         android:width="300dp"

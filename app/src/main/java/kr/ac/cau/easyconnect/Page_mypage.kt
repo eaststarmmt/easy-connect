@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -31,6 +33,7 @@ class Page_mypage : AppCompatActivity() {
 
     var firebaseAuth : FirebaseAuth? = null
     var storage : FirebaseStorage? = null
+    var db : FirebaseFirestore? = null
 
     var uriPhoto : Uri? = null
     var imgFileName : String? = null
@@ -40,6 +43,7 @@ class Page_mypage : AppCompatActivity() {
 
     lateinit var currentPhotoPath : String
     lateinit var imageView_me : ImageView
+    var userDTO : UserDTO? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,22 +52,27 @@ class Page_mypage : AppCompatActivity() {
 
         // 권한과 파이어스토어 데이터베이스 객체 받아옴
         firebaseAuth = FirebaseAuth.getInstance()
-        val db = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         // xml 파일의 버튼과 텍스트, 그리고 이미지뷰에 연결!
         val button_goback : ImageButton = findViewById(R.id.bt_goback)
-        val button_take_img : Button = findViewById(R.id.bt_take_img)
+        val button_take_img : Button = findViewById(R.id.bt_camera)
         val button_choose_img : Button = findViewById(R.id.bt_choose_img)
         val button_change_info : Button = findViewById(R.id.bt_change_information)
         val button_change_password : Button = findViewById(R.id.bt_change_password)
         val button_withdrawal : Button = findViewById(R.id.bt_withdrawal)
         val textView_phoneNumber : TextView = findViewById(R.id.txt_phoneNumber)
         val textView_name : TextView = findViewById(R.id.txt_name)
+        val switchSearch : Switch = findViewById(R.id.switch_search)
         imageView_me = findViewById(R.id.img_me)
 
+        val sharedPreference = getSharedPreferences("searchBoolean", 0)
+        switchSearch.isChecked = sharedPreference.getBoolean("searchState", false)
+
+        switchSearch.setOnCheckedChangeListener(searchSwitchListener())
+
         // 현재 정보를 기본적으로 출력하는 부분!
-        var userDTO : UserDTO? = null
-        db.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
             if (it.isSuccessful) {
                 // 현재 로그인 정보의 파이어스토어 데이터 조회
                 storage = FirebaseStorage.getInstance()
@@ -92,6 +101,9 @@ class Page_mypage : AppCompatActivity() {
                             .load(it)
                             .into(imageView_me)
                     }
+
+                    imageView_me.setBackground(ShapeDrawable(OvalShape()))
+                    imageView_me.setClipToOutline(true)
                 }
             }
         }
@@ -117,7 +129,6 @@ class Page_mypage : AppCompatActivity() {
         button_change_info.setOnClickListener({
             // 이름이나 휴대폰 번호 변경하기!
             // 기본 정보를 그대로 띄워주고 변경할거면 입력하게끔!
-
 
             var builder = AlertDialog.Builder(this)
             builder.setView(layoutInflater.inflate(R.layout.update_information_dialog, null))
@@ -156,10 +167,10 @@ class Page_mypage : AppCompatActivity() {
                     }
 
                     // 파이어스토어의 현재 회원 정보 삭제 및 추가 (업데이트)
-                    db.collection("user_information").document(
+                    db!!.collection("user_information").document(
                             userDTO!!.uid.toString()
                     ).delete()
-                    db.collection("user_information").document(
+                    db!!.collection("user_information").document(
                             userDTO!!.uid.toString()
                     ).set(userDTO!!)
 
@@ -207,10 +218,10 @@ class Page_mypage : AppCompatActivity() {
                                                     input_change_password!!.text.toString()
 
                                             // 파이어스토어의 현재 회원 정보 삭제 및 추가 (업데이트)
-                                            db.collection("user_information").document(
+                                            db!!.collection("user_information").document(
                                                     userDTO!!.uid.toString()
                                             ).delete()
-                                            db.collection("user_information").document(
+                                            db!!.collection("user_information").document(
                                                     userDTO!!.uid.toString()
                                             ).set(userDTO!!)
                                         }
@@ -243,7 +254,7 @@ class Page_mypage : AppCompatActivity() {
                     if (input_current_password2!!.text.toString() == userDTO!!.password) {
                         // 현재 사용중인 비밀번호와 접속중인 계정의 비밀번호가 일치
                         // 파이어스토어의 현재 회원 정보 삭제
-                        db.collection("user_information").document(userDTO!!.uid.toString()).delete()
+                        db!!.collection("user_information").document(userDTO!!.uid.toString()).delete()
 
                         // 현재 로그인 정보 삭제
                         firebaseAuth!!.currentUser.delete()
@@ -265,6 +276,36 @@ class Page_mypage : AppCompatActivity() {
         })
     }
 
+    inner class searchSwitchListener : CompoundButton.OnCheckedChangeListener {
+
+        override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+            if (isChecked){
+                if (userDTO != null) {
+                    userDTO!!.search = true
+                    val sharedPreference = getSharedPreferences("searchBoolean", 0)
+                    val editor = sharedPreference.edit()
+                    editor.putBoolean("searchState", userDTO!!.search!!)
+                    editor.apply()
+                }
+            }
+            else{
+                if (userDTO != null) {
+                    userDTO!!.search = false
+                    val sharedPreference = getSharedPreferences("searchBoolean", 0)
+                    val editor = sharedPreference.edit()
+                    editor.putBoolean("searchState", userDTO!!.search!!)
+                    editor.apply()
+                }
+            }
+            // 파이어스토어 갱신
+            db!!.collection("user_information")
+                .document(userDTO!!.uid.toString()).delete()
+            db!!.collection("user_information")
+                .document(userDTO!!.uid.toString()).set(
+                    userDTO!!
+                )
+        }
+    }
 
     // 카메라 사용!!
     private fun dispatchTakePictureIntent() {

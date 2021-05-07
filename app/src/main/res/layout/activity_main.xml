@@ -15,7 +15,7 @@
             android:id="@+id/top"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             >
 
             <Button
@@ -26,7 +26,7 @@
                 android:id="@+id/bt_menu"
                 android:background="#00FF0000"
                 android:drawableLeft="@drawable/drawable_menu"
-                android:textSize="18dp"
+                android:textSize="20dp"
                 android:text="메뉴"/>
 
         </RelativeLayout>
@@ -74,31 +74,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_above="@+id/bottom"
-            android:background="@color/hardgray"/>
-
         <LinearLayout
             android:id="@+id/bottom"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            >
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/bt_post"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_post"
-                android:drawableLeft="@drawable/drawable_post"
-                android:text="게시" />
+                android:background="@color/softskyblue"
+                android:text="📝 글쓰기"
+                android:textSize="20dp"/>
 
         </LinearLayout>
 

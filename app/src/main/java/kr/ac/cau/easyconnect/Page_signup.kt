@@ -41,7 +41,7 @@ class Page_signup : AppCompatActivity() {
         button_goback.setOnClickListener({
             // 뒤로 버튼 클릭 시 되돌아가는 여부 체크하고 확인 누르면 로그인 페이지로 이동
             var builder_dialog = AlertDialog.Builder(this);
-            builder_dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까?"); // 다이얼로그 제목
+            builder_dialog.setTitle("내용이 저장되지 않습니다.\n돌아가시겠습니까?"); // 다이얼로그 제목
             var listener = DialogInterface.OnClickListener { dialog, which ->
                 val intentLogin = Intent(this, Page_login::class.java)
                 startActivity(intentLogin)
@@ -160,7 +160,7 @@ class Page_signup : AppCompatActivity() {
     override fun onBackPressed() {
         // 뒤로 버튼 클릭 시 되돌아가는 여부 체크하고 확인 누르면 로그인 페이지로 이동
         var builder_dialog = AlertDialog.Builder(this);
-        builder_dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까?"); // 다이얼로그 제목
+        builder_dialog.setTitle("내용이 저장되지 않습니다.\n돌아가시겠습니까?"); // 다이얼로그 제목
         var listener = DialogInterface.OnClickListener { dialog, which ->
             val intentLogin = Intent(this, Page_login::class.java)
             startActivity(intentLogin)

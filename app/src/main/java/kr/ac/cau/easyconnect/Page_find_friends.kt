@@ -140,7 +140,6 @@ class Page_find_friends : AppCompatActivity() {
             var friendLayout: View = view.findViewById(R.id.layout_friend_item)
             var friendImage: ImageView = view.findViewById(R.id.img_friend)
             var friendName: TextView = view.findViewById(R.id.txt_friendName)
-            var friendPhoneNumber: TextView = view.findViewById(R.id.txt_friendPhoneNumber)
 
             fun bind(item: UserDTO) {
                 // 검색된 계정의 photo 필드를 바탕으로 ImageView에 Glide로 이미지 뷰 띄워줌
@@ -151,7 +150,6 @@ class Page_find_friends : AppCompatActivity() {
                         .into(friendImage)
                 }
                 friendName.setText(item.name)
-                friendPhoneNumber.setText(item.phoneNumber)
 
                 // 이미지 배경 동그랗게 !
                 friendImage.setBackground(ShapeDrawable(OvalShape()))
