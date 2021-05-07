@@ -80,6 +80,8 @@
                         android:layout_marginTop="70dp"
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/button_round"
+                        android:paddingLeft="10dp"
+                        android:drawableLeft="@drawable/drawable_camera"
                         android:textSize="20dp"
                         android:text="촬영"/>
 
@@ -91,6 +93,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/button_round"
+                        android:paddingLeft="10dp"
+                        android:drawableLeft="@drawable/drawable_album"
                         android:textSize="20dp"
                         android:text="앨범"/>
 

@@ -73,7 +73,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="85dp"
-            android:background="@drawable/button_back"
+            android:background="@drawable/button_post"
             android:text="게시" />
 
         <Button
@@ -82,7 +82,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_marginRight="85dp"
-            android:background="@drawable/button_back"
+            android:background="@drawable/button_post"
             android:text="취소" />
     </RelativeLayout>
 

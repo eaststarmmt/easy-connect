@@ -131,7 +131,7 @@ class Page_login : AppCompatActivity() {
         // 클릭 시 종료 여부 체크하고 종료 버튼 누르면 앱 종료
         var builder_dialog = AlertDialog.Builder(this);
         builder_dialog.setTitle("종료할까요?"); // 다이얼로그 제목
-        builder_dialog.setIcon(R.mipmap.easy_connect)
+        builder_dialog.setIcon(R.drawable.exiticon)
         var listener = DialogInterface.OnClickListener { dialog, which
             -> ActivityCompat.finishAffinity(this)
             System.exit(0)

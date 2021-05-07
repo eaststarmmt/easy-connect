@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button_menu : ImageButton = findViewById(R.id.bt_menu)
+        val button_menu : Button = findViewById(R.id.bt_menu)
         val pageAdapter = PagerAdapter(supportFragmentManager, 1)
         val fragmentList = arrayListOf(Timeline(), Friends(), Recommendation())
 

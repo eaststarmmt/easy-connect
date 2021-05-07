@@ -43,10 +43,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_mypage"
                 android:layout_marginTop="100dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
+                android:drawableLeft="@drawable/drawable_mypage"
                 android:textSize="21sp"
-                android:text="• 마이 페이지"
+                android:text=" 마이 페이지"
                 >
             </Button>
 
@@ -55,10 +56,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_find_friend"
                 android:layout_marginTop="60dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
+                android:drawableLeft="@drawable/drawable_friends"
                 android:textSize="21sp"
-                android:text="• 친구 찾기"
+                android:text=" 친구 찾기"
                 >
             </Button>
 
@@ -67,10 +69,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_setting"
                 android:layout_marginTop="60dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
+                android:drawableLeft="@drawable/drawable_settings"
                 android:textSize="21sp"
-                android:text="• 환경 설정"
+                android:text=" 환경 설정"
                 >
             </Button>
 
@@ -79,10 +82,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_logout"
                 android:layout_marginTop="60dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
+                android:drawableLeft="@drawable/drawable_logout"
                 android:textSize="21sp"
-                android:text="• 로그아웃"
+                android:text=" 로그아웃"
                 >
                 // 버튼눌리면 알림메시지 띄워서 비밀번호 재입력 받고 탈퇴하게끔
             </Button>
