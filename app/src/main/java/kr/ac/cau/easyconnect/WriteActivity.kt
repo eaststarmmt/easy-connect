@@ -2,6 +2,7 @@ package kr.ac.cau.easyconnect
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.ClipData
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
@@ -27,10 +28,12 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.io.IOException
+import java.net.URI
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 class WriteActivity : AppCompatActivity() {
 
@@ -39,12 +42,19 @@ class WriteActivity : AppCompatActivity() {
 
     val REQUEST_IMAGE_CAPTURE = 1
     val REQUEST_GALLERY_TAKE = 2
+    val GET_GALLERY_IMAGE = 200
 
     var imgFileName : String? = null
+    var imgNameList: Array<String?> = arrayOfNulls(3)
     var uriPhoto : Uri? = null
+    var clipData: ClipData? = null
+
+    var uriList: Array<Uri?> = arrayOfNulls(3)
 
     lateinit var currentPhotoPath : String
     lateinit var imageView : ImageView
+    lateinit var imageView2 : ImageView
+    lateinit var imageView3 : ImageView
     val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmsss").format(Date())
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -59,8 +69,9 @@ class WriteActivity : AppCompatActivity() {
         // xml id 연결
         val title: EditText = findViewById(R.id.title)
         val content: EditText = findViewById(R.id.content)
-
         imageView = findViewById(R.id.imageView)
+        imageView2 = findViewById(R.id.imageView2)
+        imageView3 = findViewById(R.id.imageView3)
         findViewById<ImageButton>(R.id.back).setOnClickListener {
 
             val dialog = AlertDialog.Builder(this)
@@ -87,7 +98,10 @@ class WriteActivity : AppCompatActivity() {
         }
         // 앨범버튼 눌렀을 때
         findViewById<Button>(R.id.album).setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
+
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "image/*"
             startActivityForResult(intent, REQUEST_GALLERY_TAKE)
         }
@@ -105,9 +119,12 @@ class WriteActivity : AppCompatActivity() {
             var name = firebaseAuth!!.currentUser.email.toString()
             var registered : String = LocalDateTime.now().toString()
             var modified : String = LocalDateTime.now().toString()
-            var imgOfDetail : String? = imgFileName
+            var imgOfDetail : String? = imgNameList[0]
+            var imgOfDetail2 : String? = imgNameList[1]
+            var imgOfDetail3 : String? = imgNameList[2]
 
-            val postDTO : PostDTO = PostDTO(inputTitle, inputContent, name, registered, modified, imgOfDetail)
+            val postDTO : PostDTO = PostDTO(inputTitle, inputContent, name, registered, modified,
+                imgOfDetail, imgOfDetail2, imgOfDetail3)
 
             if (inputTitle.isNullOrEmpty()) {
                 var builder = AlertDialog.Builder(this)
@@ -211,10 +228,12 @@ class WriteActivity : AppCompatActivity() {
                     )
                     val bitmap = ImageDecoder.decodeBitmap(decode)
                     imageView.setImageBitmap(bitmap)
-                    uriPhoto = Uri.fromFile(file)
+                    uriList[0] = Uri.fromFile(file)
+                    imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
                 }
             }
             // 앨범에서 가져왔을 때
+/*
             REQUEST_GALLERY_TAKE -> {
                 // Uri
                 if (resultCode == Activity.RESULT_OK) {
@@ -223,8 +242,41 @@ class WriteActivity : AppCompatActivity() {
                     imgFileName = "IMAGE_" + timestamp + "_.jpg"
                 }
             }
+
+*/
+            REQUEST_GALLERY_TAKE -> {
+                if(data == null) {
+                    Toast.makeText(applicationContext,"이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show()
+                } else {
+                    clipData = data.clipData
+                    if(data.clipData == null) {
+                        uriList[0] = data.data
+                        imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
+                        imageView.setImageURI(uriList[0])
+                    } else {
+                        for (i in 0 until clipData!!.itemCount) {
+                            uriList[i] = clipData!!.getItemAt(i).uri
+                            if (i == 0) {
+                                imgNameList[i] = "IMAGE_" + timestamp + "_.jpg"
+                                imageView.setImageURI(uriList[i])
+                            } else if (i == 1) {
+                                imgNameList[i] = "IMAGE_" + timestamp + "-" + (i+1) + "_.jpg"
+                                imageView2.setImageURI(uriList[i])
+                            } else if (i == 2) {
+                                imgNameList[i] = "IMAGE_" + timestamp + "-" + (i+1) + "_.jpg"
+                                imageView3.setImageURI(uriList[i])
+                            }
+                        }
+                    }
+                }
+            }
+
+
         }
+
+
     }
+
 
     private fun imageUpload() {
         var postDTO : PostDTO? = null
@@ -234,23 +286,47 @@ class WriteActivity : AppCompatActivity() {
 
         storage = FirebaseStorage.getInstance()
         val db = FirebaseFirestore.getInstance()
+        if (uriList[1] == null) {
+            var riversRef = storage!!.reference.child("post").child(imgNameList[0]!!)
+            riversRef.putFile(uriList[0]!!)
+                .addOnSuccessListener {
 
-        // url 찾기 위해 참조!
-        var riversRef = storage!!.reference.child("post").child(imgFileName!!)
-        riversRef.putFile(uriPhoto!!)
-            .addOnSuccessListener {
-
-                riversRef.downloadUrl.addOnSuccessListener { uri ->
-                db.collection("user_information")
-                        .whereEqualTo("email", firebaseAuth!!.currentUser.email).get()
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                for (dc in it.result!!.documents) {
-                                    postDTO = dc.toObject(PostDTO::class.java)
-                                    break
+                    riversRef.downloadUrl.addOnSuccessListener { uri ->
+                        db.collection("user_information")
+                            .whereEqualTo("email", firebaseAuth!!.currentUser.email).get()
+                            .addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    for (dc in it.result!!.documents) {
+                                        postDTO = dc.toObject(PostDTO::class.java)
+                                        break
+                                    }
                                 }
                             }
+                    }
+                }
+        }
+        else {
+            for (i in 0 until clipData!!.itemCount) {
+                // url 찾기 위해 참조!
+                var riversRef = storage!!.reference.child("post").child(imgNameList[i]!!)
+                //riversRef.putFile(uriPhoto!!)
+                riversRef.putFile(uriList[i]!!)
+                    .addOnSuccessListener {
+
+                        riversRef.downloadUrl.addOnSuccessListener { uri ->
+                            db.collection("user_information")
+                                .whereEqualTo("email", firebaseAuth!!.currentUser.email).get()
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        for (dc in it.result!!.documents) {
+                                            postDTO = dc.toObject(PostDTO::class.java)
+                                            break
+                                        }
+                                    }
+                                }
                         }
+                    }
+
             }
         }
     }
