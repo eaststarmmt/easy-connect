@@ -78,9 +78,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun getPageTitle(position: Int): CharSequence? {
             return when(position) {
-                0-> "타임라인"
-                1-> "친구들"
-                else-> "추천 키워드"
+                0-> "나의 이야기"
+                1-> "나의 벗"
+                else-> "추천해요"
             }
         }
     }
