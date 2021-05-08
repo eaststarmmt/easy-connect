@@ -1,6 +1,7 @@
 package kr.ac.cau.easyconnect
 
 import android.app.Activity
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.DialogInterface
@@ -11,6 +12,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
@@ -34,6 +36,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class WriteActivity : AppCompatActivity() {
 
@@ -144,10 +147,17 @@ class WriteActivity : AppCompatActivity() {
                     if (it.isSuccessful) {
                         Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
                         //현재 엑티비티 종료하고 내가 쓴 글 확인하는 액티비티로 이동. 추후에 수정 예정
-                        val intent = Intent(this, DetailActivity::class.java)
+                        //val intent = Intent(this, DetailActivity::class.java)
                         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)   Detail이 끝나고 바로 메인으로 가기 위해 만듬
                         //startActivity(intent)
-                        finish()
+                        val loadingAnimDialog = CustomLodingDialog(this)
+                        loadingAnimDialog.show()
+                        Handler().postDelayed({
+                            loadingAnimDialog.dismiss()
+                            finish()
+                        }, 10000)
+
+
                     } else {
                         Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                     }
@@ -281,11 +291,14 @@ class WriteActivity : AppCompatActivity() {
     private fun imageUpload() {
         var postDTO : PostDTO? = null
 
+        val progressDialog : ProgressDialog = ProgressDialog(this)
+
         // 결정되는대로 바꿀예정
         imgFileName = "IMAGE_" + timestamp + "_.jpg"
 
         storage = FirebaseStorage.getInstance()
         val db = FirebaseFirestore.getInstance()
+
         if (uriList[1] == null) {
             var riversRef = storage!!.reference.child("post").child(imgNameList[0]!!)
             riversRef.putFile(uriList[0]!!)
@@ -304,6 +317,7 @@ class WriteActivity : AppCompatActivity() {
                             }
                     }
                 }
+
         }
         else {
             for (i in 0 until clipData!!.itemCount) {
@@ -329,6 +343,8 @@ class WriteActivity : AppCompatActivity() {
 
             }
         }
+    //    Thread.sleep(10000)
+
     }
 
 }
