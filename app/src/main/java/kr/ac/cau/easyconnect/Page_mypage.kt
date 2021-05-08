@@ -42,7 +42,7 @@ class Page_mypage : AppCompatActivity() {
     val REQUEST_GALLERY_TAKE = 2
 
     lateinit var currentPhotoPath : String
-    lateinit var imageView_me : ImageView
+    lateinit var imageView_me : ImageButton
     var userDTO : UserDTO? = null
 
 
@@ -107,6 +107,16 @@ class Page_mypage : AppCompatActivity() {
                 }
             }
         }
+
+        imageView_me.setOnClickListener({
+            val sharedPreference = getSharedPreferences("imageme", 0)
+            val editor = sharedPreference.edit()
+            editor.putString("image", userDTO!!.photo)
+            editor.apply()
+            val intentImageMe = Intent(this, Page_imageme::class.java)
+            startActivity(intentImageMe)
+            finish()
+        })
 
         button_goback.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)

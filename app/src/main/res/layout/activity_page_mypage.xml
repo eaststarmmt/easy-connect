@@ -55,7 +55,7 @@
                 android:orientation="horizontal"
                 >
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/img_me"
                     android:layout_margin="10dp"
                     android:layout_width="120dp"
