@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/button_round"
-    android:layout_margin="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:id="@+id/layout_photoCard_item">
 
     <ImageView
@@ -33,7 +35,7 @@
         android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:text="123"
-        android:textSize="16dp"/>
+        android:textSize="15sp"/>
 
     <TextView
         android:id="@+id/name_of_post"
@@ -41,12 +43,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/photo_of_post"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:maxLines="1"
         android:ellipsize="end"
         android:text="123"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
 
 

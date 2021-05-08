@@ -46,11 +46,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     >
 
                     <EditText
-                        android:layout_width="match_parent"
+                        android:layout_width="330dp"
                         android:layout_height="50dp"
                         android:textAlignment="center"
                         android:layout_gravity="center"
@@ -65,11 +65,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     >
 
                     <EditText
-                        android:layout_width="match_parent"
+                        android:layout_width="330dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:textAlignment="center"
@@ -83,7 +83,7 @@
 
 
                 <Button
-                    android:layout_width="match_parent"
+                    android:layout_width="330dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
@@ -114,7 +114,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="30dp"
                     android:background="#00FF0000"
                     android:id="@+id/bt_signup"
                     android:textSize="20dp"
@@ -124,7 +124,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="30dp"
                     android:layout_alignParentRight="true"
                     android:background="#00FF0000"
                     android:textSize="20dp"

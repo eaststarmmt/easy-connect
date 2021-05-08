@@ -18,7 +18,6 @@ class Page_menu : AppCompatActivity() {
 
         val button_goback : ImageButton = findViewById(R.id.bt_goback)
         val button_find_friend : Button = findViewById(R.id.bt_find_friend)
-        val button_setting : Button = findViewById(R.id.bt_setting)
         val button_logout : Button = findViewById(R.id.bt_logout)
         val button_mypage : Button = findViewById(R.id.bt_mypage)
 
@@ -42,17 +41,10 @@ class Page_menu : AppCompatActivity() {
             finish()
         })
 
-        button_setting.setOnClickListener({
-            // 버튼 눌렸을 때 셋팅(글자 크기, 알림 끄기 등) 페이지로 이동 !!!!!!!!!! 개인정보 보호를 위해 검색 안되게 막는 것 기능으로 넣으면 좋을 듯
-            val intentSets = Intent(this, Page_sets::class.java)
-            startActivity(intentSets)
-            finish()
-        })
-
         button_logout.setOnClickListener({
             // 버튼 눌렸을 때 로그아웃 여부 확인하기
             var builder_dialog = AlertDialog.Builder(this);
-            builder_dialog.setTitle("정말로 로그아웃 하시겠습니까?"); // 다이얼로그 제목
+            builder_dialog.setTitle("로그아웃 하시겠습니까?"); // 다이얼로그 제목
             var listener = DialogInterface.OnClickListener { dialog, which ->
                 FirebaseAuth.getInstance().signOut()
 

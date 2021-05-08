@@ -1,12 +1,12 @@
 package kr.ac.cau.easyconnect
 
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
+import android.os.Bundle
+import android.text.SpannableString
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val button_menu : Button = findViewById(R.id.bt_menu)
+        val button_post : Button = findViewById(R.id.bt_post)
         val pageAdapter = PagerAdapter(supportFragmentManager, 1)
         val fragmentList = arrayListOf(Timeline(), Friends(), Recommendation())
 
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         val tabLayout : TabLayout = findViewById(R.id.tab_layout)
         tabLayout.setupWithViewPager(viewPager)
-
 
         // 환경 설정부분 (타인의 검색을 허용할 지에 대한 공유정보)
         db.collection("user_information").whereEqualTo("email", firebaseAuth.currentUser.email).get()
@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intentMenu)
             finish()
         })
-        findViewById<Button>(R.id.bt_post).setOnClickListener{
+
+        button_post.setOnClickListener{
             val intent = Intent(this, WriteActivity::class.java)
             startActivity(intent)
         }
@@ -77,9 +78,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun getPageTitle(position: Int): CharSequence? {
             return when(position) {
-                0-> "타임라인"
-                1-> "친구들"
-                else-> "추천 키워드"
+                0-> "나의 이야기"
+                1-> "나의 벗"
+                else-> "추천해요"
             }
         }
     }

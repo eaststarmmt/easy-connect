@@ -32,13 +32,13 @@
 
             <EditText
                 android:id="@+id/edit_change_name"
-                android:layout_width="wrap_content"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textSize="20dp"
-                android:hint="변경하실 이름을 입력하세요"/>
+                android:hint="변경하실 이름 입력"/>
 
         </LinearLayout>
         <LinearLayout
@@ -56,7 +56,7 @@
 
             <EditText
                 android:id="@+id/edit_change_phoneNumber"
-                android:layout_width="wrap_content"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
@@ -65,7 +65,7 @@
                 android:textSize="20dp"
                 android:inputType="numberDecimal"
                 android:digits="0123456789"
-                android:hint="변경하실 전화번호를 입력하세요"/>
+                android:hint="변경하실 전화번호 입력"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -74,6 +74,6 @@
             android:layout_marginTop="10dp"
             android:textSize="18dp"
             android:textColor="#FF0000"
-            android:text="!! 빈칸으로 두신 곳은 기존 정보를 사용합니다 !!"/>
+            android:text="!! 빈칸은 기존 정보를 사용합니다 !!"/>
     </LinearLayout>
 </LinearLayout>

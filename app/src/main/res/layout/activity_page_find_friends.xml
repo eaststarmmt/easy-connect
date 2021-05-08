@@ -40,6 +40,17 @@
             android:orientation="vertical"
             >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/hardgray"
+                android:textStyle="bold"
+                android:textSize="27dp"
+                android:layout_marginLeft="20dp"
+                android:text="새 친구 찾기"/>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
@@ -56,6 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
+                        android:textSize="17dp"
                         android:entries="@array/option" />
                     <EditText
                         android:layout_width="wrap_content"
@@ -63,6 +75,7 @@
                         android:layout_gravity="center"
                         android:gravity="center|bottom"
                         android:id="@+id/edit_searchFriend"
+                        android:textSize="20dp"
                         android:hint=" 이름/전화번호 "/>
                     <Button
                         android:layout_width="wrap_content"
@@ -75,11 +88,6 @@
 
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/hardgray"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
