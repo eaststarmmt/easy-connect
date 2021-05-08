@@ -38,21 +38,11 @@
             android:orientation="vertical"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/hardgray"
-                android:textStyle="bold"
-                android:textSize="27dp"
-                android:layout_marginLeft="20dp"
-                android:text="메뉴"/>
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_mypage"
-                android:layout_marginTop="90dp"
+                android:layout_marginTop="120dp"
                 android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
                 android:drawableLeft="@drawable/drawable_mypage"
@@ -65,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_find_friend"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="120dp"
                 android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
                 android:drawableLeft="@drawable/drawable_friends"
@@ -78,14 +68,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_logout"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="120dp"
                 android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
                 android:drawableLeft="@drawable/drawable_logout"
                 android:textSize="20dp"
                 android:text="   로그아웃"
                 >
-                // 버튼눌리면 알림메시지 띄워서 비밀번호 재입력 받고 탈퇴하게끔
             </Button>
 
         </LinearLayout>

@@ -38,19 +38,9 @@
             android:orientation="vertical"
             android:layout_weight="1.1">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/hardgray"
-                android:textStyle="bold"
-                android:textSize="27dp"
-                android:layout_marginLeft="20dp"
-                android:text="마이 페이지"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="200dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 >
