@@ -24,7 +24,7 @@ class CustomLodingDialog(context: Context):Dialog(context) {
         loading_img2.startAnimation(turnAround)
 
  */
-        val loading_img : ImageView = findViewById<ImageView>(R.id.loading_img)
-        loading_img.startAnimation(turnAround)
+//    val loading_img : ImageView = findViewById<ImageView>(R.id.loading_img)
+//        loading_img.startAnimation(turnAround)
     }
 }

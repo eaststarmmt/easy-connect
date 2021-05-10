@@ -28,21 +28,35 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/hardgray"/>
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="3dp"
-        android:paddingLeft="3dp"
-        android:textSize="30sp"
-        android:layout_weight="1"
-        android:background="@drawable/border_layout"
-        android:text="제목"/>
 
-    <ImageView
-        android:id="@+id/imgView"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="222dp" />
+        android:layout_height="400dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+             />
+
+        <ImageView
+            android:id="@+id/imgView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <ImageView
+            android:id="@+id/imgView3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/content"
@@ -61,21 +75,29 @@
 
         <Button
             android:id="@+id/update"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="85dp"
+            android:layout_marginLeft="55dp"
             android:background="@drawable/button_post"
-            android:text="수정" />
+            android:drawableLeft="@drawable/drawable_update"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="수정"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/delete"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="85dp"
+            android:layout_marginRight="55dp"
             android:background="@drawable/button_post"
-            android:text="삭제" />
+            android:drawableLeft="@drawable/drawable_delete"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="삭제"
+            android:textSize="20dp" />
     </RelativeLayout>
 
 </LinearLayout>

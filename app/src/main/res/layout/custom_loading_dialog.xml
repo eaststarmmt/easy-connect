@@ -12,12 +12,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
+        <!--
         <ImageView
             android:id="@+id/loading_img"
             android:layout_margin="20dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/icon_loading2"/>
+            -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

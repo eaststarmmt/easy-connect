@@ -147,7 +147,7 @@ class Timeline : Fragment() {
                     }
                 }
 
-                nameOfDetail.setText(item.title)
+                nameOfDetail.setText(item.content)
 
                 photoCardLayout.setOnClickListener{
                     val intentDetail = Intent(view.context, DetailMainActivity::class.java).apply{

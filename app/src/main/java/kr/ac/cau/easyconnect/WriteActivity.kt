@@ -1,5 +1,6 @@
 package kr.ac.cau.easyconnect
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -14,6 +15,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -58,23 +61,31 @@ class WriteActivity : AppCompatActivity() {
     lateinit var imageView : ImageView
     lateinit var imageView2 : ImageView
     lateinit var imageView3 : ImageView
+    lateinit var content: EditText
     val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmsss").format(Date())
+
+    private var speechRecognizer: SpeechRecognizer? = null
+    private var REQUEST_CODE = 1
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
+        if (Build.VERSION.SDK_INT >= 23)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO), REQUEST_CODE)
 
         // Firebase - Auth, Firestore의 인스턴스 받아오기
         firebaseAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
 
         // xml id 연결
-        val title: EditText = findViewById(R.id.title)
-        val content: EditText = findViewById(R.id.content)
+//        val title: EditText = findViewById(R.id.title)
+        content = findViewById(R.id.content)
         imageView = findViewById(R.id.imageView)
         imageView2 = findViewById(R.id.imageView2)
         imageView3 = findViewById(R.id.imageView3)
+
+
         findViewById<ImageButton>(R.id.back).setOnClickListener {
 
             val dialog = AlertDialog.Builder(this)
@@ -117,7 +128,7 @@ class WriteActivity : AppCompatActivity() {
         // 게시버튼 눌렀을 때 구현
 
         findViewById<Button>(R.id.post).setOnClickListener {
-            var inputTitle = title.text.trim().toString()
+    //        var inputTitle = title.text.trim().toString()
             var inputContent = content.text.trim().toString()
             var name = firebaseAuth!!.currentUser.email.toString()
             var registered : String = LocalDateTime.now().toString()
@@ -126,15 +137,10 @@ class WriteActivity : AppCompatActivity() {
             var imgOfDetail2 : String? = imgNameList[1]
             var imgOfDetail3 : String? = imgNameList[2]
 
-            val postDTO : PostDTO = PostDTO(inputTitle, inputContent, name, registered, modified,
+            val postDTO : PostDTO = PostDTO(null, inputContent, name, registered, modified,
                 imgOfDetail, imgOfDetail2, imgOfDetail3)
 
-            if (inputTitle.isNullOrEmpty()) {
-                var builder = AlertDialog.Builder(this)
-                builder.setTitle("제목을 입력해주세요.")
-                builder.setPositiveButton("확인", null)
-                builder.show()
-            } else if (inputContent.isNullOrEmpty()) {
+            if (inputContent.isNullOrEmpty()) {
                 var builder = AlertDialog.Builder(this)
                 builder.setTitle("내용을 입력해주세요.")
                 builder.setPositiveButton("확인", null)
@@ -145,7 +151,7 @@ class WriteActivity : AppCompatActivity() {
                 db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this) {
                     //글이 정상적으로 작성 됐을 때
                     if (it.isSuccessful) {
-                        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
                         //현재 엑티비티 종료하고 내가 쓴 글 확인하는 액티비티로 이동. 추후에 수정 예정
                         //val intent = Intent(this, DetailActivity::class.java)
                         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)   Detail이 끝나고 바로 메인으로 가기 위해 만듬
@@ -155,7 +161,7 @@ class WriteActivity : AppCompatActivity() {
                         Handler().postDelayed({
                             loadingAnimDialog.dismiss()
                             finish()
-                        }, 10000)
+                        }, 15000)
 
 
                     } else {
@@ -165,8 +171,27 @@ class WriteActivity : AppCompatActivity() {
             }
         }
 
+        //녹음버튼
+        findViewById<Button>(R.id.record).setOnClickListener {
+            startSTTUseActivityResult()
+        }
+
 
     }
+    // STT 구현
+    private fun startSTTUseActivityResult() {
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
+
+        val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        }
+
+        startActivityForResult(speechRecognizerIntent, 100)
+    }
+
+
+
     // 뒤로가기 구현
     override fun onBackPressed(){
         val dialog = AlertDialog.Builder(this)
@@ -222,10 +247,22 @@ class WriteActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        if (speechRecognizer != null) {
+            speechRecognizer!!.stopListening()
+        }
+
+        super.onDestroy()
+    }
+
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        if(resultCode == Activity.RESULT_OK && requestCode == 100) {
+            val st: String = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)!![0]
+            content.setText(st)
+        //    content.text = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)!![0]
+        }
         when(requestCode) {
             // 카메라 쵤영
             REQUEST_IMAGE_CAPTURE -> {
