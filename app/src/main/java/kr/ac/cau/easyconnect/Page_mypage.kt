@@ -113,13 +113,12 @@ class Page_mypage : AppCompatActivity() {
         }
 
         imageView_me.setOnClickListener({
-            val sharedPreference = getSharedPreferences("imageme", 0)
-            val editor = sharedPreference.edit()
-            editor.putString("image", userDTO!!.photo)
-            editor.apply()
-            val intentImageMe = Intent(this, Page_imageme::class.java)
+            val intentImageMe = Intent(this, Page_imageme::class.java).apply{
+                val userPhoto = userDTO!!.photo
+                putExtra("userPhoto", userPhoto)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
             startActivity(intentImageMe)
-            finish()
         })
 
         button_goback.setOnClickListener({
