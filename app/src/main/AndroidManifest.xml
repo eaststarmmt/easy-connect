@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/easy_connect_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyConnect">
-        <activity android:name=".Page_imagefriend"></activity>
+        <activity android:name=".DetailFriendActivity"></activity>
+        <activity android:name=".Page_imagefriend" />
         <activity android:name=".Page_friendpage" />
+        <activity android:name=".DetailImage" />
         <activity android:name=".Page_imageme" />
         <activity android:name=".Page_mypage" />
         <activity android:name=".Page_signup2" />
         <activity android:name=".Page_find_information" />
-        <activity android:name=".Page_sets" />
         <activity android:name=".Page_find_friends" />
         <activity android:name=".Page_menu" />
         <activity android:name=".Page_signup" />
@@ -45,6 +46,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-permission android:name="android.permission.CAMERA" />

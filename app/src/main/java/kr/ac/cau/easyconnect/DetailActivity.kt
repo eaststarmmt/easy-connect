@@ -31,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
         val title : TextView = findViewById(R.id.title)
         val content : TextView = findViewById(R.id.content)
         var postDTO : PostDTO? = null
-        imgView = findViewById(R.id.imgView)
+    //    imgView = findViewById(R.id.imgView)
 
 
         db.collection("post").whereEqualTo("name", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {

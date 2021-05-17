@@ -10,15 +10,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.FragmentTransaction
-import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.myhome.siviewpager.SIViewPager
-import me.relex.circleindicator.CircleIndicator
 
-class DetailMainActivity : AppCompatActivity() {
+class DetailFriendActivity : AppCompatActivity() {
     private var vpAdapter: FragmentStatePagerAdapter? = null
     //테스트용. 삭제할 페이지
     var firebaseAuth: FirebaseAuth? = null
@@ -65,7 +62,7 @@ class DetailMainActivity : AppCompatActivity() {
         var item_name = item_split[0]
         var item_modified = item_split[1]
 
-        db.collection("post").whereEqualTo("name", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+        db.collection("post").whereEqualTo("name", item_name).get().addOnCompleteListener {
             if (it.isSuccessful) {
                 // 파이어스토어에서 현재 게시글 정보 조회
 
