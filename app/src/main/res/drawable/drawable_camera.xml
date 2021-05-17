@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/cameraicon"
-        android:width="25dp"
-        android:height="25dp"
+        android:width="30dp"
+        android:height="30dp"
         />
 
 </layer-list>

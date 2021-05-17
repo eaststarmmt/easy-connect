@@ -46,8 +46,8 @@
                 android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
                 android:drawableLeft="@drawable/drawable_mypage"
-                android:textSize="20dp"
-                android:text="   마이 페이지"
+                android:textSize="22dp"
+                android:text="    마이 페이지"
                 >
             </Button>
 
@@ -59,8 +59,8 @@
                 android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
                 android:drawableLeft="@drawable/drawable_friends"
-                android:textSize="20dp"
-                android:text="   새 친구 찾기"
+                android:textSize="22dp"
+                android:text="    새 친구 찾기"
                 >
             </Button>
 
@@ -72,8 +72,8 @@
                 android:layout_marginLeft="30dp"
                 android:background="#00FF0000"
                 android:drawableLeft="@drawable/drawable_logout"
-                android:textSize="20dp"
-                android:text="   로그아웃"
+                android:textSize="22dp"
+                android:text="    로그아웃"
                 >
             </Button>
 

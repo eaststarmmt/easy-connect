@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/friendsicon"
-        android:width="40dp"
-        android:height="40dp"
+        android:drawable="@drawable/home"
+        android:width="50dp"
+        android:height="50dp"
         />
 
 </layer-list>

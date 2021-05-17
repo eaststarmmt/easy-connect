@@ -159,6 +159,15 @@ class Page_find_friends : AppCompatActivity() {
 
                 // 아직 구현 X ///////////////////////////////////////////////////////////////////////////////
 
+                friendLayout.setOnClickListener{
+                    // 친구의 마이 페이지로 가야함!
+                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                        val data = item.email
+                        putExtra("friendEmail", data)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intentFriendPage)
+                }
             }
         }
 
@@ -174,10 +183,13 @@ class Page_find_friends : AppCompatActivity() {
                         // searchWord로 들어온 정보가 포함된 계정을 리스트에 담는 과정!
                         if (snapshot.getString(option)!!.contains(serachWord)) {
                             var item = snapshot.toObject(UserDTO::class.java)
-                            if(item!!.search == false){
-                                // 검색 불허
-                            }else{
-                                arrayUserDTO!!.add(item!!)
+                            if(item!!.email != firebaseAuth!!.currentUser.email){
+                                // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음
+                                if(item!!.search == false){
+                                    // 검색 불허
+                                }else{
+                                    arrayUserDTO!!.add(item!!)
+                                }
                             }
                         }
                     }

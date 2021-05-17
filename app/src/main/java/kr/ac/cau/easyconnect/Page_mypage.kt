@@ -11,7 +11,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.InputType
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -198,45 +202,72 @@ class Page_mypage : AppCompatActivity() {
         button_change_password.setOnClickListener({
             // 비밀번호 변경 기능
             var builder = AlertDialog.Builder(this)
-            builder.setView(layoutInflater.inflate(R.layout.update_password_dialog, null))
+            var passwordView : View? = layoutInflater.inflate(R.layout.update_password_dialog, null)
+            var input_current_password : EditText? = passwordView!!.findViewById(R.id.edit_current_password)!!
+            var input_change_password : EditText? = passwordView!!.findViewById(R.id.edit_change_password)!!
+            var checkbox_current : CheckBox? = passwordView!!.findViewById(R.id.checkbox_pw_current)!!
+            var checkbox_changed : CheckBox? = passwordView!!.findViewById(R.id.checkbox_pw_changed)!!
+            builder.setView(passwordView)
+
+            checkbox_current!!.setOnCheckedChangeListener{ buttonView, isChecked ->
+                if(isChecked){
+                    input_current_password!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                }else{
+                    input_current_password!!.transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+            }
+            checkbox_changed!!.setOnCheckedChangeListener{ buttonView, isChecked ->
+                if(isChecked){
+                    input_change_password!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                }else{
+                    input_change_password!!.transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+            }
 
             var listener = DialogInterface.OnClickListener { p0, _ ->
-                var dialog = p0 as AlertDialog
-                var input_change_password: EditText? =
-                        dialog.findViewById(R.id.edit_change_password)
-                var input_current_password: EditText? =
-                        dialog.findViewById(R.id.edit_current_password)
-
                 // 현재 접속중인 정보는 이미 화면을 띄울 때 userDTO 객체에 담아두었으니 비교만 하면 된다.
                 if (userDTO != null) {
                     // 조회 성공 시
                     if (input_current_password!!.text.toString() == userDTO!!.password) {
                         // 입력한 현재 비밀번호가 접속중인 계정의 비밀번호와 일치하는지 비교
-                        firebaseAuth!!.currentUser.updatePassword(input_change_password!!.text.toString())
+                        if (input_change_password!!.text.toString().isNullOrEmpty() || input_change_password.length() < 6){
+                            // 새 비밀번호 입력하지 않음
+                            Toast.makeText(this, "새 비밀번호를 입력하세요", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        else if(input_change_password.length() < 6){
+                            // 비밀번호가 너무 짧음
+                            Toast.makeText(this, "비밀번호를 6자리 이상으로 입력하세요", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        else{
+                            firebaseAuth!!.currentUser.updatePassword(input_change_password!!.text.toString())
                                 .addOnCompleteListener(
-                                        this
+                                    this
                                 ) {
                                     // 일치하므로 새로 입력한 비밀번호로 변경해 줌
                                     if (it.isSuccessful) {
                                         // 비밀번호 변경 성공
                                         Toast.makeText(this, "비밀번호 변경 성공!!", Toast.LENGTH_SHORT)
-                                                .show()
+                                            .show()
                                         // 파이어스토어 변경
                                         if (userDTO != null) {
                                             // 파이어스토어 업데이트!!
                                             userDTO!!.password =
-                                                    input_change_password!!.text.toString()
+                                                input_change_password!!.text.toString()
 
                                             // 파이어스토어의 현재 회원 정보 삭제 및 추가 (업데이트)
                                             db!!.collection("user_information").document(
-                                                    userDTO!!.uid.toString()
+                                                userDTO!!.uid.toString()
                                             ).delete()
                                             db!!.collection("user_information").document(
-                                                    userDTO!!.uid.toString()
+                                                userDTO!!.uid.toString()
                                             ).set(userDTO!!)
                                         }
                                     }
                                 }
+                        }
+
                     } else {
                         // 로그인 정보와 일치하지 않는다면
                         Toast.makeText(this, "변경 실패! 현재 비밀번호를 틀렸습니다.", Toast.LENGTH_SHORT)

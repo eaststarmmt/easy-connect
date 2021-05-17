@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/logouticon"
-        android:width="25sp"
-        android:height="25sp"
+        android:width="40dp"
+        android:height="40dp"
         />
 
 </layer-list>
