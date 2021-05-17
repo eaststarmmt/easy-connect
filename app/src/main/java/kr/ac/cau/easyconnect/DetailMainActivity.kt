@@ -65,7 +65,7 @@ class DetailMainActivity : AppCompatActivity() {
         var item_name = item_split[0]
         var item_modified = item_split[1]
 
-        db.collection("post").whereEqualTo("name", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+        db.collection("post").whereEqualTo("name", item_name).get().addOnCompleteListener {
             if (it.isSuccessful) {
                 // 파이어스토어에서 현재 게시글 정보 조회
 
