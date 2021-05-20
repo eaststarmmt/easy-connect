@@ -19,11 +19,12 @@
             android:gravity="center"
             android:layout_weight="1.5">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/img_friend_profile"
                     android:layout_margin="10dp"
                     android:layout_width="120dp"
-                    android:layout_height="120dp"/>
+                    android:layout_height="120dp"
+                    android:scaleType="fitXY"/>
 
         </LinearLayout>
 

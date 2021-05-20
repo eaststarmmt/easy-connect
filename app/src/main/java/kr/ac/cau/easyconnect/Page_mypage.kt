@@ -46,7 +46,7 @@ class Page_mypage : AppCompatActivity() {
     val REQUEST_GALLERY_TAKE = 2
 
     lateinit var currentPhotoPath : String
-    lateinit var imageView_me : ImageButton
+    lateinit var imageView_me : ImageView
     var userDTO : UserDTO? = null
 
 
@@ -105,7 +105,6 @@ class Page_mypage : AppCompatActivity() {
                             .load(it)
                             .into(imageView_me)
                     }
-
                     imageView_me.setBackground(ShapeDrawable(OvalShape()))
                     imageView_me.setClipToOutline(true)
                 }
@@ -181,10 +180,10 @@ class Page_mypage : AppCompatActivity() {
 
                     // 파이어스토어의 현재 회원 정보 삭제 및 추가 (업데이트)
                     db!!.collection("user_information").document(
-                            userDTO!!.uid.toString()
+                        userDTO!!.uid.toString()
                     ).delete()
                     db!!.collection("user_information").document(
-                            userDTO!!.uid.toString()
+                        userDTO!!.uid.toString()
                     ).set(userDTO!!)
 
                     // 변경된 정보로 다시 mypage 정보 바꿔주기
@@ -270,7 +269,7 @@ class Page_mypage : AppCompatActivity() {
                     } else {
                         // 로그인 정보와 일치하지 않는다면
                         Toast.makeText(this, "변경 실패! 현재 비밀번호를 틀렸습니다.", Toast.LENGTH_SHORT)
-                                .show()
+                            .show()
                     }
                 }
             }
@@ -287,7 +286,7 @@ class Page_mypage : AppCompatActivity() {
             var listener = DialogInterface.OnClickListener { p0, _ ->
                 var dialog = p0 as AlertDialog
                 var input_current_password2: EditText? =
-                        dialog.findViewById(R.id.edit_current_password2)
+                    dialog.findViewById(R.id.edit_current_password2)
 
                 // 현재 접속중인 정보는 이미 화면을 띄울 때 userDTO 객체에 담아두었으니 비교만 하면 된다.
                 if (userDTO != null) {
@@ -365,7 +364,7 @@ class Page_mypage : AppCompatActivity() {
                 // 그림파일을 성공적으로 만들었다면 onActivityForResult로 보내기
                 photoFile?.also {
                     val photoUri: Uri = FileProvider.getUriForFile(
-                            this, "kr.ac.cau.easyconnect.fileprovider", it
+                        this, "kr.ac.cau.easyconnect.fileprovider", it
                     )
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -384,9 +383,9 @@ class Page_mypage : AppCompatActivity() {
         imgFileName = "IMAGE_" + timestamp + "_.jpg"
 
         return File.createTempFile(
-                "JPEG_${timestamp}_", /* prefix */
-                ".jpg", /* suffix */
-                storageDir /* directory */
+            "JPEG_${timestamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
@@ -405,8 +404,8 @@ class Page_mypage : AppCompatActivity() {
                     // 카메라로부터 받은 데이터가 있을경우에만
                     val file = File(currentPhotoPath)
                     val decode = ImageDecoder.createSource(
-                            this.contentResolver,
-                            Uri.fromFile(file)
+                        this.contentResolver,
+                        Uri.fromFile(file)
                     )
                     val bitmap = ImageDecoder.decodeBitmap(decode)
                     imageView_me.setImageBitmap(bitmap)
@@ -473,8 +472,8 @@ class Page_mypage : AppCompatActivity() {
                                     .document(userDTO!!.uid.toString()).delete()
                                 db.collection("user_information")
                                     .document(userDTO!!.uid.toString()).set(
-                                                userDTO!!
-                                        )
+                                        userDTO!!
+                                    )
                             }
                         }
                     }

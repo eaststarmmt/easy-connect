@@ -32,7 +32,7 @@ class Friendpage : Fragment() {
 
     var imgFileName : String? = null
 
-    lateinit var imageView_me : ImageButton
+    lateinit var imageView_me : ImageView
     var userDTO : UserDTO? = null
 
     private var friendEmail : String? = null
