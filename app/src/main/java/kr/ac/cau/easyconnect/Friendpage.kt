@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -214,12 +215,21 @@ class Friendpage : Fragment() {
         })
 
         imageView_me.setOnClickListener({
-            val intentImageMe = Intent(it.context, Page_imageme::class.java).apply{
-                val userPhoto = userDTO!!.photo
-                putExtra("userPhoto", userPhoto)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            var builder = AlertDialog.Builder(it.context)
+            var imageMeView : View? = layoutInflater.inflate(R.layout.image_expansion, null)
+            var imageView_imageMe : ImageView? = imageMeView!!.findViewById(R.id.img_me_expanded)
+
+            val storageReference = storage!!.reference
+            storageReference.child("user_profile/" + userDTO!!.photo).downloadUrl.addOnSuccessListener {
+                Glide.with(this /* context */)
+                    .load(it)
+                    .into(imageView_imageMe!!)
             }
-            startActivity(intentImageMe)
+
+            builder.setView(imageMeView)
+
+            builder.setPositiveButton("확인", null)
+            builder.show()
         })
 
         return view

@@ -1,6 +1,7 @@
 package kr.ac.cau.easyconnect
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
@@ -15,12 +16,16 @@ import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -55,6 +60,7 @@ class Page_mypage : AppCompatActivity() {
         setContentView(R.layout.activity_page_mypage)
 
         // 권한과 파이어스토어 데이터베이스 객체 받아옴
+        storage = FirebaseStorage.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
@@ -123,13 +129,28 @@ class Page_mypage : AppCompatActivity() {
             }
         }
 
+        textView_myFollowed.setOnClickListener({
+            val intentListOfFan = Intent(this, Page_listOfFan::class.java)
+            startActivity(intentListOfFan)
+            finish()
+        })
+
         imageView_me.setOnClickListener({
-            val intentImageMe = Intent(this, Page_imageme::class.java).apply{
-                val userPhoto = userDTO!!.photo
-                putExtra("userPhoto", userPhoto)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            var builder = AlertDialog.Builder(this)
+            var imageMeView : View? = layoutInflater.inflate(R.layout.image_expansion, null)
+            var imageView_imageMe : ImageView? = imageMeView!!.findViewById(R.id.img_me_expanded)
+
+            val storageReference = storage!!.reference
+            storageReference.child("user_profile/" + userDTO!!.photo).downloadUrl.addOnSuccessListener {
+                Glide.with(this /* context */)
+                    .load(it)
+                    .into(imageView_imageMe!!)
             }
-            startActivity(intentImageMe)
+
+            builder.setView(imageMeView)
+
+            builder.setPositiveButton("확인", null)
+            builder.show()
         })
 
         button_goback.setOnClickListener({
@@ -494,7 +515,6 @@ class Page_mypage : AppCompatActivity() {
     }
 
     override fun onBackPressed(){
-        // 클릭 시 이전 페이지인 메인으로!
         val intentMenu = Intent(this, Page_menu::class.java)
         startActivity(intentMenu)
         finish()
