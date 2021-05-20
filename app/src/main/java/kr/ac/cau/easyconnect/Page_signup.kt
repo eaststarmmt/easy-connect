@@ -113,6 +113,8 @@ class Page_signup : AppCompatActivity() {
                                                     newUserDTO.photo = "base.jpg"
                                                     newUserDTO.uid = firebaseAuth!!.uid
                                                     newUserDTO.search = false
+                                                    newUserDTO.followed = ""
+                                                    newUserDTO.following = ""
 
                                                     // firestore에 newUserDTO 객체 저장
                                                     db.collection("user_information").document(firebaseAuth!!.uid.toString()).set(newUserDTO)

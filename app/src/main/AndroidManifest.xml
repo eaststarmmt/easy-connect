@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyConnect">
         <activity android:name=".DetailFriendActivity"></activity>
-        <activity android:name=".Page_imagefriend" />
         <activity android:name=".Page_friendpage" />
         <activity android:name=".DetailImage" />
         <activity android:name=".Page_imageme" />

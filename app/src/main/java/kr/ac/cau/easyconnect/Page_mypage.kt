@@ -68,6 +68,7 @@ class Page_mypage : AppCompatActivity() {
         val textView_phoneNumber : TextView = findViewById(R.id.txt_phoneNumber)
         val textView_name : TextView = findViewById(R.id.txt_name)
         val switchSearch : Switch = findViewById(R.id.switch_search)
+        val textView_myFollowed : TextView = findViewById(R.id.txt_my_followed)
         imageView_me = findViewById(R.id.img_me)
 
         val sharedPreference = getSharedPreferences("searchBoolean", 0)
@@ -91,6 +92,17 @@ class Page_mypage : AppCompatActivity() {
                     imgFileName = userDTO!!.photo
                     textView_name.setText(userDTO!!.name)
                     textView_phoneNumber.setText(userDTO!!.phoneNumber)
+
+                    if(userDTO!!.followed.isNullOrEmpty()){
+                        userDTO!!.followed = ""
+                    }
+                    val follower = userDTO!!.followed!!.split(",").toMutableList() as ArrayList
+                    val followerCount = follower.size
+                    if(followerCount == 1 && follower[0].isNullOrEmpty()){
+                        textView_myFollowed.setText("나의 팬 : " + 0)
+                    }else{
+                        textView_myFollowed.setText("나의 팬 : " + followerCount)
+                    }
 
                     // 해당 폴더("user_profile")가 존재하지 않는다면 생성
                     var file: File? =
