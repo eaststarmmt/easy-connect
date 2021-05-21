@@ -136,6 +136,7 @@ class WriteActivity : AppCompatActivity() {
             var imgOfDetail : String? = imgNameList[0]
             var imgOfDetail2 : String? = imgNameList[1]
             var imgOfDetail3 : String? = imgNameList[2]
+            //var postid : String? = firebaseAuth!!
 
             val postDTO : PostDTO = PostDTO(null, inputContent, name, registered, modified,
                 imgOfDetail, imgOfDetail2, imgOfDetail3)

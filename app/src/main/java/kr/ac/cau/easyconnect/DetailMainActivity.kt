@@ -2,11 +2,11 @@ package kr.ac.cau.easyconnect
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.FragmentTransaction
@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.myhome.siviewpager.SIViewPager
 import me.relex.circleindicator.CircleIndicator
+import java.time.LocalDateTime
 
 class DetailMainActivity : AppCompatActivity() {
     private var vpAdapter: FragmentStatePagerAdapter? = null
@@ -41,6 +42,7 @@ class DetailMainActivity : AppCompatActivity() {
     init {
         bundle = Bundle(1)
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -48,8 +50,8 @@ class DetailMainActivity : AppCompatActivity() {
         // Firebase - Auth, Firestore의 인스턴스 받아오기
         firebaseAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
-//        val title : TextView = findViewById(R.id.title)
         val content : TextView = findViewById(R.id.content)
+        val replyContent : EditText = findViewById(R.id.reply_content)
         var postDTO : PostDTO? = null
 //        imgView = findViewById(R.id.imgView) 뷰페이저 때문에 잠시 가림
 
@@ -111,8 +113,23 @@ class DetailMainActivity : AppCompatActivity() {
                         }
                     }
                 }
+                // 테스트
+                db.collection("post/" + thisData!!.registered.toString() + "/reply").get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        var replyDTO : ReplyDTO? = null
+                        for (document in it.result!!.documents) {
+                            replyDTO = document.toObject(ReplyDTO::class.java)
+                            break
+                        }
+                        if (replyDTO != null) {
+                            val test : TextView = findViewById(R.id.test)
+                            test.text = replyDTO!!.content
+                        }
+                    }
+                }
             }
         }
+        // 지울 부분 댓글 띄우는거 되는지만 확인할거
 
         imageView.setOnClickListener {
             val sharedPreference = getSharedPreferences("detailImage", 0)
@@ -158,6 +175,31 @@ class DetailMainActivity : AppCompatActivity() {
             dialog.setNegativeButton("취소", null)
             dialog.show()
 
+        }
+        //댓글 등록시
+        findViewById<Button>(R.id.reply_button).setOnClickListener {
+            var inputReply = replyContent.text.trim().toString()
+            var name = firebaseAuth!!.currentUser.email.toString()
+            var registered : String = LocalDateTime.now().toString()
+            var modified : String = LocalDateTime.now().toString()
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified)
+
+            if (inputReply.isNullOrEmpty()) {
+                var builder = AlertDialog.Builder(this)
+                builder.setTitle("내용을 입력해주세요.")
+                builder.setPositiveButton("확인", null)
+                builder.show()
+            } else {
+                db.collection("post/" + thisData!!.registered.toString() + "/reply").document(registered).set(replyDTO).addOnCompleteListener(this) {
+                    //글이 정상적으로 작성 됐을 때
+                    if (it.isSuccessful) {
+                        Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
 
 
