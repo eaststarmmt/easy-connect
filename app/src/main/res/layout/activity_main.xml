@@ -83,7 +83,7 @@
             <Button
                 android:id="@+id/bt_post"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:background="@color/softskyblue"
                 android:text="📝 글쓰기"
                 android:textSize="20dp"/>

@@ -1,6 +1,7 @@
 package kr.ac.cau.easyconnect
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
@@ -15,12 +16,16 @@ import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,7 +51,7 @@ class Page_mypage : AppCompatActivity() {
     val REQUEST_GALLERY_TAKE = 2
 
     lateinit var currentPhotoPath : String
-    lateinit var imageView_me : ImageButton
+    lateinit var imageView_me : ImageView
     var userDTO : UserDTO? = null
 
 
@@ -55,6 +60,7 @@ class Page_mypage : AppCompatActivity() {
         setContentView(R.layout.activity_page_mypage)
 
         // 권한과 파이어스토어 데이터베이스 객체 받아옴
+        storage = FirebaseStorage.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
@@ -68,6 +74,7 @@ class Page_mypage : AppCompatActivity() {
         val textView_phoneNumber : TextView = findViewById(R.id.txt_phoneNumber)
         val textView_name : TextView = findViewById(R.id.txt_name)
         val switchSearch : Switch = findViewById(R.id.switch_search)
+        val textView_myFollowed : TextView = findViewById(R.id.txt_my_followed)
         imageView_me = findViewById(R.id.img_me)
 
         val sharedPreference = getSharedPreferences("searchBoolean", 0)
@@ -92,6 +99,17 @@ class Page_mypage : AppCompatActivity() {
                     textView_name.setText(userDTO!!.name)
                     textView_phoneNumber.setText(userDTO!!.phoneNumber)
 
+                    if(userDTO!!.followed.isNullOrEmpty()){
+                        userDTO!!.followed = ""
+                    }
+                    val follower = userDTO!!.followed!!.split(",").toMutableList() as ArrayList
+                    val followerCount = follower.size
+                    if(followerCount == 1 && follower[0].isNullOrEmpty()){
+                        textView_myFollowed.setText("나의 팬 : " + 0)
+                    }else{
+                        textView_myFollowed.setText("나의 팬 : " + followerCount)
+                    }
+
                     // 해당 폴더("user_profile")가 존재하지 않는다면 생성
                     var file: File? =
                         getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/user_profile")
@@ -105,20 +123,34 @@ class Page_mypage : AppCompatActivity() {
                             .load(it)
                             .into(imageView_me)
                     }
-
                     imageView_me.setBackground(ShapeDrawable(OvalShape()))
                     imageView_me.setClipToOutline(true)
                 }
             }
         }
 
+        textView_myFollowed.setOnClickListener({
+            val intentListOfFan = Intent(this, Page_listOfFan::class.java)
+            startActivity(intentListOfFan)
+            finish()
+        })
+
         imageView_me.setOnClickListener({
-            val intentImageMe = Intent(this, Page_imageme::class.java).apply{
-                val userPhoto = userDTO!!.photo
-                putExtra("userPhoto", userPhoto)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            var builder = AlertDialog.Builder(this)
+            var imageMeView : View? = layoutInflater.inflate(R.layout.image_expansion, null)
+            var imageView_imageMe : ImageView? = imageMeView!!.findViewById(R.id.img_me_expanded)
+
+            val storageReference = storage!!.reference
+            storageReference.child("user_profile/" + userDTO!!.photo).downloadUrl.addOnSuccessListener {
+                Glide.with(this /* context */)
+                    .load(it)
+                    .into(imageView_imageMe!!)
             }
-            startActivity(intentImageMe)
+
+            builder.setView(imageMeView)
+
+            builder.setPositiveButton("확인", null)
+            builder.show()
         })
 
         button_goback.setOnClickListener({
@@ -181,10 +213,10 @@ class Page_mypage : AppCompatActivity() {
 
                     // 파이어스토어의 현재 회원 정보 삭제 및 추가 (업데이트)
                     db!!.collection("user_information").document(
-                            userDTO!!.uid.toString()
+                        userDTO!!.uid.toString()
                     ).delete()
                     db!!.collection("user_information").document(
-                            userDTO!!.uid.toString()
+                        userDTO!!.uid.toString()
                     ).set(userDTO!!)
 
                     // 변경된 정보로 다시 mypage 정보 바꿔주기
@@ -270,7 +302,7 @@ class Page_mypage : AppCompatActivity() {
                     } else {
                         // 로그인 정보와 일치하지 않는다면
                         Toast.makeText(this, "변경 실패! 현재 비밀번호를 틀렸습니다.", Toast.LENGTH_SHORT)
-                                .show()
+                            .show()
                     }
                 }
             }
@@ -287,7 +319,7 @@ class Page_mypage : AppCompatActivity() {
             var listener = DialogInterface.OnClickListener { p0, _ ->
                 var dialog = p0 as AlertDialog
                 var input_current_password2: EditText? =
-                        dialog.findViewById(R.id.edit_current_password2)
+                    dialog.findViewById(R.id.edit_current_password2)
 
                 // 현재 접속중인 정보는 이미 화면을 띄울 때 userDTO 객체에 담아두었으니 비교만 하면 된다.
                 if (userDTO != null) {
@@ -365,7 +397,7 @@ class Page_mypage : AppCompatActivity() {
                 // 그림파일을 성공적으로 만들었다면 onActivityForResult로 보내기
                 photoFile?.also {
                     val photoUri: Uri = FileProvider.getUriForFile(
-                            this, "kr.ac.cau.easyconnect.fileprovider", it
+                        this, "kr.ac.cau.easyconnect.fileprovider", it
                     )
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -384,9 +416,9 @@ class Page_mypage : AppCompatActivity() {
         imgFileName = "IMAGE_" + timestamp + "_.jpg"
 
         return File.createTempFile(
-                "JPEG_${timestamp}_", /* prefix */
-                ".jpg", /* suffix */
-                storageDir /* directory */
+            "JPEG_${timestamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
@@ -405,8 +437,8 @@ class Page_mypage : AppCompatActivity() {
                     // 카메라로부터 받은 데이터가 있을경우에만
                     val file = File(currentPhotoPath)
                     val decode = ImageDecoder.createSource(
-                            this.contentResolver,
-                            Uri.fromFile(file)
+                        this.contentResolver,
+                        Uri.fromFile(file)
                     )
                     val bitmap = ImageDecoder.decodeBitmap(decode)
                     imageView_me.setImageBitmap(bitmap)
@@ -473,8 +505,8 @@ class Page_mypage : AppCompatActivity() {
                                     .document(userDTO!!.uid.toString()).delete()
                                 db.collection("user_information")
                                     .document(userDTO!!.uid.toString()).set(
-                                                userDTO!!
-                                        )
+                                        userDTO!!
+                                    )
                             }
                         }
                     }
@@ -483,7 +515,6 @@ class Page_mypage : AppCompatActivity() {
     }
 
     override fun onBackPressed(){
-        // 클릭 시 이전 페이지인 메인으로!
         val intentMenu = Intent(this, Page_menu::class.java)
         startActivity(intentMenu)
         finish()

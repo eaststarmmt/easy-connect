@@ -46,9 +46,15 @@ class Page_menu : AppCompatActivity() {
             var builder_dialog = AlertDialog.Builder(this);
             builder_dialog.setTitle("로그아웃 하시겠습니까?"); // 다이얼로그 제목
             var listener = DialogInterface.OnClickListener { dialog, which ->
-                FirebaseAuth.getInstance().signOut()
+
+                val sharedPreference = getSharedPreferences("logout", 0)
+                val editor = sharedPreference.edit()
+                editor.putBoolean("islogout", true)
+                editor.apply()
 
                 val intentLogin = Intent(this, Page_login::class.java)
+
+                FirebaseAuth.getInstance().signOut()
                 startActivity(intentLogin)
                 finish()
             }

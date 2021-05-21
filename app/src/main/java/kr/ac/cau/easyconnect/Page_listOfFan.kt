@@ -1,54 +1,64 @@
 package kr.ac.cau.easyconnect
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
+import android.graphics.ImageDecoder
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
+import android.net.Uri
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-class Friends : Fragment() {
-    // TODO: Rename and change types of parameters
+class Page_listOfFan : AppCompatActivity() {
 
-    var storage: FirebaseStorage? = null
-    var firebaseAuth: FirebaseAuth? = null
-    var db: FirebaseFirestore? = null
+    var firebaseAuth : FirebaseAuth? = null
+    var storage : FirebaseStorage? = null
+    var db : FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_page_list_of_fan)
 
+        // 권한과 파이어스토어 데이터베이스 객체 받아옴
         storage = FirebaseStorage.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        val recycler_view: RecyclerView = findViewById(R.id.recycler_fan)
+        val button_goback : ImageButton = findViewById(R.id.bt_goback)
 
-        val view : View = inflater.inflate(R.layout.fragment_friends, container, false)
-        val timelineView : RecyclerView = view.findViewById(R.id.recycler_friendlist)
-        val context: Context = view.context
-        val lm = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        timelineView.layoutManager = lm
-        timelineView.adapter = FriendAdapter()
+        recycler_view.adapter = FriendAdapter()
+        recycler_view.layoutManager = LinearLayoutManager(this)
 
-        return view
+        button_goback.setOnClickListener({
+            val intentMypage = Intent(this, Page_mypage::class.java)
+            startActivity(intentMypage)
+            finish()
+        })
     }
 
     inner class FriendAdapter() : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
@@ -81,9 +91,9 @@ class Friends : Fragment() {
                                         // 검색 불허
                                     }else{
                                         for (email in myFollower)
-                                            if(user!!.email == email){
-                                                arrayUserDTO!!.add(user!!)
-                                            }
+                                        if(user!!.email == email){
+                                            arrayUserDTO!!.add(user!!)
+                                        }
                                     }
                                 }
                             }
@@ -101,7 +111,7 @@ class Friends : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendViewHolder {
             val inflatedView =
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.friend_item_list, parent, false)
+                    .inflate(R.layout.list_of_fan_item, parent, false)
             return FriendViewHolder(inflatedView)
         }
 
@@ -115,38 +125,30 @@ class Friends : Fragment() {
         // friend_item_list.xml 파일 view에 연결해서 동작
         inner class FriendViewHolder(v: View) : RecyclerView.ViewHolder(v) {
             var view: View = v
-            var friendLayout: View = view.findViewById(R.id.layout_friend_item)
-            var friendImage: ImageView = view.findViewById(R.id.img_friend)
-            var friendName: TextView = view.findViewById(R.id.txt_friendName)
+            var fanLayout: View = view.findViewById(R.id.layout_fan_item)
+            var fanImage: ImageView = view.findViewById(R.id.img_fan)
+            var fanName: TextView = view.findViewById(R.id.txt_fanname)
 
             fun bind(item: UserDTO) {
                 // 검색된 계정의 photo 필드를 바탕으로 ImageView에 Glide로 이미지 뷰 띄워줌
                 val storageReference = storage!!.reference
                 storageReference.child("user_profile/" + item.photo).downloadUrl.addOnSuccessListener {
-                    Glide.with(friendLayout /* context */)
+                    Glide.with(fanLayout /* context */)
                         .load(it)
-                        .into(friendImage)
+                        .into(fanImage)
                 }
-                friendName.setText(item.name)
+                fanName.setText(item.name)
 
                 // 이미지 배경 동그랗게 !
-                friendImage.setBackground(ShapeDrawable(OvalShape()))
-                friendImage.setClipToOutline(true)
-
-                // 한 계정 정보를 클릭 했을 때!! 친구의 마이페이지로 이동해야 한다!
-
-                // 아직 구현 X ///////////////////////////////////////////////////////////////////////////////
-
-                friendLayout.setOnClickListener{
-                    // 친구의 마이 페이지로 가야함!
-                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
-                        val data = item.email
-                        putExtra("friendEmail", data)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    startActivity(intentFriendPage)
-                }
+                fanImage.setBackground(ShapeDrawable(OvalShape()))
+                fanImage.setClipToOutline(true)
             }
         }
+    }
+
+    override fun onBackPressed(){
+        val intentMypage = Intent(this, Page_mypage::class.java)
+        startActivity(intentMypage)
+        finish()
     }
 }

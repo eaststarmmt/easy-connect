@@ -7,10 +7,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextThemeWrapper
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.Dimension
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -18,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import java.lang.Thread.sleep
 import java.util.ArrayList
 
 // UI만 손보면 될 듯!
@@ -25,13 +23,14 @@ import java.util.ArrayList
 class Page_login : AppCompatActivity() {
     // 로그인 구현
     var firebaseAuth: FirebaseAuth? = null
+    lateinit var autoLogin : CheckBox;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page_login)
 
         // firebase - Auth의 인스턴스 받아오기
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
 
         // xml id 연결
@@ -40,12 +39,53 @@ class Page_login : AppCompatActivity() {
         val button_find_info : Button = findViewById(R.id.bt_find_info)
         val editText_id : EditText = findViewById(R.id.edit_id)
         val editText_password : EditText = findViewById(R.id.edit_password)
+        val autoLogin : CheckBox = findViewById(R.id.auto_login)
 
         // 회원가입 or 로그인 했던 정보를 바탕으로 아이디(이메일) 저장 후 출력
         val sharedPreference = getSharedPreferences("other", 0)
         editText_id.setText(sharedPreference.getString("id", ""))
 
-        tedPermission();
+        val sharedauto = getSharedPreferences("auto", 0)
+        autoLogin.isChecked = sharedauto.getBoolean("login_auto", false)
+
+        // 로그아웃 버튼으로 인해 돌아왔을 때
+        val sharedlogout = getSharedPreferences("logout", 0)
+        var logout = sharedlogout.getBoolean("islogout", true)
+        if(logout){
+            autoLogin.isChecked = false
+            val editorlogout = sharedlogout.edit()
+            editorlogout.putBoolean("islogout", false)
+            editorlogout.apply()
+        }
+
+        if(autoLogin.isChecked){
+            val sharedid = getSharedPreferences("id", 0)
+            val auto_id = sharedid.getString("login_id", "")
+            editText_id.setText(auto_id)
+
+            val sharedpw = getSharedPreferences("pw", 0)
+            val auto_pw = sharedpw.getString("login_pw", "")
+            editText_password.setText(auto_pw)
+
+            firebaseAuth!!.signInWithEmailAndPassword(
+                    editText_id.text.toString(),
+                    editText_password.text.toString()
+                ).addOnCompleteListener(this) {
+                if (it.isSuccessful) {
+                    // 로그인 정보가 맞을 때 동작
+                    // 현재 인증된 계정인지 확인하는 것 필요함
+                    if (firebaseAuth!!.currentUser.isEmailVerified) {
+                        Toast.makeText(this, "자동 로그인 중입니다.", Toast.LENGTH_SHORT).show()
+
+                        // 메인 페이지로 이동 (나의 글 목록 포토카드로 보여주는 페이지)
+                        val intentMain = Intent(this, MainActivity::class.java)
+                        startActivity(intentMain)
+                        finish()
+                    }
+                }
+            }
+
+        }
 
         button_login.setOnClickListener({
             // 로그인 버튼이 눌렸을 때 동작
@@ -77,6 +117,28 @@ class Page_login : AppCompatActivity() {
                             editor.clear()
                             editor.putString("id", saved_id)
                             editor.apply()
+
+                            if(autoLogin.isChecked) {
+                                val sharedID = getSharedPreferences("id", 0)
+                                val editorID = sharedID.edit()
+                                editorID.putString("login_id", id)
+                                editorID.apply()
+
+                                val sharedPW = getSharedPreferences("pw", 0)
+                                val editorPW = sharedPW.edit()
+                                editorPW.putString("login_pw", password)
+                                editorPW.apply()
+
+                                val sharedAuto = getSharedPreferences("auto", 0)
+                                val editorAuto = sharedAuto.edit()
+                                editorAuto.putBoolean("login_auto", true)
+                                editorAuto.apply()
+                            }else{
+                                val sharedAuto = getSharedPreferences("auto", 0)
+                                val editorAuto = sharedAuto.edit()
+                                editorAuto.putBoolean("login_auto", false)
+                                editorAuto.apply()
+                            }
 
                             // 메인 페이지로 이동 (나의 글 목록 포토카드로 보여주는 페이지)
                             val intentMain = Intent(this, MainActivity::class.java)
