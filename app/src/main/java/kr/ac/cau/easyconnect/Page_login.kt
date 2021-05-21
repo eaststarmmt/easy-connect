@@ -144,7 +144,6 @@ class Page_login : AppCompatActivity() {
                             val intentMain = Intent(this, MainActivity::class.java)
                             startActivity(intentMain)
                             finish()
-                            //updateUI(user)
                         }else{
                             // 인증이 되지 않았다!
                             Toast.makeText(this, "이메일 인증 후 이용 가능합니다", Toast.LENGTH_SHORT).show()
@@ -182,12 +181,14 @@ class Page_login : AppCompatActivity() {
             // 버튼 눌렸을 때 회원가입 페이지로 이동
             val intentSignUp = Intent(this, Page_signup::class.java)
             startActivity(intentSignUp)
+            finish()
         })
 
         button_find_info.setOnClickListener({
             // 버튼 눌렀을 때 아이디 비밀번호 찾는 페이지로 이동
             val intentFindInformations = Intent(this, Page_find_information::class.java)
             startActivity(intentFindInformations)
+            finish()
         })
     }
 

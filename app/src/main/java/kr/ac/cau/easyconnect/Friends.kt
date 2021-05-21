@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,12 +13,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +41,7 @@ class Friends : Fragment() {
         db = FirebaseFirestore.getInstance()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +57,7 @@ class Friends : Fragment() {
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     inner class FriendAdapter() : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
         // 띄워줄 정보에 해당하는 UserDTO 객체들을 담을 리스트
         var arrayUserDTO: ArrayList<UserDTO> = arrayListOf()
@@ -65,8 +72,7 @@ class Friends : Fragment() {
                         myDTO = dc.toObject(UserDTO::class.java)!!
                         break
                     }
-                    val myFollower = myDTO.followed!!.split(",").toMutableList() as ArrayList
-
+                    val myFollower = myDTO.following!!.split(",").toMutableList() as ArrayList
 
                     db!!.collection("user_information")
                         .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -118,8 +124,65 @@ class Friends : Fragment() {
             var friendLayout: View = view.findViewById(R.id.layout_friend_item)
             var friendImage: ImageView = view.findViewById(R.id.img_friend)
             var friendName: TextView = view.findViewById(R.id.txt_friendName)
+            var friendNewImage : ImageView = view.findViewById(R.id.img_new_friend)
+
+            var flag = 0
 
             fun bind(item: UserDTO) {
+                if(flag == 0){
+                    var postDTO = PostDTO()
+                    db!!.collection("post")
+                        .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                            for (snapshot in querySnapshot!!.documents.reversed()) {
+                                if (snapshot.toObject(PostDTO::class.java)!!.name == item.email) {
+                                    postDTO = snapshot.toObject(PostDTO::class.java)!!
+                                    break
+                                }
+                            }
+
+                            var now: String = LocalDateTime.now().toString()
+                            var lastDate: String? = postDTO!!.modified
+                            if(!postDTO!!.modified.isNullOrEmpty()){
+                                var parsing_now = now.split("T")
+                                var parsing_now_date = parsing_now[0].split("-")
+
+                                var parsing_lastDate = lastDate!!.split("T")
+                                var parsing_lastDate_date =
+                                    parsing_lastDate[0].split("-")
+
+                                var detailDateFromNow_year: Int =
+                                    parsing_now_date[0].toInt() - parsing_lastDate_date[0].toInt()
+                                var detailDateFromNow_month: Int =
+                                    parsing_now_date[1].toInt() - parsing_lastDate_date[1].toInt()
+                                var detailDateFromNow_day: Int =
+                                    parsing_now_date[2].toInt() - parsing_lastDate_date[2].toInt()
+
+                                // 날짜 수정
+                                if (detailDateFromNow_year > 0) {
+                                    // 작년 혹은 그 이전 게시물
+                                    friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                } else {
+                                    // 올해 게시물
+                                    if (detailDateFromNow_month == 0) {
+                                        // 같은 달
+                                        if (detailDateFromNow_day == 0) {
+                                            friendNewImage.setBackgroundResource(R.drawable.drawable_new_friend)
+                                        } else if (detailDateFromNow_day > 3) {
+                                            friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                        } else {
+                                            friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                        }
+                                    } else {
+                                        friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                    }
+                                }
+                            }
+                            notifyDataSetChanged()
+                        }
+                    flag += 1
+                }
+
+
                 // 검색된 계정의 photo 필드를 바탕으로 ImageView에 Glide로 이미지 뷰 띄워줌
                 val storageReference = storage!!.reference
                 storageReference.child("user_profile/" + item.photo).downloadUrl.addOnSuccessListener {
@@ -134,14 +197,13 @@ class Friends : Fragment() {
                 friendImage.setClipToOutline(true)
 
                 // 한 계정 정보를 클릭 했을 때!! 친구의 마이페이지로 이동해야 한다!
-
-                // 아직 구현 X ///////////////////////////////////////////////////////////////////////////////
-
                 friendLayout.setOnClickListener{
                     // 친구의 마이 페이지로 가야함!
                     val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
                         val data = item.email
+                        val flag = "friend"
                         putExtra("friendEmail", data)
+                        putExtra("flag", flag)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                     startActivity(intentFriendPage)

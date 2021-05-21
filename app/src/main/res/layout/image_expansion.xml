@@ -8,11 +8,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="확대 사진"
+        android:text="프로필 사진"
         android:textSize="25dp"
         android:textColor="#000000"
         android:gravity="center"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
 
 
     <ImageView
