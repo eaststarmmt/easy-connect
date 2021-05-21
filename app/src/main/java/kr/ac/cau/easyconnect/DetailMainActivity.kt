@@ -113,7 +113,7 @@ class DetailMainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                // 테스트
+                // 테스트. 지울 부분. 댓글 띄우는거 될때까지만 놔둘게요
                 db.collection("post/" + thisData!!.registered.toString() + "/reply").get().addOnCompleteListener {
                     if (it.isSuccessful) {
                         var replyDTO : ReplyDTO? = null
@@ -129,7 +129,6 @@ class DetailMainActivity : AppCompatActivity() {
                 }
             }
         }
-        // 지울 부분 댓글 띄우는거 되는지만 확인할거
 
         imageView.setOnClickListener {
             val sharedPreference = getSharedPreferences("detailImage", 0)
