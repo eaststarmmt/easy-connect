@@ -11,13 +11,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:textColor="@color/hardgray"
         android:textStyle="bold"
         android:textSize="22dp"
-        android:layout_marginLeft="20dp"
-        android:text="나는 이 사람의 팬"/>
+        android:text="★이 사람들의 팬★"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

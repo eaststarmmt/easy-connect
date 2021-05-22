@@ -86,7 +86,6 @@ class Page_find_friends : AppCompatActivity() {
         })
     }
 
-
     inner class FriendAdapter() : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
         // 띄워줄 정보에 해당하는 UserDTO 객체들을 담을 리스트
         var arrayUserDTO: ArrayList<UserDTO> = arrayListOf()
@@ -163,7 +162,9 @@ class Page_find_friends : AppCompatActivity() {
                     // 친구의 마이 페이지로 가야함!
                     val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
                         val data = item.email
+                        val flag = "find"
                         putExtra("friendEmail", data)
+                        putExtra("flag", flag)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                     startActivity(intentFriendPage)

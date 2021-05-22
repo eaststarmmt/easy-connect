@@ -107,6 +107,7 @@ class Timeline_friend : Fragment() {
             var photoOfDetail: ImageView = view.findViewById(R.id.photo_of_post)
             var nameOfDetail: TextView = view.findViewById(R.id.name_of_post)
             var dateOfDetail: TextView = view.findViewById(R.id.date_of_post)
+            var alarmNew : ImageView = view.findViewById(R.id.new_alarm)
 
             // 몇 일 전 게시글인지 보여주는!
             @RequiresApi(Build.VERSION_CODES.O)
@@ -135,19 +136,24 @@ class Timeline_friend : Fragment() {
                 // 날짜 수정
                 if(detailDateFromNow_year > 0){
                     // 작년 혹은 그 이전 게시물
+                    alarmNew.setBackgroundResource(R.drawable.drawable_empty)
                     dateOfDetail.setText(parsing_lastDate[0])
                 }else{
                     // 올해 게시물
                     if(detailDateFromNow_month == 0){
                         // 같은 달
                         if(detailDateFromNow_day == 0){
+                            alarmNew.setBackgroundResource(R.drawable.drawable_new_post)
                             dateOfDetail.setText("오늘")
                         }else if(detailDateFromNow_day > 3){
+                            alarmNew.setBackgroundResource(R.drawable.drawable_empty)
                             dateOfDetail.setText(parsing_lastDate[0])
                         }else{
+                            alarmNew.setBackgroundResource(R.drawable.drawable_empty)
                             dateOfDetail.setText(detailDateFromNow_day.toString() + "일 전")
                         }
                     }else{
+                        alarmNew.setBackgroundResource(R.drawable.drawable_empty)
                         dateOfDetail.setText(parsing_lastDate[0])
                     }
                 }

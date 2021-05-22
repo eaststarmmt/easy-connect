@@ -147,26 +147,35 @@ class WriteActivity : AppCompatActivity() {
                 builder.setPositiveButton("확인", null)
                 builder.show()
             } else {
-                if (imgOfDetail != null)
+                if (!imgOfDetail.isNullOrEmpty()){
                     imageUpload()
-                db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this) {
-                    //글이 정상적으로 작성 됐을 때
-                    if (it.isSuccessful) {
-                        //Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
-                        //현재 엑티비티 종료하고 내가 쓴 글 확인하는 액티비티로 이동. 추후에 수정 예정
-                        //val intent = Intent(this, DetailActivity::class.java)
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)   Detail이 끝나고 바로 메인으로 가기 위해 만듬
-                        //startActivity(intent)
-                        val loadingAnimDialog = CustomLodingDialog(this)
-                        loadingAnimDialog.show()
-                        Handler().postDelayed({
-                            loadingAnimDialog.dismiss()
+                    db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this) {
+                        //글이 정상적으로 작성 됐을 때
+                        if (it.isSuccessful) {
+                            //Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
+                            //현재 엑티비티 종료하고 내가 쓴 글 확인하는 액티비티로 이동. 추후에 수정 예정
+                            //val intent = Intent(this, DetailActivity::class.java)
+                            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)   Detail이 끝나고 바로 메인으로 가기 위해 만듬
+                            //startActivity(intent)
+                            val loadingAnimDialog = CustomLodingDialog(this)
+                            loadingAnimDialog.show()
+                            Handler().postDelayed({
+                                loadingAnimDialog.dismiss()
+                                finish()
+                            }, 15000)
+
+
+                        } else {
+                            Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }else{
+                    db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this){
+                        if (it.isSuccessful) {
                             finish()
-                        }, 15000)
-
-
-                    } else {
-                        Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                        }else {
+                            Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }

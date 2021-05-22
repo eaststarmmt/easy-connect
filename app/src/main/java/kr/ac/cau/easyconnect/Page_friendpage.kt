@@ -20,6 +20,8 @@ class Page_friendpage : AppCompatActivity() {
     var storage : FirebaseStorage? = null
     var db : FirebaseFirestore? = null
 
+    var flag : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page_friendpage)
@@ -34,6 +36,8 @@ class Page_friendpage : AppCompatActivity() {
         val fragmentList = arrayListOf(Timeline_friend(), Friendpage())
 
         val friendEmail = intent.getStringExtra("friendEmail") as String
+        flag = intent.getStringExtra("flag") as String
+
         val bundle = Bundle()
         bundle.putString("email", friendEmail)
         fragmentList[0].arguments = bundle
@@ -75,6 +79,12 @@ class Page_friendpage : AppCompatActivity() {
 
     override fun onBackPressed(){
         // 이전 페이지로 돌아가야함
-        finish()
+        if(flag == "find"){
+            finish()
+        }else{
+            val intentMain = Intent(this, MainActivity::class.java)
+            startActivity(intentMain)
+            finish()
+        }
     }
 }
