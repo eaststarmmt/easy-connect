@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/easy_connect_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyConnect">
-        <activity android:name=".ReplyUpdate"></activity>
-        <activity android:name=".ReplyActivity" />
+        <activity android:name=".ReplyUpdate"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".ReplyActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Page_listOfFan" />
         <activity android:name=".DetailFriendActivity" />
         <activity android:name=".Page_friendpage" />

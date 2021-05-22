@@ -9,10 +9,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import kr.ac.cau.easyconnect.databinding.ActivityReplyBinding
+
 import java.text.SimpleDateFormat
 
 class ReplyActivity : AppCompatActivity() {
@@ -120,13 +117,20 @@ class ReplyActivity : AppCompatActivity() {
             var content: TextView = view.findViewById(R.id.content)
             var replyDelete : Button = view.findViewById(R.id.replyDelete)
             var replyUpdate : Button = view.findViewById(R.id.replyUpdate)
-
+            var emoticon : ImageView = view.findViewById(R.id.emoticon)
             fun bind(reply: ReplyDTO) {
                 content.setText(reply.content)
+                // 본인이 쓴 댓글 아니면 안보이게 함
                 if (firebaseAuth!!.currentUser.email != reply.name) {
                     replyDelete.visibility = View.GONE
                     replyUpdate.visibility = View.GONE
                 }
+                /*
+                if (reply.emoticon == null) {
+                    emoticon.visibility = View.GONE
+                }
+                */
+
                 registration.setText(SimpleDateFormat("MM월 dd일 kk:mm").format(reply.registered))
                 // 유저 이름 받기위해 DB 탐색
                 db!!.collection("user_information").whereEqualTo("email", reply.name).get().addOnCompleteListener{

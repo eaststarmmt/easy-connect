@@ -124,10 +124,7 @@ class DetailMainActivity : AppCompatActivity() {
                             replyDTO = document.toObject(ReplyDTO::class.java)
                             break
                         }
-                        if (replyDTO != null) {
-                            val test : TextView = findViewById(R.id.replyList)
-                            test.text = replyDTO!!.content
-                        }
+
                     }
                 }
             }
