@@ -89,7 +89,7 @@
             android:paddingRight="15dp"
             android:background="@drawable/button_round"
             android:drawableLeft="@drawable/drawable_camera"
-            android:text="촬영"
+            android:text="촬영해서\n사진추가"
             android:textSize="15dp"/>
 
         <Button
@@ -100,7 +100,7 @@
             android:paddingRight="15dp"
             android:background="@drawable/button_round"
             android:drawableLeft="@drawable/drawable_album"
-            android:text="앨범"
+            android:text="앨범에서\n사진추가"
             android:textSize="15dp"/>
         <Button
             android:id="@+id/record"
@@ -110,7 +110,7 @@
             android:paddingRight="15dp"
             android:background="@drawable/button_round"
             android:drawableLeft="@drawable/drawable_record"
-            android:text="녹음"
+            android:text="음성으로\n내용입력"
             android:textSize="15dp"/>
 
     </LinearLayout>
