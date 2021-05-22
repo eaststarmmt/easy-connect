@@ -73,9 +73,11 @@
         android:id="@+id/replyList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:text="여기를 눌러서 댓글을 확인해보세요" />
+        android:text="여기를 눌러서 댓글을 확인해보세요!!!"
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"
+        android:textColor="#F80000"
+        android:textSize="20sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
