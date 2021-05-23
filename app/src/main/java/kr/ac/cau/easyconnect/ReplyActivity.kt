@@ -120,11 +120,14 @@ class ReplyActivity : AppCompatActivity() {
             var emoticon : ImageView = view.findViewById(R.id.emoticon)
             fun bind(reply: ReplyDTO) {
                 content.setText(reply.content)
-                // 본인이 쓴 댓글 아니면 안보이게 함
-                if (firebaseAuth!!.currentUser.email != reply.name) {
-                    replyDelete.visibility = View.GONE
-                    replyUpdate.visibility = View.GONE
+                // 본인이 쓴 댓글 아니면 버튼 안보이게 함
+
+                if (firebaseAuth!!.currentUser.email == reply.name) {
+                    replyDelete.visibility = View.VISIBLE
+                    replyUpdate.visibility = View.VISIBLE
                 }
+
+
                 /*
                 if (reply.emoticon == null) {
                     emoticon.visibility = View.GONE

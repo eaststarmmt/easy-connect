@@ -110,6 +110,7 @@ class WriteActivity : AppCompatActivity() {
             dialog.setNegativeButton("취소", null)
             dialog.show()
         }
+        /*
         // 앨범버튼 눌렀을 때
         findViewById<Button>(R.id.album).setOnClickListener {
 
@@ -119,10 +120,36 @@ class WriteActivity : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, REQUEST_GALLERY_TAKE)
         }
+        */
 
+         */
+
+         /*
         // 카메라 촬영 버튼 눌렀을 때
         findViewById<Button>(R.id.photoButton).setOnClickListener {
             takePicture()
+        }
+        */
+        // 사진추가
+        findViewById<Button>(R.id.photo).setOnClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("사진 추가할 방법 선택")
+            // 촬영 누른 경우
+            var cameraListener = DialogInterface.OnClickListener { dialog, i ->
+                takePicture()
+            }
+            // 앨범 누른 경우
+            var albumListener = DialogInterface.OnClickListener { dialog, i ->
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                intent.type = "image/*"
+                startActivityForResult(intent, REQUEST_GALLERY_TAKE)
+            }
+            dialog.setPositiveButton("촬영", cameraListener)
+            dialog.setNeutralButton("취소", null)
+            dialog.setNegativeButton("앨범", albumListener)
+            dialog.show()
         }
 
         // 게시버튼 눌렀을 때 구현

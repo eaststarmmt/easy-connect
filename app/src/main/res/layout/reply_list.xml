@@ -7,74 +7,130 @@
     android:paddingTop="10dp"
     android:paddingBottom="35dp"
     >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="15sp"
-            android:paddingLeft="20dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="글쓴이" />
-
-        <TextView
-            android:id="@+id/registration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="15sp"
-            android:text="생성일" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:paddingLeft="20dp"
-        android:text="내용" />
-
-    <ImageView
-        android:id="@+id/emoticon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="?attr/selectableItemBackgroundBorderless" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/replyDelete"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_round"
-            android:drawableLeft="@drawable/drawable_delete_reply"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="삭제" />
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
-        <Button
-            android:id="@+id/replyUpdate"
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_alignParentLeft="true"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+
+                    android:text="글쓴이" />
+
+                <TextView
+                    android:id="@+id/registration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="생성일"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="40dp"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:text="내용"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/emoticon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:srcCompat="?attr/selectableItemBackgroundBorderless" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/drawable_update_reply"
-            android:background="@drawable/button_round"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="수정" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/replyDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/button_round"
+                android:drawableLeft="@drawable/drawable_delete_reply"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:visibility="invisible"
+                android:text="삭제" />
+
+            <Button
+                android:id="@+id/replyUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/button_round"
+                android:drawableLeft="@drawable/drawable_update_reply"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:visibility="invisible"
+                android:text="수정" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"></LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

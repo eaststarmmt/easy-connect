@@ -179,7 +179,7 @@ class DetailMainActivity : AppCompatActivity() {
         // 댓글보기. 일단 액티비티로 해둠
         findViewById<TextView>(R.id.replyList).setOnClickListener {
             val intent = Intent(this, ReplyActivity::class.java)
-            intent.putExtra("id", thisData!!.modified)  // reply 액티비티에 값 전달
+            intent.putExtra("id", thisData!!.registered)  // reply 액티비티에 값 전달
             startActivity(intent)
 
         }
