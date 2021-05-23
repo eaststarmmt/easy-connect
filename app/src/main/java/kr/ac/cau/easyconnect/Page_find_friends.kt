@@ -2,6 +2,7 @@ package kr.ac.cau.easyconnect
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
@@ -139,6 +140,9 @@ class Page_find_friends : AppCompatActivity() {
             var friendLayout: View = view.findViewById(R.id.layout_friend_item)
             var friendImage: ImageView = view.findViewById(R.id.img_friend)
             var friendName: TextView = view.findViewById(R.id.txt_friendName)
+            var friendFollow : TextView = view.findViewById(R.id.txt_follow)
+
+            var userDTO = UserDTO()
 
             fun bind(item: UserDTO) {
                 // 검색된 계정의 photo 필드를 바탕으로 ImageView에 Glide로 이미지 뷰 띄워줌
@@ -154,9 +158,104 @@ class Page_find_friends : AppCompatActivity() {
                 friendImage.setBackground(ShapeDrawable(OvalShape()))
                 friendImage.setClipToOutline(true)
 
-                // 한 계정 정보를 클릭 했을 때!! 친구의 마이페이지로 이동해야 한다!
+                // 이미 친구?
+                db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+                    if(it.isSuccessful){
+                        for (dc in it.result!!.documents) {
+                            userDTO = dc.toObject(UserDTO::class.java)!!
+                            break
+                        }
+                        var myFollowing = userDTO.following!!.split(",").toMutableList() as ArrayList
 
-                // 아직 구현 X ///////////////////////////////////////////////////////////////////////////////
+                        friendFollow.setText("팬이 될래요!")
+                        friendFollow.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
+
+                        for (email in myFollowing){
+                            if(email == item.email){
+                                friendFollow.setText("이미 팬이에요!")
+                                friendFollow.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
+                            }
+                        }
+                    }
+                }
+
+                friendFollow.setOnClickListener({
+                    var me = UserDTO()
+
+                    if(friendFollow.text.toString() == "팬이 될래요!"){
+                        friendFollow.setText("이미 팬이에요!");
+                        friendFollow.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
+
+                        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+                            if(it.isSuccessful){
+                                for (dc in it.result!!.documents) {
+                                    me = dc.toObject(UserDTO::class.java)!!
+                                    break
+                                }
+                                // 팔로잉 했으니 나의 following 에 친구 이메일 추가
+                                if(me.following.isNullOrEmpty()){
+                                    // 나의 팔로잉 수 0명
+                                    me.following = item.email
+                                }else{
+                                    // 나의 팔로잉 수 >= 1명
+                                    me.following = me.following!! + ',' + item.email
+                                }
+
+                                // 팔로잉 했으니 친구의 followed 에 내 이메일 추가!
+                                if(item.followed.isNullOrEmpty()) {
+                                    // 친구의 팔로워 수 0명
+                                    item.followed = me.email
+                                }else{
+                                    // 친구의 팔로워 수 >= 1명
+                                    item.followed = item.followed + ',' + me.email
+                                }
+                                db!!.collection("user_information").document(me.uid.toString()).delete()
+                                db!!.collection("user_information").document(me.uid.toString()).set(me)
+                                db!!.collection("user_information").document(item.uid.toString()).delete()
+                                db!!.collection("user_information").document(item.uid.toString()).set(item)
+                            }
+                        }
+                    }else{
+                        // 팔로잉 취소
+                        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+                            if(it.isSuccessful){
+                                for (dc in it.result!!.documents) {
+                                    me = dc.toObject(UserDTO::class.java)!!
+                                    break
+                                }
+                                val my_following = me.following!!.split(",").toMutableList() as java.util.ArrayList
+                                for (i in 0..my_following.size - 1){
+                                    if(my_following[i] == item.email){
+                                        my_following.removeAt(i)
+                                        break
+                                    }
+                                }
+                                val my_following_fin = my_following.joinToString(separator = ",")
+                                me.following = my_following_fin
+
+                                val friend_followed = item.followed!!.split(",").toMutableList() as java.util.ArrayList
+                                for (j in 0..friend_followed.size - 1){
+                                    if(friend_followed[j] == me.email){
+                                        friend_followed.removeAt(j)
+                                        break
+                                    }
+                                }
+                                val friend_followed_fin = friend_followed.joinToString(separator = ",")
+                                item.followed = friend_followed_fin
+
+                                db!!.collection("user_information").document(me.uid.toString()).delete()
+                                db!!.collection("user_information").document(me.uid.toString()).set(me)
+                                db!!.collection("user_information").document(item.uid.toString()).delete()
+                                db!!.collection("user_information").document(item.uid.toString()).set(item)
+                            }
+                        }
+
+                        friendFollow.setText("팬이 될래요!")
+                        friendFollow.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
+                    }
+                })
+
+                // 한 계정 정보를 클릭 했을 때!! 친구의 마이페이지로 이동해야 한다!
 
                 friendLayout.setOnClickListener{
                     // 친구의 마이 페이지로 가야함!

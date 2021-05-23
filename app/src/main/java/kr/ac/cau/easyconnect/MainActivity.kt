@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         override fun getPageTitle(position: Int): CharSequence? {
             return when(position) {
                 0-> "나의 이야기"
-                1-> "나의 벗"
+                1-> "지켜봐요"
                 else-> "추천해요"
             }
         }
