@@ -125,7 +125,7 @@ class Friendpage : Fragment() {
                             txt_following.setText("이미 팬이에요!");
                             txt_following.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
                         }else{
-                            txt_following.setText("친구의 팬 되기")
+                            txt_following.setText("팬이 될래요!")
                             txt_following.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
                         }
                     }
@@ -136,7 +136,7 @@ class Friendpage : Fragment() {
         txt_following.setOnClickListener({
             var me = UserDTO()
 
-            if(txt_following.text.toString() == "친구의 팬 되기"){
+            if(txt_following.text.toString() == "팬이 될래요!"){
                 txt_following.setText("이미 팬이에요!");
                 txt_following.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
 
@@ -209,7 +209,7 @@ class Friendpage : Fragment() {
                     }
                 }
 
-                txt_following.setText("친구의 팬 되기")
+                txt_following.setText("팬이 될래요!")
                 txt_following.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
             }
         })

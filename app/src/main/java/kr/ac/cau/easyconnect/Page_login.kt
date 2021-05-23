@@ -45,6 +45,8 @@ class Page_login : AppCompatActivity() {
         val sharedPreference = getSharedPreferences("other", 0)
         editText_id.setText(sharedPreference.getString("id", ""))
 
+        tedPermission()
+
         val sharedauto = getSharedPreferences("auto", 0)
         autoLogin.isChecked = sharedauto.getBoolean("login_auto", false)
 
@@ -84,7 +86,6 @@ class Page_login : AppCompatActivity() {
                     }
                 }
             }
-
         }
 
         button_login.setOnClickListener({
