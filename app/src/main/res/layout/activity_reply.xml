@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,7 +26,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reply_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="519dp"
+        android:layout_height="190dp"
         android:layout_weight="1"
         android:scrollbarThumbVertical="@color/gray"
         android:scrollbars="vertical"
@@ -33,6 +34,7 @@
         tools:listitem="@layout/reply_list" />
 
     <LinearLayout
+        android:id="@+id/replyLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -44,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:hint="댓글" />
 
         <Button
@@ -55,17 +57,31 @@
             android:text="등록" />
 
         <Button
-            android:id="@+id/frame"
+            android:id="@+id/emoticonButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="프레임" />
+            android:text="이모티콘" />
     </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/emoticonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,12 +95,14 @@
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_amazing" />
+
                 <ImageView
                     android:id="@+id/angry"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_angry" />
+
                 <ImageView
                     android:id="@+id/cry"
                     android:layout_width="100dp"
@@ -92,6 +110,7 @@
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_cry" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,12 +124,14 @@
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_curiosity" />
+
                 <ImageView
                     android:id="@+id/good"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_good" />
+
                 <ImageView
                     android:id="@+id/great"
                     android:layout_width="100dp"
@@ -118,6 +139,7 @@
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_great" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,12 +152,14 @@
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_hello" />
+
                 <ImageView
                     android:id="@+id/hi"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/emo_hi" />
+
                 <ImageView
                     android:id="@+id/love"
                     android:layout_width="100dp"
@@ -146,9 +170,7 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
-
+    </RelativeLayout>
 
 
 </LinearLayout>

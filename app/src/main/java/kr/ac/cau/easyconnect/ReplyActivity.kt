@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Rect
 import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -81,12 +81,41 @@ class ReplyActivity : AppCompatActivity() {
             }
 
         }
+        var rootHeight = -1
+        val rootView = findViewById<LinearLayout>(R.id.root_view)
+        val emoticonContainer : RelativeLayout = findViewById(R.id.emoticonContainer)
 
-        findViewById<Button>(R.id.frame).setOnClickListener {
-            val testText : TextView = findViewById(R.id.testText)
-            hideKeyboard()
-            testText.visibility = View.VISIBLE
+        // 키보드 높이만큼 이모티콘 위치 시키기 위해 값 측정
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            if (rootHeight == -1) rootHeight = rootView.height
+            val visibleFrameSize = Rect()
+            rootView.getWindowVisibleDisplayFrame(visibleFrameSize)
+            val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
+            // 키보드를 제외한 높이가 디바이스 rootView보다 높거나 같으면 키보드가 올라왔을때가 아니므로 무시
+            if (heightExceptKeyboard < rootHeight) {
+                val keyBoardHeight = rootHeight - heightExceptKeyboard  // 키보드 높이
+                emoticonContainer.layoutParams.height = keyBoardHeight  // 이모티콘 컨테이너에 키보드 높이 입력
+            }
         }
+        // 이모티콘 버튼 눌렀을 때
+        findViewById<Button>(R.id.emoticonButton).setOnClickListener {
+            // 키보드에 따라 딸려오는거 해제
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+            // 시간차 때문에 딜레이 주고 이모티콘 컨테이너 보이게 함
+            Handler().postDelayed({
+                emoticonContainer.visibility = View.VISIBLE
+            }, 90)
+
+            hideKeyboard()
+
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        }
+        // 배경 클릭시 키보드 없애기
+        rootView.setOnClickListener{
+            if (emoticonContainer.visibility == View.VISIBLE) emoticonContainer.visibility = View.GONE
+            hideKeyboard()
+        }
+
     }
 
     // 키보드 없애기
@@ -94,6 +123,12 @@ class ReplyActivity : AppCompatActivity() {
     fun hideKeyboard() {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(replyContent!!.windowToken, 0)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        return true
     }
 
     inner class ReplyAdapter() : RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {
