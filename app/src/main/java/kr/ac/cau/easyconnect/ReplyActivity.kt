@@ -1,16 +1,20 @@
 package kr.ac.cau.easyconnect
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.getSystemService
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +31,7 @@ class ReplyActivity : AppCompatActivity() {
     var db: FirebaseFirestore? = null
     var id : String? = null
     var userData : UserDTO? = null
+    var replyContent : EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,7 @@ class ReplyActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         id = intent.getStringExtra("id")  // 수정일 인텐트로 넘겨 받음
         val replyRecyclerview : RecyclerView = findViewById(R.id.reply_recyclerview)
-        val replyContent : EditText = findViewById(R.id.reply_content)
+        replyContent = findViewById(R.id.reply_content)
 
         //어댑터 연결 해야 나옴
         replyRecyclerview.adapter = ReplyAdapter()
@@ -47,7 +52,7 @@ class ReplyActivity : AppCompatActivity() {
         //댓글 등록시
         findViewById<Button>(R.id.reply_button).setOnClickListener {
 
-            var inputReply = replyContent.text.trim().toString()
+            var inputReply = replyContent!!.text.trim().toString()
             var name = firebaseAuth!!.currentUser.email
             // 현재 시간 출력
             val currentDateTime : Long  = System.currentTimeMillis()
@@ -67,6 +72,8 @@ class ReplyActivity : AppCompatActivity() {
                     //글이 정상적으로 작성 됐을 때
                     if (it.isSuccessful) {
                         Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                        hideKeyboard()
+                        replyContent!!.text = null
                     } else {
                         Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                     }
@@ -74,6 +81,19 @@ class ReplyActivity : AppCompatActivity() {
             }
 
         }
+
+        findViewById<Button>(R.id.frame).setOnClickListener {
+            val testText : TextView = findViewById(R.id.testText)
+            hideKeyboard()
+            testText.visibility = View.VISIBLE
+        }
+    }
+
+    // 키보드 없애기
+    @SuppressLint("ServiceCast")
+    fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(replyContent!!.windowToken, 0)
     }
 
     inner class ReplyAdapter() : RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {
