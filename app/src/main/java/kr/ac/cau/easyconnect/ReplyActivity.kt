@@ -32,6 +32,7 @@ class ReplyActivity : AppCompatActivity() {
     var id : String? = null
     var userData : UserDTO? = null
     var replyContent : EditText? = null
+    var emoticonContainer : ScrollView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +46,11 @@ class ReplyActivity : AppCompatActivity() {
         id = intent.getStringExtra("id")  // 수정일 인텐트로 넘겨 받음
         val replyRecyclerview : RecyclerView = findViewById(R.id.reply_recyclerview)
         replyContent = findViewById(R.id.reply_content)
+        // 액티비티 실행 시 키보드 바로 올려줌
+        // replyContent!!.requestFocus()
+        var keyBoardHeight = 0
 
-        //어댑터 연결 해야 나옴
+        // 어댑터 연결 해야 나옴
         replyRecyclerview.adapter = ReplyAdapter()
         replyRecyclerview.layoutManager = LinearLayoutManager(this)
         //댓글 등록시
@@ -83,27 +87,35 @@ class ReplyActivity : AppCompatActivity() {
         }
         var rootHeight = -1
         val rootView = findViewById<LinearLayout>(R.id.root_view)
-        val emoticonContainer : RelativeLayout = findViewById(R.id.emoticonContainer)
+        emoticonContainer = findViewById(R.id.emoticonContainer)
 
         // 키보드 높이만큼 이모티콘 위치 시키기 위해 값 측정
         rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            if (keyBoardHeight == 0) {
+                showKeyboard()
+                Handler().postDelayed({
+                    hideKeyboard()
+                }, 100)
+            }
+
             if (rootHeight == -1) rootHeight = rootView.height
             val visibleFrameSize = Rect()
             rootView.getWindowVisibleDisplayFrame(visibleFrameSize)
             val heightExceptKeyboard = visibleFrameSize.bottom - visibleFrameSize.top
             // 키보드를 제외한 높이가 디바이스 rootView보다 높거나 같으면 키보드가 올라왔을때가 아니므로 무시
             if (heightExceptKeyboard < rootHeight) {
-                val keyBoardHeight = rootHeight - heightExceptKeyboard  // 키보드 높이
-                emoticonContainer.layoutParams.height = keyBoardHeight  // 이모티콘 컨테이너에 키보드 높이 입력
+                keyBoardHeight = rootHeight - heightExceptKeyboard  // 키보드 높이
+                emoticonContainer!!.layoutParams.height = keyBoardHeight  // 이모티콘 컨테이너에 키보드 높이 입력
             }
         }
         // 이모티콘 버튼 눌렀을 때
         findViewById<Button>(R.id.emoticonButton).setOnClickListener {
+
             // 키보드에 따라 딸려오는거 해제
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
             // 시간차 때문에 딜레이 주고 이모티콘 컨테이너 보이게 함
             Handler().postDelayed({
-                emoticonContainer.visibility = View.VISIBLE
+                emoticonContainer!!.visibility = View.VISIBLE
             }, 90)
 
             hideKeyboard()
@@ -112,8 +124,12 @@ class ReplyActivity : AppCompatActivity() {
         }
         // 배경 클릭시 키보드 없애기
         rootView.setOnClickListener{
-            if (emoticonContainer.visibility == View.VISIBLE) emoticonContainer.visibility = View.GONE
+            if (emoticonContainer!!.visibility == View.VISIBLE) hideEmoticon()
             hideKeyboard()
+        }
+        // 댓글 입력창 클릭시 이모티콘 없애기
+        replyContent!!.setOnClickListener {
+            if (emoticonContainer!!.visibility == View.VISIBLE) hideEmoticon()
         }
 
     }
@@ -123,6 +139,16 @@ class ReplyActivity : AppCompatActivity() {
     fun hideKeyboard() {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(replyContent!!.windowToken, 0)
+    }
+    // 이모티콘 없애기
+    fun hideEmoticon() {
+        emoticonContainer!!.visibility = View.GONE
+    }
+
+    fun showKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+        InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -173,6 +199,11 @@ class ReplyActivity : AppCompatActivity() {
             var replyDelete : Button = view.findViewById(R.id.replyDelete)
             var replyUpdate : Button = view.findViewById(R.id.replyUpdate)
             var emoticon : ImageView = view.findViewById(R.id.emoticon)
+            var replyLayout : View = view.findViewById(R.id.replyLayout)
+//            var emoticonContainer : View = parent.findViewById(R.id.emoticonContainer)
+
+
+
             fun bind(reply: ReplyDTO) {
                 content.setText(reply.content)
                 // 본인이 쓴 댓글 아니면 버튼 안보이게 함
@@ -206,6 +237,14 @@ class ReplyActivity : AppCompatActivity() {
 
                     }
                 }
+                // 이모티콘이랑 키보드 없애기
+               replyLayout.setOnClickListener {
+                    val intent = Intent(view.context, ReplyActivity::class.java).apply {
+                        hideEmoticon()
+                        hideKeyboard()
+                    }
+                }
+
 
                 // 댓글 삭제 버튼 클릭
                 replyDelete.setOnClickListener {

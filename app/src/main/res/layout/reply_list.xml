@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
     android:paddingBottom="35dp"
+    android:id="@+id/replyLayout"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,11 +101,6 @@
                 android:text="수정" />
         </LinearLayout>
     </LinearLayout>
-
-
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"

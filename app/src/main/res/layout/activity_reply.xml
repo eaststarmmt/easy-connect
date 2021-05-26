@@ -22,7 +22,11 @@
             android:scaleType="fitCenter" />
 
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reply_recyclerview"
         android:layout_width="match_parent"
@@ -65,112 +69,118 @@
     </LinearLayout>
 
 
-    <RelativeLayout
+    <ScrollView
         android:id="@+id/emoticonContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:scrollbars="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:orientation="vertical"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/amazing"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_amazing" />
 
-                <ImageView
-                    android:id="@+id/angry"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_angry" />
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/cry"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    <ImageView
+                        android:id="@+id/amazing"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_amazing" />
+
+                    <ImageView
+                        android:id="@+id/angry"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_angry" />
+
+                    <ImageView
+                        android:id="@+id/cry"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_cry" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_cry" />
+
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/curiosity"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_curiosity" />
+
+                    <ImageView
+                        android:id="@+id/good"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_good" />
+
+                    <ImageView
+                        android:id="@+id/great"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_great" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/hello"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_hello" />
+
+                    <ImageView
+                        android:id="@+id/hi"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_hi" />
+
+                    <ImageView
+                        android:id="@+id/love"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emo_love" />
+
+                </LinearLayout>
+
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/curiosity"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_curiosity" />
-
-                <ImageView
-                    android:id="@+id/good"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_good" />
-
-                <ImageView
-                    android:id="@+id/great"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_great" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/hello"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_hello" />
-
-                <ImageView
-                    android:id="@+id/hi"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_hi" />
-
-                <ImageView
-                    android:id="@+id/love"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/emo_love" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 
 </LinearLayout>
