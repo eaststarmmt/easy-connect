@@ -33,6 +33,7 @@ class ReplyActivity : AppCompatActivity() {
     var userData : UserDTO? = null
     var replyContent : EditText? = null
     var emoticonContainer : ScrollView? = null
+    lateinit var amazing : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,7 @@ class ReplyActivity : AppCompatActivity() {
         id = intent.getStringExtra("id")  // 수정일 인텐트로 넘겨 받음
         val replyRecyclerview : RecyclerView = findViewById(R.id.reply_recyclerview)
         replyContent = findViewById(R.id.reply_content)
+
         // 액티비티 실행 시 키보드 바로 올려줌
         // replyContent!!.requestFocus()
         var keyBoardHeight = 0
@@ -91,12 +93,6 @@ class ReplyActivity : AppCompatActivity() {
 
         // 키보드 높이만큼 이모티콘 위치 시키기 위해 값 측정
         rootView.viewTreeObserver.addOnGlobalLayoutListener {
-            if (keyBoardHeight == 0) {
-                showKeyboard()
-                Handler().postDelayed({
-                    hideKeyboard()
-                }, 100)
-            }
 
             if (rootHeight == -1) rootHeight = rootView.height
             val visibleFrameSize = Rect()
@@ -132,13 +128,32 @@ class ReplyActivity : AppCompatActivity() {
             if (emoticonContainer!!.visibility == View.VISIBLE) hideEmoticon()
         }
 
+        amazing = findViewById(R.id.amazing)
+        // 이모티콘 클릭
+        amazing.setOnClickListener {
+            //TODO Reply DTO에 이모티콘 등록
+        }
+
     }
 
+    override fun onBackPressed() {
+        // 이모티콘 켜있을 때 이모티콘 없애고 키보드로 돌아가기
+        if (emoticonContainer!!.visibility == View.VISIBLE) {
+            emoticonContainer!!.visibility = View.GONE
+            showKeyboard()
+        }
+        else {
+            super.onBackPressed()
+
+        }
+
+    }
     // 키보드 없애기
     @SuppressLint("ServiceCast")
     fun hideKeyboard() {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(replyContent!!.windowToken, 0)
+
     }
     // 이모티콘 없애기
     fun hideEmoticon() {
@@ -150,6 +165,7 @@ class ReplyActivity : AppCompatActivity() {
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,
         InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
+
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
