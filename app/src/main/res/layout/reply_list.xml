@@ -59,7 +59,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_alignParentTop="true"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:srcCompat="?attr/selectableItemBackgroundBorderless" />
 
                 <TextView

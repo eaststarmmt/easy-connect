@@ -33,7 +33,7 @@ class ReplyActivity : AppCompatActivity() {
     var userData : UserDTO? = null
     var replyContent : EditText? = null
     var emoticonContainer : ScrollView? = null
-    lateinit var amazing : ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,12 +128,219 @@ class ReplyActivity : AppCompatActivity() {
             if (emoticonContainer!!.visibility == View.VISIBLE) hideEmoticon()
         }
 
-        amazing = findViewById(R.id.amazing)
-        // 이모티콘 클릭
-        amazing.setOnClickListener {
-            //TODO Reply DTO에 이모티콘 등록
+        // 이모티콘 사용시 바로 등록되게 함. 일단 하드코딩으로 처리.
+        // 놀람 이모티콘 클릭
+        findViewById<ImageView>(R.id.amazing).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "amazing"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        // 화났소 이모티콘 클릭
+        findViewById<ImageView>(R.id.angry).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "angry"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        // 울고싶소 이모티콘 클릭
+        findViewById<ImageView>(R.id.cry).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "cry"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        // 안녕하소 이모티콘 클릭
+        findViewById<ImageView>(R.id.hello).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "hello"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
+        // 좋소 이모티콘 클릭
+        findViewById<ImageView>(R.id.good).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "amazing"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // 좋아 이모티콘 클릭
+        findViewById<ImageView>(R.id.great).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "great"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // 궁금 이모티콘 클릭
+        findViewById<ImageView>(R.id.curiosity).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "curiosity"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // 안녕 이모티콘 클릭
+        findViewById<ImageView>(R.id.hi).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "hi"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // 사랑 이모티콘 클릭
+        findViewById<ImageView>(R.id.love).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "love"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -228,13 +435,24 @@ class ReplyActivity : AppCompatActivity() {
                     replyDelete.visibility = View.VISIBLE
                     replyUpdate.visibility = View.VISIBLE
                 }
+                // 이모티콘 있을 때
+                if (reply.emoticon != null) {
+                    emoticon.visibility = View.VISIBLE
+                    when (reply.emoticon) {
+                        "amazing" -> emoticon.setImageResource(R.drawable.emo_amazing)
+                        "angry" -> emoticon.setImageResource(R.drawable.emo_angry)
+                        "cry" -> emoticon.setImageResource(R.drawable.emo_cry)
+                        "hello" -> emoticon.setImageResource(R.drawable.emo_hello)
+                        "good" -> emoticon.setImageResource(R.drawable.emo_good)
+                        "great" -> emoticon.setImageResource(R.drawable.emo_great)
+                        "curiosity" -> emoticon.setImageResource(R.drawable.emo_curiosity)
+                        "hi" -> emoticon.setImageResource(R.drawable.emo_hi)
+                        "love" -> emoticon.setImageResource(R.drawable.emo_love)
 
+                    }
 
-                /*
-                if (reply.emoticon == null) {
-                    emoticon.visibility = View.GONE
                 }
-                */
+
 
                 registration.setText(SimpleDateFormat("MM월 dd일 kk:mm").format(reply.registered))
                 // 유저 이름 받기위해 DB 탐색
