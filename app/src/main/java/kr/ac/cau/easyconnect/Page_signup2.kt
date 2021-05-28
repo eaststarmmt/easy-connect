@@ -53,7 +53,7 @@ class Page_signup2 : AppCompatActivity() {
             var input_name = editText_name.text.trim().toString()
             var input_age = editText_age.text.trim().toString()
 
-            if (input_name.isNullOrEmpty() || input_phoneNumber.isNullOrEmpty() || input_age.isNullOrEmpty() || newGender.isNullOrEmpty()) {
+            if (input_name.isNullOrEmpty() || input_phoneNumber.isNullOrEmpty() || newGender.isNullOrEmpty()) {
                 // 공백인 칸이 있다면
                 var builder = AlertDialog.Builder(this)
                 builder.setTitle("입력 정보가 누락되었습니다.")
@@ -92,6 +92,7 @@ class Page_signup2 : AppCompatActivity() {
                                                             Toast.LENGTH_SHORT
                                                         ).show()
                                                     // userDTO 데이터 클래스 객체에 email, password, name, phoneNumber 은 입력값, uid와 photo 는 기본값 저장
+                                                    // age는 입력을 하지 않으면 "" 빈 값으로 들어감 <- 추천 목적
                                                     var newUserDTO = UserDTO()
                                                     newUserDTO.email = newId
                                                     newUserDTO.password = newPw
