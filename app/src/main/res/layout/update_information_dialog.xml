@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="#000000"
                 android:gravity="center"
                 android:text="이름 : "/>
@@ -37,7 +37,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:hint="변경하실 이름 입력"/>
 
         </LinearLayout>
@@ -49,7 +49,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="#000000"
                 android:gravity="center"
                 android:text="전화번호 : "/>
@@ -62,7 +62,7 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:maxLength="11"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:inputType="numberDecimal"
                 android:digits="0123456789"
                 android:hint="변경하실 전화번호 입력"/>

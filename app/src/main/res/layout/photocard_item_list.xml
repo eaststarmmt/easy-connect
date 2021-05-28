@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/button_round"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="10dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:id="@+id/layout_photoCard_item">
@@ -52,7 +53,7 @@
         android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:text="123"
-        android:textSize="15sp"/>
+        android:textSize="14dp"/>
 
     <TextView
         android:id="@+id/name_of_post"
@@ -65,7 +66,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:text="123"
-        android:textSize="20sp"
+        android:textSize="18dp"
         android:textStyle="bold"/>
 
     <ImageView

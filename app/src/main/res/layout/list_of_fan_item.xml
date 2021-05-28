@@ -33,7 +33,7 @@
         app:layout_constraintLeft_toRightOf="@id/img_fan"
         android:layout_marginLeft="30dp"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:text="123"
         android:textStyle="bold"/>
 

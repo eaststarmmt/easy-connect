@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 
@@ -17,9 +18,9 @@ class Page_menu : AppCompatActivity() {
         setContentView(R.layout.activity_page_menu)
 
         val button_goback : ImageButton = findViewById(R.id.bt_goback)
-        val button_find_friend : Button = findViewById(R.id.bt_find_friend)
-        val button_logout : Button = findViewById(R.id.bt_logout)
-        val button_mypage : Button = findViewById(R.id.bt_mypage)
+        val button_find_friend : ImageView = findViewById(R.id.bt_find_friend)
+        val button_logout : ImageView = findViewById(R.id.bt_logout)
+        val button_mypage : ImageView = findViewById(R.id.bt_mypage)
 
         button_goback.setOnClickListener({
             val intentMain = Intent(this, MainActivity::class.java)

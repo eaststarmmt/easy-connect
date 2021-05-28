@@ -83,13 +83,10 @@ class Friends : Fragment() {
                                 var user = snapshot.toObject(UserDTO::class.java)
                                 if(user!!.email != myDTO.email){
                                     // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음
-                                    if(user!!.search == false){
-                                        // 검색 불허
-                                    }else{
-                                        for (email in myFollower)
-                                            if(user!!.email == email){
-                                                arrayUserDTO!!.add(user!!)
-                                            }
+                                    for (email in myFollower) {
+                                        if (user!!.email == email) {
+                                            arrayUserDTO!!.add(user!!)
+                                        }
                                     }
                                 }
                             }

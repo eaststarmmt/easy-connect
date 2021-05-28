@@ -167,13 +167,17 @@ class Page_find_friends : AppCompatActivity() {
                         }
                         var myFollowing = userDTO.following!!.split(",").toMutableList() as ArrayList
 
-                        friendFollow.setText("팬이 될래요!")
-                        friendFollow.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
+                        friendFollow.setBackgroundResource(R.drawable.drawable_heart_empty)
+                        friendFollow.setText("")
+//                        friendFollow.setText("팬이 될래요!")
+//                        friendFollow.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
 
                         for (email in myFollowing){
                             if(email == item.email){
-                                friendFollow.setText("이미 팬이에요!")
-                                friendFollow.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
+                                friendFollow.setBackgroundResource(R.drawable.drawable_heart_full)
+                                friendFollow.setText(" ")
+//                                friendFollow.setText("이미 팬이에요!")
+//                                friendFollow.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
                             }
                         }
                     }
@@ -182,9 +186,9 @@ class Page_find_friends : AppCompatActivity() {
                 friendFollow.setOnClickListener({
                     var me = UserDTO()
 
-                    if(friendFollow.text.toString() == "팬이 될래요!"){
-                        friendFollow.setText("이미 팬이에요!");
-                        friendFollow.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
+                    if(friendFollow.text.toString() == ""){
+                        friendFollow.setBackgroundResource(R.drawable.drawable_heart_full)
+                        friendFollow.setText(" ");
 
                         db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
                             if(it.isSuccessful){
@@ -210,13 +214,18 @@ class Page_find_friends : AppCompatActivity() {
                                     item.followed = item.followed + ',' + me.email
                                 }
                                 db!!.collection("user_information").document(me.uid.toString()).delete()
-                                db!!.collection("user_information").document(me.uid.toString()).set(me)
                                 db!!.collection("user_information").document(item.uid.toString()).delete()
+                                db!!.collection("user_information").document(me.uid.toString()).set(me)
                                 db!!.collection("user_information").document(item.uid.toString()).set(item)
+
+                                Toast.makeText(view.context, item.name+ "님의 팬이 되었습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }else{
                         // 팔로잉 취소
+                        friendFollow.setBackgroundResource(R.drawable.drawable_heart_empty)
+                        friendFollow.setText("")
+
                         db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
                             if(it.isSuccessful){
                                 for (dc in it.result!!.documents) {
@@ -244,14 +253,13 @@ class Page_find_friends : AppCompatActivity() {
                                 item.followed = friend_followed_fin
 
                                 db!!.collection("user_information").document(me.uid.toString()).delete()
-                                db!!.collection("user_information").document(me.uid.toString()).set(me)
                                 db!!.collection("user_information").document(item.uid.toString()).delete()
+                                db!!.collection("user_information").document(me.uid.toString()).set(me)
                                 db!!.collection("user_information").document(item.uid.toString()).set(item)
+
+                                Toast.makeText(view.context, item.name+ "님의 팬을 그만두셨습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
-
-                        friendFollow.setText("팬이 될래요!")
-                        friendFollow.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
                     }
                 })
 

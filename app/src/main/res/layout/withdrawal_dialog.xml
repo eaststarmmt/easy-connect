@@ -25,7 +25,7 @@
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
             android:inputType="textPassword"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:hint="사용중인 비밀번호 확인"/>
 
         <RelativeLayout

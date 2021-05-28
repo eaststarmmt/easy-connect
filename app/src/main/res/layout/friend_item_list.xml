@@ -8,6 +8,7 @@
     android:id="@+id/layout_friend_item"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
+    android:layout_marginTop="10dp"
     tools:context=".Page_find_friends">
 
     <ImageView
@@ -39,7 +40,7 @@
         />
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginRight="10dp"
@@ -50,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/empty"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         android:textAlignment="center"
         />
