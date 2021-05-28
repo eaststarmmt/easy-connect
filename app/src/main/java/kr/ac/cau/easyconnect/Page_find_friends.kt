@@ -169,15 +169,11 @@ class Page_find_friends : AppCompatActivity() {
 
                         friendFollow.setBackgroundResource(R.drawable.drawable_heart_empty)
                         friendFollow.setText("")
-//                        friendFollow.setText("팬이 될래요!")
-//                        friendFollow.setBackgroundColor(Color.parseColor("#FFB8DFF8"))
 
                         for (email in myFollowing){
                             if(email == item.email){
                                 friendFollow.setBackgroundResource(R.drawable.drawable_heart_full)
                                 friendFollow.setText(" ")
-//                                friendFollow.setText("이미 팬이에요!")
-//                                friendFollow.setBackgroundColor(Color.parseColor("#FFD3D3D3"))
                             }
                         }
                     }
