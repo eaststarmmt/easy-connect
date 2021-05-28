@@ -18,11 +18,7 @@ import android.provider.MediaStore
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -208,10 +204,18 @@ class WriteActivity : AppCompatActivity() {
             }
         }
 
-        //녹음버튼
+        // 녹음버튼
         findViewById<Button>(R.id.record).setOnClickListener {
             startSTTUseActivityResult()
         }
+
+        // 자동완성 테스트
+        val fruits = arrayOf("Apple", "asibal", "ajsuited", "Banana", "cup", "drag", "eight")
+        val autoTextView : AutoCompleteTextView = findViewById(R.id.autoComplete)
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this,
+        android.R.layout.simple_gallery_item, fruits)
+        autoTextView.threshold = 1
+        autoTextView.setAdapter(adapter)
 
 
     }
