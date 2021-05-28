@@ -450,7 +450,8 @@ class ReplyActivity : AppCompatActivity() {
                         "love" -> emoticon.setImageResource(R.drawable.emo_love)
 
                     }
-
+                    // 이모티콘 사용시 수정버튼 비활성화
+                    replyUpdate.isEnabled = false
                 }
 
 
