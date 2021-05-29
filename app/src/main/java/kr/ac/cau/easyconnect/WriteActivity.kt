@@ -425,4 +425,6 @@ class WriteActivity : AppCompatActivity() {
 
     }
 
+
+
 }
