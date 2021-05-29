@@ -211,11 +211,16 @@ class WriteActivity : AppCompatActivity() {
 
         // 자동완성 테스트
         val fruits = arrayOf("Apple", "asibal", "ajsuited", "Banana", "cup", "drag", "eight")
-        val autoTextView : AutoCompleteTextView = findViewById(R.id.autoComplete)
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(this,
-        android.R.layout.simple_gallery_item, fruits)
-        autoTextView.threshold = 1
-        autoTextView.setAdapter(adapter)
+        val autoTextView : MultiAutoCompleteTextView = findViewById(R.id.autoComplete)
+        val adapter = AutoSuggestAdapter(this, android.R.layout.simple_list_item_1)
+        ArrayAdapter<String>(this,
+            android.R.layout.simple_gallery_item,
+            fruits
+        ).also { adapter ->
+            autoTextView.setAdapter(adapter)
+            autoTextView.setTokenizer(SpaceTokenizer())
+        }
+
 
 
     }
