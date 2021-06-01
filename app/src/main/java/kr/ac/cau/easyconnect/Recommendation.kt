@@ -1,6 +1,7 @@
 package kr.ac.cau.easyconnect
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -143,6 +144,87 @@ class Recommendation : Fragment() {
                 }
             }
         }
+
+        button_age1.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = arrayAgeHashDTO.get(0).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_age2.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = arrayAgeHashDTO.get(1).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_age3.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = arrayAgeHashDTO.get(2).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_age4.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = arrayAgeHashDTO.get(3).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_age5.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = arrayAgeHashDTO.get(4).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_age6.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = arrayAgeHashDTO.get(5).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_gender1.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = newArrayGenderHashDTO.get(0).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_gender2.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = newArrayGenderHashDTO.get(1).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
+
+        button_gender3.setOnClickListener({
+            val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{
+                val text = newArrayGenderHashDTO.get(2).name.toString()
+                putExtra("text", text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentHashtagPage)
+        })
 
         return view
     }
