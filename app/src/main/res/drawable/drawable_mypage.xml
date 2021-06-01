@@ -4,8 +4,8 @@
 
     <item
         android:drawable="@drawable/mypageicon"
-        android:width="40dp"
-        android:height="40dp"
+        android:width="50dp"
+        android:height="50dp"
         />
 
 </layer-list>

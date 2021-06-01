@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,77 +12,163 @@
         android:orientation="vertical"
         >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            >
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bt_goback"
+                android:background="#00FF0000"
+                android:padding="10dp"
+                android:src="@drawable/backicon"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hardgray"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="vertical"
-            android:layout_weight="1"
             >
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/hardgray"
+                android:textStyle="bold"
+                android:textSize="27dp"
+                android:layout_marginLeft="20dp"
+                android:text="회원가입"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"
+                android:text="■ 이름"/>
+
+            <EditText
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:id="@+id/edit_name"
+                android:hint="이름을 입력하세요."
+                android:background="@drawable/edit_round"
+                android:textAlignment="center"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"
+                android:text="■ 휴대폰 번호"/>
+
+            <EditText
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:id="@+id/edit_phoneNumber"
+                android:layout_marginTop="10dp"
+                android:inputType="numberDecimal"
+                android:maxLength="11"
+                android:textSize="20dp"
+                android:digits="0123456789"
+                android:hint="휴대폰 번호를 입력하세요. (' - ' 제외)"
+                android:background="@drawable/edit_round"
+                android:textAlignment="center"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"
+                android:text="■ 나이"/>
+
+            <EditText
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:inputType="numberDecimal"
+                android:maxLength="3"
+                android:textSize="20dp"
+                android:id="@+id/edit_age"
+                android:hint="나이을 입력하세요."
+                android:background="@drawable/edit_round"
+                android:textAlignment="center"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"
+                android:text="■ 성별"/>
+
+            <RadioGroup
+                android:id="@+id/rg_gender"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                >
-                <EditText
-                    android:layout_width="350dp"
+                android:layout_marginTop="10dp">
+                <RadioButton
+                    android:id="@+id/gender_male"
+                    android:text="남자"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="35dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="150dp"
-                    android:layout_gravity="center"
-                    android:hint="사용할 이메일을 입력해주세요."
-                    android:id="@+id/edit_check_id"
-                    android:textAlignment="center"></EditText>
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_weight="2"
-            >
-
-            <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:id="@+id/edit_check_password"
-                android:hint="비밀번호를 입력하세요">
-            </EditText>
-
-            <EditText
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:id="@+id/edit_check_password2"
-                android:hint="비밀번호를 다시 한 번 입력하세요">
-            </EditText>
-
-            <Button
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_login"
-                android:id="@+id/bt_fin_signup"
-                android:hint="가입 완료">
-            </Button>
+                    android:layout_weight="1"/>
+                <RadioButton
+                    android:id="@+id/gender_female"
+                    android:text="여자"
+                    android:layout_marginRight="35dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </RadioGroup>
 
         </LinearLayout>
-
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="340dp"
+            android:layout_height="60dp"
+            android:background="@drawable/button_login"
+            android:id="@+id/bt_fin_signup"
+            android:textSize="20dp"
+            android:hint="가입 완료">
+        </Button>
+    </LinearLayout>
+
+</RelativeLayout>

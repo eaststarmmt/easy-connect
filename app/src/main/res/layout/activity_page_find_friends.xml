@@ -40,28 +40,18 @@
             android:orientation="vertical"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/hardgray"
-                android:textStyle="bold"
-                android:textSize="27dp"
-                android:layout_marginLeft="20dp"
-                android:text="새 친구 찾기"/>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="15dp"
                 >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="15dp"
                     android:background="@drawable/button_round"
                     android:layout_gravity="center">
                     <TextView
@@ -89,24 +79,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp">
                     <EditText
                         android:layout_width="200dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:gravity="center|bottom"
                         android:id="@+id/edit_searchFriend"
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:hint=" 이름/전화번호 "/>
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:id="@+id/bt_searchFriend"
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:text="검색"/>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/hardgray"/>
 
             </LinearLayout>
 
