@@ -103,7 +103,11 @@ class Page_signup2 : AppCompatActivity() {
                                                     newUserDTO.search = false
                                                     newUserDTO.followed = ""
                                                     newUserDTO.following = ""
-                                                    newUserDTO.age = input_age
+                                                    if(input_age.isNullOrEmpty()){
+                                                        newUserDTO.age = "0"
+                                                    }else{
+                                                        newUserDTO.age = input_age
+                                                    }
                                                     newUserDTO.gender = newGender
 
                                                     // firestore에 newUserDTO 객체 저장
