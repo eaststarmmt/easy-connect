@@ -57,7 +57,7 @@ class WriteActivity : AppCompatActivity() {
     lateinit var imageView : ImageView
     lateinit var imageView2 : ImageView
     lateinit var imageView3 : ImageView
-    lateinit var content: EditText
+    lateinit var content: MultiAutoCompleteTextView
     val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmsss").format(Date())
 
     private var speechRecognizer: SpeechRecognizer? = null
@@ -159,7 +159,25 @@ class WriteActivity : AppCompatActivity() {
             var imgOfDetail : String? = imgNameList[0]
             var imgOfDetail2 : String? = imgNameList[1]
             var imgOfDetail3 : String? = imgNameList[2]
-            //var postid : String? = firebaseAuth!!
+
+
+            var hashtagList : MutableList<String> = mutableListOf() // 해시태그 받을 동적 배열 생성
+            val splitArray = content.text.split(" ")    // 공백을 기준으로 입력된 문자열 전체를 자름
+            for (a in splitArray) {     // 해시태그가 있는지 검사
+                if ('#' in a) {
+                    hashtagList.add(a.substring(a.indexOf("#")))    // #부터 문자열 공백 전까지 문자 받기기
+               }
+            }
+            // 해시태그 등록
+            // TODO: 태그 있는지 조회 후 중복이면 카운팅만 하도록 설계해야됨
+            for (a in hashtagList) {
+                val name : String = a
+                var count = 1
+                val hashtagDTO : HashtagDTO = HashtagDTO(name, count)
+                db.collection("hashtag").document(name).set(hashtagDTO).addOnCompleteListener(this) {
+                    if (it.isSuccessful) {}
+                }
+            }
 
             val postDTO : PostDTO = PostDTO(null, inputContent, name, registered, modified,
                 imgOfDetail, imgOfDetail2, imgOfDetail3)
@@ -208,7 +226,7 @@ class WriteActivity : AppCompatActivity() {
         findViewById<Button>(R.id.record).setOnClickListener {
             startSTTUseActivityResult()
         }
-
+        /*
         // 자동완성 테스트
         val fruits = arrayOf("Apple", "asibal", "ajsuited", "Banana", "cup", "drag", "eight")
         val autoTextView : MultiAutoCompleteTextView = findViewById(R.id.autoComplete)
@@ -221,7 +239,15 @@ class WriteActivity : AppCompatActivity() {
             autoTextView.setTokenizer(SpaceTokenizer())
         }
 
+         */
+        // 자동완성 이 부분은 데이터 들어가면 수정할 예정이니 신경 안쓰셔도 됩니다!!!
+        // TODO: 추천 받을 5개만 골라와야됨
+        val movieObjects = arrayOf(Movie("Avengers:Endgame", 2019), Movie("Captain Marvel", 2019), Movie("Shazam!", 2019), Movie("Spider-Man: Far From Home", 2019), Movie("Dark Phoenix", 2019), Movie("Hellboy", 2019), Movie("Glass", 2019), Movie("Reign of the Superman", 2019), Movie("Brightburn", 2019))
+        val adapter = AutoCompleteAdapter(this, R.layout.item_auto_complete_text_view, movieObjects)
 
+        content.threshold = 1  // 두 글자부터 드롭다운
+        content.setAdapter(adapter)    // 어댑터 설정
+        content.setTokenizer(SpaceTokenizer()) // 공백으로 구분하기 위해
 
     }
     // STT 구현
@@ -291,6 +317,7 @@ class WriteActivity : AppCompatActivity() {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
         }
+
     }
 
     override fun onDestroy() {
@@ -430,6 +457,14 @@ class WriteActivity : AppCompatActivity() {
 
     }
 
+    data class Movie(
+        val name: String,
+        val year: Int
+    ) {
+        override fun toString(): String {
+            return name
+        }
+    }
 
 
 }

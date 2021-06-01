@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
-
+<!--
     <MultiAutoCompleteTextView
         android:id="@+id/autoComplete"
         android:layout_width="match_parent"
@@ -70,16 +70,15 @@
         android:completionThreshold="1"
         android:hint="자동완성"
         android:maxLines="1" />
-
-
-
-    <EditText
+-->
+    <MultiAutoCompleteTextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="15"
         android:gravity="top"
         android:hint="내용을 입력하세요"
+        android:completionThreshold="1"
         android:textSize="30sp" />
 
     <LinearLayout

@@ -2,9 +2,13 @@ package kr.ac.cau.easyconnect
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -89,6 +93,28 @@ class DetailMainActivity : AppCompatActivity() {
                     imgFileName = thisData!!.imageOfDetail
                     imgFileName2 = thisData!!.imageOfDetail2
                     imgFileName3 = thisData!!.imageOfDetail3
+
+                    // 해시태그 글자 다르게 표시
+                    val splitArray = content.text.split(" ")
+                    var hashtagStart : Int = 0
+                    var hashtagEnd : Int = 0
+                    var nowIndex : Int = 0
+                    val span : SpannableString = SpannableString(content.text)  // 빈칸 단위로 쪼갬
+                    for (a in splitArray) { //# 이 있는 경우에 공백까지를 해시태그로 취급하여 파란색 표시
+                        if ('#' in a) {
+                            hashtagStart = nowIndex + a.indexOf("#")
+                            nowIndex += a.length
+                            hashtagEnd = nowIndex
+                            span.setSpan(ForegroundColorSpan(Color.BLUE),
+                                hashtagStart, hashtagEnd, 0)
+                        } else {
+                            nowIndex += a.length
+                        }
+
+                        nowIndex += 1
+                    }
+
+                    content.text = span
 
                     if (imgFileName != null) {
 
