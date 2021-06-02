@@ -122,6 +122,7 @@ class Page_signup2 : AppCompatActivity() {
                                                         newUserDTO.age = input_age
                                                     }
                                                     newUserDTO.gender = newGender
+                                                    newUserDTO.followerCount = 0
 
                                                     // firestore에 newUserDTO 객체 저장
                                                     db.collection("user_information")

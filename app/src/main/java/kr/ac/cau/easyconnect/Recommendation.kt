@@ -8,10 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,14 +58,16 @@ class Recommendation : Fragment() {
         var button_gender1 : Button = view.findViewById(R.id.btn_gender1)
         var button_gender2 : Button = view.findViewById(R.id.btn_gender2)
         var button_gender3 : Button = view.findViewById(R.id.btn_gender3)
+        var image_influencer1 : ImageView = view.findViewById(R.id.img_influencer1)
+        var image_influencer2 : ImageView = view.findViewById(R.id.img_influencer2)
+        var image_influencer3 : ImageView = view.findViewById(R.id.img_influencer3)
+        var text_influencer1 : TextView = view.findViewById(R.id.txt_influencer1)
+        var text_influencer2 : TextView = view.findViewById(R.id.txt_influencer2)
+        var text_influencer3 : TextView = view.findViewById(R.id.txt_influencer3)
 
         var arrayAgeHashDTO : ArrayList<HashDTO> = arrayListOf()
         var arrayGenderHashDTO : ArrayList<HashDTO> = arrayListOf()
         var newArrayGenderHashDTO : ArrayList<HashDTO> = arrayListOf()
-
-        // 권한과 파이어스토어 데이터베이스 객체 받아옴
-        firebaseAuth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
 
         // 현재 정보를 기본적으로 출력하는 부분!
         db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
@@ -97,7 +103,7 @@ class Recommendation : Fragment() {
                     currentAge = "over50"
                     ageStr = "50대 이상"
                 }
-                textView_age.setText("★ " + ageStr + "의 관심사는? ★")
+//                textView_age.setText("★ " + ageStr + "의 관심사는? ★")
 
                 val gender = myDTO!!.gender
 
@@ -144,6 +150,60 @@ class Recommendation : Fragment() {
                 }
             }
         }
+
+        storage = FirebaseStorage.getInstance()
+        val storageReference = storage!!.reference
+        var arrayUserDTO: ArrayList<UserDTO> = arrayListOf()
+
+        db!!.collection("user_information")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                // userDTO 리스트 초기화
+                arrayUserDTO!!.clear()
+
+                for (snapshot in querySnapshot!!.documents) {
+                    var user = snapshot.toObject(UserDTO::class.java)
+                    if(user!!.email != firebaseAuth!!.currentUser.email){
+                        // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음
+                        if(user!!.search == false){
+                            // 검색 불허
+                        }else{
+                            arrayUserDTO!!.add(user!!)
+                        }
+                    }
+                }
+                arrayUserDTO.sortByDescending{it.followerCount}
+
+                var arrayRecommendUserDTO: ArrayList<UserDTO> = arrayListOf()
+                for(index in 0..4){
+                    arrayRecommendUserDTO.add(arrayUserDTO.get(index))
+                }
+
+                Collections.shuffle(arrayRecommendUserDTO)
+
+                // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
+                storageReference.child("user_profile/" + arrayRecommendUserDTO.get(0).photo).downloadUrl.addOnSuccessListener {
+                    Glide.with(this /* context */)
+                        .load(it)
+                        .into(image_influencer1)
+                }
+                text_influencer1.setText(arrayRecommendUserDTO.get(0).name)
+
+                // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
+                storageReference.child("user_profile/" + arrayRecommendUserDTO.get(1).photo).downloadUrl.addOnSuccessListener {
+                    Glide.with(this /* context */)
+                        .load(it)
+                        .into(image_influencer2)
+                }
+                text_influencer2.setText(arrayRecommendUserDTO.get(1).name)
+
+                // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
+                storageReference.child("user_profile/" + arrayRecommendUserDTO.get(2).photo).downloadUrl.addOnSuccessListener {
+                    Glide.with(this /* context */)
+                        .load(it)
+                        .into(image_influencer3)
+                }
+                text_influencer3.setText(arrayRecommendUserDTO.get(2).name)
+            }
 
         button_age1.setOnClickListener({
             val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{

@@ -37,7 +37,6 @@
         android:textColor="@color/hardgray"
         android:textStyle="bold"
         android:textSize="27dp"
-        android:layout_marginLeft="20dp"
         android:text="해시태그"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -49,7 +48,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="5dp"

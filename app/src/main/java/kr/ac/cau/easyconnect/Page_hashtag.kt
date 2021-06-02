@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -41,7 +42,7 @@ class Page_hashtag : AppCompatActivity() {
         var hashtagPageName: TextView = findViewById(R.id.txt_hashtag_page_name)
 
         recycler_view.adapter = HashtagAdapter()
-        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = GridLayoutManager(this, 3)
 
         text = intent.getStringExtra("text") as String
         hashtagPageName.setText(text)
@@ -96,7 +97,8 @@ class Page_hashtag : AppCompatActivity() {
             var view: View = v
             var hashtagLayout: View = view.findViewById(R.id.layout_hashtag_item)
             var hashtagImage: ImageView = view.findViewById(R.id.img_hashtag)
-            var hashtagText: TextView = view.findViewById(R.id.txt_hashtag)
+            var hashtagName : TextView = view.findViewById(R.id.txt_hashtag_name)
+//            var hashtagText: TextView = view.findViewById(R.id.txt_hashtag)
 
             var userDTO = UserDTO()
             var content : String? = null
@@ -109,28 +111,39 @@ class Page_hashtag : AppCompatActivity() {
                         .load(it)
                         .into(hashtagImage)
                 }
+
                 content = item.content
                 val split_contents = content!!.split(" ").toMutableList() as java.util.ArrayList
-                var hashtag_contents : ArrayList<String> = arrayListOf()
-                for (splited_content in split_contents){
-                    if("#" in splited_content){
-                        val split_contents2 = splited_content.split("#").toMutableList() as java.util.ArrayList
-                        hashtag_contents.add("#" + split_contents2[1])
+                if(item.imageOfDetail.isNullOrEmpty()){
+                    var content_name : ArrayList<String> = arrayListOf()
+                    for (i in 0..1){
+                        content_name.add(split_contents.get(i))
                     }
+                    val final_content_name = content_name.joinToString(separator = "\n")
+                    hashtagName.setText(final_content_name)
                 }
-                for(index in (0..hashtag_contents.size-1)){
-                    if(hashtag_contents[index] == text){
-                        if(index == 0){
-                            break
-                        }else{
-                            Collections.swap(hashtag_contents, 0, index)
-                            break
-                        }
-                    }
-                }
-                val final_hashtag_contents = hashtag_contents.joinToString(separator = "  ")
 
-                hashtagText.setText(final_hashtag_contents)
+                // 해시태그만 출력하는 부분
+//                var hashtag_contents : ArrayList<String> = arrayListOf()
+//                for (splited_content in split_contents){
+//                    if("#" in splited_content){
+//                        val split_contents2 = splited_content.split("#").toMutableList() as java.util.ArrayList
+//                        hashtag_contents.add("#" + split_contents2[1])
+//                    }
+//                }
+//                for(index in (0..hashtag_contents.size-1)){
+//                    if(hashtag_contents[index] == text){
+//                        if(index == 0){
+//                            break
+//                        }else{
+//                            Collections.swap(hashtag_contents, 0, index)
+//                            break
+//                        }
+//                    }
+//                }
+//                val final_hashtag_contents = hashtag_contents.joinToString(separator = "  ")
+//
+//                hashtagText.setText(final_hashtag_contents)
 
                 // 게시 글을 클릭 했을 때!! 게시 글 페이지로 이동해야 한다.
 
