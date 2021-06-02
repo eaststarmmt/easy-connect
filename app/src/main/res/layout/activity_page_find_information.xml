@@ -80,7 +80,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:textSize="21dp"
+                android:textSize="20dp"
                 android:background="@drawable/button_find"
                 android:id="@+id/bt_find_id"
                 android:hint="아이디 찾기">
@@ -136,7 +136,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:textSize="21dp"
+                android:textSize="20dp"
                 android:background="@drawable/button_find"
                 android:id="@+id/bt_find_password"
                 android:hint="비밀번호 재설정">

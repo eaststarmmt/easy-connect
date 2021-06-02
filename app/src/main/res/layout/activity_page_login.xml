@@ -65,7 +65,7 @@
                         android:layout_gravity="center"
                         android:textSize="20dp"
                         android:id="@+id/edit_id"
-                        android:background="@drawable/edit_round"
+                        android:background="@drawable/button_keyword_round"
                         android:hint="ID를 입력하세요.">
                     </EditText>
                 </LinearLayout>
@@ -85,7 +85,7 @@
                         android:textSize="20dp"
                         android:id="@+id/edit_password"
                         android:inputType="textPassword"
-                        android:background="@drawable/edit_round"
+                        android:background="@drawable/button_keyword_round"
                         android:hint="비밀번호를 입력하세요.">
                     </EditText>
                 </LinearLayout>

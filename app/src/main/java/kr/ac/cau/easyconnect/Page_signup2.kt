@@ -1,12 +1,10 @@
 package kr.ac.cau.easyconnect
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +21,7 @@ class Page_signup2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page_signup2)
 
+        var button_goback : ImageButton = findViewById(R.id.bt_goback)
         var button_fin_signup : Button = findViewById(R.id.bt_fin_signup)
         var editText_phoneNumber : EditText = findViewById(R.id.edit_phoneNumber)
         var editText_name : EditText = findViewById(R.id.edit_name)
@@ -47,6 +46,20 @@ class Page_signup2 : AppCompatActivity() {
                 Toast.makeText(this, "여자", Toast.LENGTH_SHORT).show()
             }
         }
+
+        button_goback.setOnClickListener({
+            // 뒤로 버튼 클릭 시 되돌아가는 여부 체크하고 확인 누르면 로그인 페이지로 이동
+            var builder_dialog = AlertDialog.Builder(this);
+            builder_dialog.setTitle("내용이 저장되지 않습니다. 돌아가시겠습니까?"); // 다이얼로그 제목
+            var listener = DialogInterface.OnClickListener { dialog, which ->
+                val intentSignUp = Intent(this, Page_signup::class.java)
+                startActivity(intentSignUp)
+                finish()
+            }
+            builder_dialog.setPositiveButton("확인", listener)
+            builder_dialog.setNegativeButton("취소", null)
+            builder_dialog.show(); // 다이얼로그 보이기
+        })
 
         button_fin_signup.setOnClickListener({
             var input_phoneNumber = editText_phoneNumber.text.trim().toString()
@@ -103,7 +116,11 @@ class Page_signup2 : AppCompatActivity() {
                                                     newUserDTO.search = false
                                                     newUserDTO.followed = ""
                                                     newUserDTO.following = ""
-                                                    newUserDTO.age = input_age
+                                                    if(input_age.isNullOrEmpty()){
+                                                        newUserDTO.age = "0"
+                                                    }else{
+                                                        newUserDTO.age = input_age
+                                                    }
                                                     newUserDTO.gender = newGender
 
                                                     // firestore에 newUserDTO 객체 저장
@@ -148,6 +165,21 @@ class Page_signup2 : AppCompatActivity() {
 
         })
 
+    }
+
+    override fun onBackPressed() {
+        // 뒤로 버튼 클릭 시 되돌아가는 여부 체크하고 확인 누르면 로그인 페이지로 이동
+        var builder_dialog = AlertDialog.Builder(this);
+        builder_dialog.setTitle("내용이 저장되지 않습니다. 돌아가시겠습니까?"); // 다이얼로그 제목
+        var listener = DialogInterface.OnClickListener { dialog, which ->
+
+            val intentSignUp = Intent(this, Page_signup::class.java)
+            startActivity(intentSignUp)
+            finish()
+        }
+        builder_dialog.setPositiveButton("확인", listener)
+        builder_dialog.setNegativeButton("취소", null)
+        builder_dialog.show(); // 다이얼로그 보이기
     }
 
 }
