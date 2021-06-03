@@ -8,6 +8,7 @@ import android.content.ClipData
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
+import android.graphics.Movie
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +64,13 @@ class WriteActivity : AppCompatActivity() {
     private var speechRecognizer: SpeechRecognizer? = null
     private var REQUEST_CODE = 1
 
+    lateinit var userData : UserDTO
+    lateinit var age : String
+    lateinit var gender : String
+
+    lateinit var checkAge : String
+    lateinit var checkGender : String
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +89,19 @@ class WriteActivity : AppCompatActivity() {
         imageView2 = findViewById(R.id.imageView2)
         imageView3 = findViewById(R.id.imageView3)
 
+        //연령대 미리 받아두기
+        db.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+            for (dc in it.result!!.documents) {
+                var data = dc.toObject(UserDTO::class.java)
+                if (data != null) {
+                    userData = data
+                }
+                break
+            }
+
+            age = userData!!.age.toString()
+            gender = userData!!.gender.toString()
+        }
 
         findViewById<ImageButton>(R.id.back).setOnClickListener {
 
@@ -106,26 +127,7 @@ class WriteActivity : AppCompatActivity() {
             dialog.setNegativeButton("취소", null)
             dialog.show()
         }
-        /*
-        // 앨범버튼 눌렀을 때
-        findViewById<Button>(R.id.album).setOnClickListener {
 
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_GALLERY_TAKE)
-        }
-        */
-
-         */
-
-         /*
-        // 카메라 촬영 버튼 눌렀을 때
-        findViewById<Button>(R.id.photoButton).setOnClickListener {
-            takePicture()
-        }
-        */
         // 사진추가
         findViewById<Button>(R.id.photo).setOnClickListener {
             val dialog = AlertDialog.Builder(this)
@@ -160,6 +162,11 @@ class WriteActivity : AppCompatActivity() {
             var imgOfDetail2 : String? = imgNameList[1]
             var imgOfDetail3 : String? = imgNameList[2]
 
+            // 하나씩 검사하면서 등록이 안돼서 따로 배열 만들고 나중에 등록하기 위한 동적 배열 생성
+            var genderList : ArrayList<HashDTO> = arrayListOf() // 성별 해시태그 받을 동적 배열 생성
+            var ageList : ArrayList<HashDTO> = arrayListOf() // 나이 해시태그 받을 동적 배열 생성
+            var totalDTOList : ArrayList<HashDTO> = arrayListOf() // total 해시태그 받을 동적 배열 생성
+            var totalList : MutableList<String> = mutableListOf()
 
             var hashtagList : MutableList<String> = mutableListOf() // 해시태그 받을 동적 배열 생성
             val splitArray = content.text.split(" ")    // 공백을 기준으로 입력된 문자열 전체를 자름
@@ -170,15 +177,127 @@ class WriteActivity : AppCompatActivity() {
             }
             // 해시태그 등록
             // TODO: 태그 있는지 조회 후 중복이면 카운팅만 하도록 설계해야됨
-            for (a in hashtagList) {
-                val name : String = a
-                var count = 1
-                val hashtagDTO : HashtagDTO = HashtagDTO(name, count)
-                db.collection("hashtag").document(name).set(hashtagDTO).addOnCompleteListener(this) {
-                    if (it.isSuccessful) {}
+            var htDTO : HashDTO? = null
+
+            // 전체 total case
+            for (ht in hashtagList) {
+                db.collection("hashtag/total/name").whereEqualTo("name", ht).get().addOnCompleteListener{
+                    htDTO = null
+                    if(it.isSuccessful){
+                        for (dc in it.result!!.documents) {
+                            htDTO = dc.toObject(HashDTO::class.java)
+                            break
+                        }
+
+                        var map = mutableMapOf<String, Any?>()
+                        if(htDTO != null){
+                            map["count"] = htDTO!!.count!!.toInt() + 1
+
+                            db.collection("hashtag/total/name").document(
+                                ht
+                            ).update(map)
+                        }
+                        else{
+                            var new_count = 1
+                            val new_htDTO = HashDTO(ht, new_count)
+                            db.collection("hashtag/total/name").document(ht).set(new_htDTO)
+                        }
+                    }
                 }
             }
 
+            var myDTO = UserDTO()
+            db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    for (dc in it.result!!.documents) {
+                        myDTO = dc.toObject(UserDTO::class.java)!!
+                        break
+                    }
+
+                    val age = myDTO.age!!.toInt()
+                    var current_age : String? = null
+                    if(age < 20){
+                        // 20세 미만
+                        current_age = "upto20"
+                    }else if(age < 30){
+                        // 20대
+                        current_age = "age20s"
+                    }else if(age < 40){
+                        // 30대
+                        current_age = "age30s"
+                    }else if(age < 50){
+                        // 40대
+                        current_age = "age40s"
+                    }else{
+                        // 50대 이상
+                        current_age = "over50"
+                    }
+
+                    // 나이 case
+                    for (ht in hashtagList) {
+                        db.collection("hashtag/" + current_age + "/name").whereEqualTo("name", ht).get().addOnCompleteListener{ query ->
+                            htDTO = null
+
+                            if(query.isSuccessful){
+                                for (dc in query.result!!.documents) {
+                                    htDTO = dc.toObject(HashDTO::class.java)
+                                    break
+                                }
+
+                                var map = mutableMapOf<String, Any?>()
+                                if(htDTO != null){
+                                    map["count"] = htDTO!!.count!!.toInt() + 1
+
+                                    db.collection("hashtag/" + current_age + "/name").document(
+                                        ht
+                                    ).update(map)
+                                }
+                                else{
+                                    var new_count = 1
+                                    val new_htDTO = HashDTO(ht, new_count)
+                                    db.collection("hashtag/" + current_age + "/name").document(ht).set(new_htDTO)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            var myDTO2 = UserDTO()
+            db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    for (dc in it.result!!.documents) {
+                        myDTO2 = dc.toObject(UserDTO::class.java)!!
+                        break
+                    }
+                    val current_gender = myDTO2.gender
+
+                    // 성별 case
+                    for (ht in hashtagList) {
+                        db.collection("hashtag/" + current_gender + "/name").whereEqualTo("name", ht).get().addOnCompleteListener{ query ->
+                            htDTO = null
+                            if(query.isSuccessful){
+                                for (dc in query.result!!.documents) {
+                                    htDTO = dc.toObject(HashDTO::class.java)
+                                    break
+                                }
+
+                                var map = mutableMapOf<String, Any?>()
+                                if(htDTO != null){
+                                    map["count"] = htDTO!!.count!!.toInt() + 1
+
+                                    db.collection("hashtag/" + current_gender + "/name").document(ht).update(map)
+                                }
+                                else{
+                                    var new_count = 1
+                                    val new_htDTO = HashDTO(ht, new_count)
+                                    db.collection("hashtag/" + current_gender + "/name").document(ht).set(new_htDTO)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             val postDTO : PostDTO = PostDTO(null, inputContent, name, registered, modified,
                 imgOfDetail, imgOfDetail2, imgOfDetail3)
 
