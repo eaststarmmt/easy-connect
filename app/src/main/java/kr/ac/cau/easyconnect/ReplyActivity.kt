@@ -230,7 +230,7 @@ class ReplyActivity : AppCompatActivity() {
             val currentDateTime : Long  = System.currentTimeMillis()
             var registered : Long = System.currentTimeMillis()
             var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
-            val emoticon : String = "amazing"
+            val emoticon : String = "good"
 
             val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
