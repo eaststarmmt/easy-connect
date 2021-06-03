@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/noicon"
-        android:width="280dp"
-        android:height="280dp"
+        android:width="109dp"
+        android:height="109dp"
         />
 
 </layer-list>

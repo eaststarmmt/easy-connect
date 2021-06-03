@@ -209,6 +209,9 @@ class Page_find_friends : AppCompatActivity() {
                                     // 친구의 팔로워 수 >= 1명
                                     item.followed = item.followed + ',' + me.email
                                 }
+                                val friend_followed = item.followed!!.split(",").toMutableList() as java.util.ArrayList
+                                item.followerCount = friend_followed.size
+
                                 db!!.collection("user_information").document(me.uid.toString()).delete()
                                 db!!.collection("user_information").document(item.uid.toString()).delete()
                                 db!!.collection("user_information").document(me.uid.toString()).set(me)
@@ -245,6 +248,8 @@ class Page_find_friends : AppCompatActivity() {
                                         break
                                     }
                                 }
+                                item.followerCount = friend_followed.size
+
                                 val friend_followed_fin = friend_followed.joinToString(separator = ",")
                                 item.followed = friend_followed_fin
 

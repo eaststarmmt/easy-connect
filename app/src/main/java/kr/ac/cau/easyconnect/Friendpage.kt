@@ -165,6 +165,7 @@ class Friendpage : Fragment() {
                         }
                         val friend_followed = userDTO!!.followed!!.split(",").toMutableList() as ArrayList
                         friendCounter = friend_followed.size
+                        userDTO!!.followerCount = friendCounter
                         txt_followCount.setText("친구의 팬 : " + friendCounter)
                         db!!.collection("user_information").document(me.uid.toString()).delete()
                         db!!.collection("user_information").document(me.uid.toString()).set(me)
@@ -198,6 +199,7 @@ class Friendpage : Fragment() {
                             }
                         }
                         friendCounter = friend_followed.size
+                        userDTO!!.followerCount = friendCounter
                         txt_followCount.setText("친구의 팬 : " + friendCounter)
                         val friend_followed_fin = friend_followed.joinToString(separator = ",")
                         userDTO!!.followed = friend_followed_fin
