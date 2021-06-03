@@ -182,6 +182,7 @@ class WriteActivity : AppCompatActivity() {
             // 전체 total case
             for (ht in hashtagList) {
                 db.collection("hashtag/total/name").whereEqualTo("name", ht).get().addOnCompleteListener{
+                    htDTO = null
                     if(it.isSuccessful){
                         for (dc in it.result!!.documents) {
                             htDTO = dc.toObject(HashDTO::class.java)
@@ -235,6 +236,8 @@ class WriteActivity : AppCompatActivity() {
                     // 나이 case
                     for (ht in hashtagList) {
                         db.collection("hashtag/" + current_age + "/name").whereEqualTo("name", ht).get().addOnCompleteListener{ query ->
+                            htDTO = null
+
                             if(query.isSuccessful){
                                 for (dc in query.result!!.documents) {
                                     htDTO = dc.toObject(HashDTO::class.java)
@@ -272,6 +275,7 @@ class WriteActivity : AppCompatActivity() {
                     // 성별 case
                     for (ht in hashtagList) {
                         db.collection("hashtag/" + current_gender + "/name").whereEqualTo("name", ht).get().addOnCompleteListener{ query ->
+                            htDTO = null
                             if(query.isSuccessful){
                                 for (dc in query.result!!.documents) {
                                     htDTO = dc.toObject(HashDTO::class.java)
