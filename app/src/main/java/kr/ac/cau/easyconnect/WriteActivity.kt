@@ -380,7 +380,7 @@ class WriteActivity : AppCompatActivity() {
                             }
                             hashObject.sortByDescending { it!!.year }
                             val adapter = AutoCompleteAdapter(this, R.layout.item_auto_complete_text_view, hashObject)
-                            content.threshold = 1  // 두 글자부터 드롭다운
+                            content.threshold = 2  // 두 글자부터 드롭다운
                             content.setAdapter(adapter)
                             content.setTokenizer(SpaceTokenizer())
                         }
