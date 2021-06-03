@@ -2,13 +2,11 @@ package kr.ac.cau.easyconnect
 
 import android.Manifest
 import android.app.Activity
-import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.ImageDecoder
-import android.graphics.Movie
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -26,17 +24,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.io.IOException
-import java.net.URI
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.thread
 
 class WriteActivity : AppCompatActivity() {
 
@@ -161,12 +155,6 @@ class WriteActivity : AppCompatActivity() {
             var imgOfDetail : String? = imgNameList[0]
             var imgOfDetail2 : String? = imgNameList[1]
             var imgOfDetail3 : String? = imgNameList[2]
-
-            // 하나씩 검사하면서 등록이 안돼서 따로 배열 만들고 나중에 등록하기 위한 동적 배열 생성
-            var genderList : ArrayList<HashDTO> = arrayListOf() // 성별 해시태그 받을 동적 배열 생성
-            var ageList : ArrayList<HashDTO> = arrayListOf() // 나이 해시태그 받을 동적 배열 생성
-            var totalDTOList : ArrayList<HashDTO> = arrayListOf() // total 해시태그 받을 동적 배열 생성
-            var totalList : MutableList<String> = mutableListOf()
 
             var hashtagList : MutableList<String> = mutableListOf() // 해시태그 받을 동적 배열 생성
             val splitArray = content.text.split(" ")    // 공백을 기준으로 입력된 문자열 전체를 자름
@@ -349,28 +337,64 @@ class WriteActivity : AppCompatActivity() {
         findViewById<Button>(R.id.record).setOnClickListener {
             startSTTUseActivityResult()
         }
-        /*
-        // 자동완성 테스트
-        val fruits = arrayOf("Apple", "asibal", "ajsuited", "Banana", "cup", "drag", "eight")
-        val autoTextView : MultiAutoCompleteTextView = findViewById(R.id.autoComplete)
-        val adapter = AutoSuggestAdapter(this, android.R.layout.simple_list_item_1)
-        ArrayAdapter<String>(this,
-            android.R.layout.simple_gallery_item,
-            fruits
-        ).also { adapter ->
-            autoTextView.setAdapter(adapter)
-            autoTextView.setTokenizer(SpaceTokenizer())
+        //연령별 리스트 불러오기
+        var myDTO = UserDTO()
+        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                for (dc in it.result!!.documents) {
+                    myDTO = dc.toObject(UserDTO::class.java)!!
+                    break
+                }
+
+                val age = myDTO.age!!.toInt()
+                var current_age: String? = null
+                if (age < 20) {
+                    // 20세 미만
+                    current_age = "upto20"
+                } else if (age < 30) {
+                    // 20대
+                    current_age = "age20s"
+                } else if (age < 40) {
+                    // 30대
+                    current_age = "age30s"
+                } else if (age < 50) {
+                    // 40대
+                    current_age = "age40s"
+                } else {
+                    // 50대 이상
+                    current_age = "over50"
+                }
+                db.collection("hashtag/" + current_age + "/name").get()
+                    .addOnCompleteListener { query ->
+                        var hashDTO: HashDTO? = null
+                        var nameObject: MutableList<String> = mutableListOf()
+                        var countObject: MutableList<Int> = mutableListOf()
+                        var hashObject : MutableList<WriteActivity.Movie?> = mutableListOf()
+
+                        if (query.isSuccessful) {
+                            var i = 0
+                            for (dc in query.result!!.documents) {
+                                hashDTO = dc.toObject(HashDTO::class.java)
+                                hashObject.add(Movie(hashDTO!!.name.toString(), hashDTO!!.count!!.toInt()))
+
+                            }
+                            hashObject.sortByDescending { it!!.year }
+                            val adapter = AutoCompleteAdapter(this, R.layout.item_auto_complete_text_view, hashObject)
+                            content.threshold = 1  // 두 글자부터 드롭다운
+                            content.setAdapter(adapter)
+                            content.setTokenizer(SpaceTokenizer())
+                        }
+                    }
+            }
         }
-
-         */
-        // 자동완성 이 부분은 데이터 들어가면 수정할 예정이니 신경 안쓰셔도 됩니다!!!
-        // TODO: 추천 받을 5개만 골라와야됨
-        val movieObjects = arrayOf(Movie("Avengers:Endgame", 2019), Movie("Captain Marvel", 2019), Movie("Shazam!", 2019), Movie("Spider-Man: Far From Home", 2019), Movie("Dark Phoenix", 2019), Movie("Hellboy", 2019), Movie("Glass", 2019), Movie("Reign of the Superman", 2019), Movie("Brightburn", 2019))
-        val adapter = AutoCompleteAdapter(this, R.layout.item_auto_complete_text_view, movieObjects)
-
+/*
         content.threshold = 1  // 두 글자부터 드롭다운
         content.setAdapter(adapter)    // 어댑터 설정
         content.setTokenizer(SpaceTokenizer()) // 공백으로 구분하기 위해
+
+ */
+
+
 
     }
     // STT 구현
