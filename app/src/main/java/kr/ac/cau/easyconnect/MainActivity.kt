@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         button_menu.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)
             startActivity(intentMenu)
-            finish()
         })
 
         button_post.setOnClickListener{
@@ -84,7 +83,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     override fun onBackPressed(){
         // 회원탈퇴 후 뒤로가는 기능 막기 위함

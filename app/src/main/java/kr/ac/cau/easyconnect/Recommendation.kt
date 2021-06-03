@@ -2,6 +2,8 @@ package kr.ac.cau.easyconnect
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -186,7 +188,21 @@ class Recommendation : Fragment() {
                         .load(it)
                         .into(image_influencer1)
                 }
+                image_influencer1.setBackground(ShapeDrawable(OvalShape()))
+                image_influencer1.setClipToOutline(true)
                 text_influencer1.setText(arrayRecommendUserDTO.get(0).name)
+
+                image_influencer1.setOnClickListener{
+                    // 친구의 마이 페이지로 가야함!
+                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                        val data = arrayRecommendUserDTO.get(0).email
+                        val flag = "friend"
+                        putExtra("friendEmail", data)
+                        putExtra("flag", flag)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intentFriendPage)
+                }
 
                 // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
                 storageReference.child("user_profile/" + arrayRecommendUserDTO.get(1).photo).downloadUrl.addOnSuccessListener {
@@ -194,7 +210,21 @@ class Recommendation : Fragment() {
                         .load(it)
                         .into(image_influencer2)
                 }
+                image_influencer2.setBackground(ShapeDrawable(OvalShape()))
+                image_influencer2.setClipToOutline(true)
                 text_influencer2.setText(arrayRecommendUserDTO.get(1).name)
+
+                image_influencer2.setOnClickListener{
+                    // 친구의 마이 페이지로 가야함!
+                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                        val data = arrayRecommendUserDTO.get(1).email
+                        val flag = "friend"
+                        putExtra("friendEmail", data)
+                        putExtra("flag", flag)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intentFriendPage)
+                }
 
                 // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
                 storageReference.child("user_profile/" + arrayRecommendUserDTO.get(2).photo).downloadUrl.addOnSuccessListener {
@@ -202,7 +232,21 @@ class Recommendation : Fragment() {
                         .load(it)
                         .into(image_influencer3)
                 }
+                image_influencer3.setBackground(ShapeDrawable(OvalShape()))
+                image_influencer3.setClipToOutline(true)
                 text_influencer3.setText(arrayRecommendUserDTO.get(2).name)
+
+                image_influencer3.setOnClickListener{
+                    // 친구의 마이 페이지로 가야함!
+                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                        val data = arrayRecommendUserDTO.get(2).email
+                        val flag = "friend"
+                        putExtra("friendEmail", data)
+                        putExtra("flag", flag)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intentFriendPage)
+                }
             }
 
         button_age1.setOnClickListener({

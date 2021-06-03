@@ -7,4 +7,5 @@ data class UserDTO(var email:String? = null, var password:String? = null,
                    var photo:String? = null, var uid:String? = null,
                    var search:Boolean? = false, var following:String? = null,
                    var followed:String? = null, var gender:String? = null,
-                   var age:String? = null, var followerCount:Int? = 0)
+                   var age:String? = null, var followerCount:Int? = 0,
+                   var newPost:Int? = 0)

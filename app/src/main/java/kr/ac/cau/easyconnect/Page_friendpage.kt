@@ -82,8 +82,8 @@ class Page_friendpage : AppCompatActivity() {
         if(flag == "find"){
             finish()
         }else{
-            val intentMain = Intent(this, MainActivity::class.java)
-            startActivity(intentMain)
+//            val intentMain = Intent(this, MainActivity::class.java)
+//            startActivity(intentMain)
             finish()
         }
     }

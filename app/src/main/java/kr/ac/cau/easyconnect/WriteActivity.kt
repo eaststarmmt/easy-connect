@@ -202,6 +202,8 @@ class WriteActivity : AppCompatActivity() {
                             loadingAnimDialog.show()
                             Handler().postDelayed({
                                 loadingAnimDialog.dismiss()
+                                val intentMain = Intent(this, MainActivity::class.java)
+                                startActivity(intentMain)
                                 finish()
                             }, 15000)
 
@@ -213,6 +215,8 @@ class WriteActivity : AppCompatActivity() {
                 }else{
                     db.collection("post").document(registered).set(postDTO).addOnCompleteListener(this){
                         if (it.isSuccessful) {
+                            val intentMain = Intent(this, MainActivity::class.java)
+                            startActivity(intentMain)
                             finish()
                         }else {
                             Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -270,6 +274,8 @@ class WriteActivity : AppCompatActivity() {
         dialog.setTitle("작성된 내용이 저장되지 않을수 있습니다.\n종료하시겠습니까? ")
         // 확인시 종료 처리 할 리스너
         var listener = DialogInterface.OnClickListener { dialog, i ->
+            val intentMain = Intent(this, MainActivity::class.java)
+            startActivity(intentMain)
             finish()
         }
         dialog.setPositiveButton("확인", listener)
