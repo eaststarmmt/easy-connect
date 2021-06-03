@@ -90,6 +90,8 @@ class Friends : Fragment() {
                                     }
                                 }
                             }
+                            arrayUserDTO.sortByDescending{it.newPost!!.toInt()}
+
                             notifyDataSetChanged()
                         }
                 }
@@ -155,24 +157,43 @@ class Friends : Fragment() {
                                     parsing_now_date[2].toInt() - parsing_lastDate_date[2].toInt()
 
                                 // 날짜 수정
-                                if (detailDateFromNow_year > 0) {
-                                    // 작년 혹은 그 이전 게시물
-                                    friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
-                                } else {
+                                if (detailDateFromNow_year  == 0){
                                     // 올해 게시물
                                     if (detailDateFromNow_month == 0) {
                                         // 같은 달
                                         if (detailDateFromNow_day == 0) {
                                             friendNewImage.setBackgroundResource(R.drawable.drawable_new_friend)
-                                        } else if (detailDateFromNow_day > 3) {
-                                            friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                            item.newPost = 1
+
+                                            db!!.collection("user_information").document(item.uid!!).delete()
+                                            db!!.collection("user_information").document(item.uid!!).set(item)
                                         } else {
                                             friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                            item.newPost = 0
+
+                                            db!!.collection("user_information").document(item.uid!!).delete()
+                                            db!!.collection("user_information").document(item.uid!!).set(item)
                                         }
-                                    } else {
+                                    } else{
                                         friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                        item.newPost = 0
+
+                                        db!!.collection("user_information").document(item.uid!!).delete()
+                                        db!!.collection("user_information").document(item.uid!!).set(item)
                                     }
+                                }else{
+                                    friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                    item.newPost = 0
+
+                                    db!!.collection("user_information").document(item.uid!!).delete()
+                                    db!!.collection("user_information").document(item.uid!!).set(item)
                                 }
+                            }else{
+                                friendNewImage.setBackgroundResource(R.drawable.drawable_empty)
+                                item.newPost = 0
+
+                                db!!.collection("user_information").document(item.uid!!).delete()
+                                db!!.collection("user_information").document(item.uid!!).set(item)
                             }
                             notifyDataSetChanged()
                         }
