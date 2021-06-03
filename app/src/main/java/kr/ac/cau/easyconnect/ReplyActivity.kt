@@ -143,7 +143,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -166,7 +166,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -189,7 +189,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -212,7 +212,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -236,7 +236,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -260,7 +260,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -284,7 +284,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -308,7 +308,7 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -332,7 +332,78 @@ class ReplyActivity : AppCompatActivity() {
             db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
                 //글이 정상적으로 작성 됐을 때
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // 멋지소 이모티콘 클릭
+        findViewById<ImageView>(R.id.nice).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "nice"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        // 슬퍼 이모티콘 클릭
+        findViewById<ImageView>(R.id.sad).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "sad"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                    hideKeyboard()
+                    hideEmoticon()
+                    replyContent!!.text = null
+                } else {
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // 화나 이모티콘 클릭
+        findViewById<ImageView>(R.id.upset).setOnClickListener {
+            var inputReply = null
+            var name = firebaseAuth!!.currentUser.email
+            // 현재 시간 출력
+            val currentDateTime : Long  = System.currentTimeMillis()
+            var registered : Long = System.currentTimeMillis()
+            var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+            val emoticon : String = "upset"
+
+            val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+            db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                //글이 정상적으로 작성 됐을 때
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
                     replyContent!!.text = null
@@ -448,7 +519,9 @@ class ReplyActivity : AppCompatActivity() {
                         "curiosity" -> emoticon.setImageResource(R.drawable.emo_curiosity)
                         "hi" -> emoticon.setImageResource(R.drawable.emo_hi)
                         "love" -> emoticon.setImageResource(R.drawable.emo_love)
-
+                        "nice" -> emoticon.setImageResource(R.drawable.emo_nice)
+                        "sad" -> emoticon.setImageResource(R.drawable.emo_sad)
+                        "upset" -> emoticon.setImageResource(R.drawable.emo_upset)
                     }
                     // 이모티콘 사용시 수정버튼 비활성화
                     replyUpdate.isEnabled = false
