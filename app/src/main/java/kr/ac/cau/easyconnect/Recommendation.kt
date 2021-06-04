@@ -121,13 +121,10 @@ class Recommendation : Fragment() {
                     button_age1.setText(arrayAgeHashDTO.get(0).name.toString())
                     button_age2.setText(arrayAgeHashDTO.get(1).name.toString())
                     button_age3.setText(arrayAgeHashDTO.get(2).name.toString())
-                    /*
                     button_age4.setText(arrayAgeHashDTO.get(3).name.toString())
                     button_age5.setText(arrayAgeHashDTO.get(4).name.toString())
                     button_age6.setText(arrayAgeHashDTO.get(5).name.toString())
 
-
-                     */
                     db!!.collection("hashtag/" + gender + "/name").addSnapshotListener{ querySnapshot, firebaseFirestoreException ->
                         arrayGenderHashDTO.clear()
                         for(snapshot in querySnapshot!!.documents!!){

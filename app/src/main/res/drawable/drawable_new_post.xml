@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/newicon_post"
-        android:width="50dp"
-        android:height="50dp"
+        android:width="60dp"
+        android:height="60dp"
         />
 
 </layer-list>
