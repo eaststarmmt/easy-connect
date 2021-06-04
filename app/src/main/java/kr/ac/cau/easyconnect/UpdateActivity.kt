@@ -140,22 +140,155 @@ class UpdateActivity : AppCompatActivity() {
 //            db.collection("post").document(postDTO!!.modified.toString()).delete()
             postDTO!!.content = content.text.trim().toString()
 //            postDTO!!.modified = LocalDateTime.now().toString()
+            // 해시태그 등록
+            var hashtagList : MutableList<String> = mutableListOf() // 해시태그 받을 동적 배열 생성
+            val splitArray = content.text.split(" ")    // 공백을 기준으로 입력된 문자열 전체를 자름
+            for (a in splitArray) {     // 해시태그가 있는지 검사
+                if ('#' in a) {
+                    hashtagList.add(a.substring(a.indexOf("#")))    // #부터 문자열 공백 전까지 문자 받기기
+                }
+            }
+            var htDTO : HashDTO? = null
+
+            // 전체 total case
+            for (ht in hashtagList) {
+                db.collection("hashtag/total/name").whereEqualTo("name", ht).get().addOnCompleteListener{
+                    htDTO = null
+                    if(it.isSuccessful){
+                        for (dc in it.result!!.documents) {
+                            htDTO = dc.toObject(HashDTO::class.java)
+                            break
+                        }
+
+                        var map = mutableMapOf<String, Any?>()
+                        if(htDTO != null){
+                            map["count"] = htDTO!!.count!!.toInt() + 1
+
+                            db.collection("hashtag/total/name").document(
+                                ht
+                            ).update(map)
+                        }
+                        else{
+                            var new_count = 1
+                            val new_htDTO = HashDTO(ht, new_count)
+                            db.collection("hashtag/total/name").document(ht).set(new_htDTO)
+                        }
+                    }
+                }
+            }
+
+            var myDTO = UserDTO()
+            db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    for (dc in it.result!!.documents) {
+                        myDTO = dc.toObject(UserDTO::class.java)!!
+                        break
+                    }
+
+                    val age = myDTO.age!!.toInt()
+                    var current_age : String? = null
+                    if(age < 20){
+                        // 20세 미만
+                        current_age = "upto20"
+                    }else if(age < 30){
+                        // 20대
+                        current_age = "age20s"
+                    }else if(age < 40){
+                        // 30대
+                        current_age = "age30s"
+                    }else if(age < 50){
+                        // 40대
+                        current_age = "age40s"
+                    }else{
+                        // 50대 이상
+                        current_age = "over50"
+                    }
+
+                    // 나이 case
+                    for (ht in hashtagList) {
+                        db.collection("hashtag/" + current_age + "/name").whereEqualTo("name", ht).get().addOnCompleteListener{ query ->
+                            htDTO = null
+
+                            if(query.isSuccessful){
+                                for (dc in query.result!!.documents) {
+                                    htDTO = dc.toObject(HashDTO::class.java)
+                                    break
+                                }
+
+                                var map = mutableMapOf<String, Any?>()
+                                if(htDTO != null){
+                                    map["count"] = htDTO!!.count!!.toInt() + 1
+
+                                    db.collection("hashtag/" + current_age + "/name").document(
+                                        ht
+                                    ).update(map)
+                                }
+                                else{
+                                    var new_count = 1
+                                    val new_htDTO = HashDTO(ht, new_count)
+                                    db.collection("hashtag/" + current_age + "/name").document(ht).set(new_htDTO)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            var myDTO2 = UserDTO()
+            db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    for (dc in it.result!!.documents) {
+                        myDTO2 = dc.toObject(UserDTO::class.java)!!
+                        break
+                    }
+                    val current_gender = myDTO2.gender
+
+                    // 성별 case
+                    for (ht in hashtagList) {
+                        db.collection("hashtag/" + current_gender + "/name").whereEqualTo("name", ht).get().addOnCompleteListener{ query ->
+                            htDTO = null
+                            if(query.isSuccessful){
+                                for (dc in query.result!!.documents) {
+                                    htDTO = dc.toObject(HashDTO::class.java)
+                                    break
+                                }
+
+                                var map = mutableMapOf<String, Any?>()
+                                if(htDTO != null){
+                                    map["count"] = htDTO!!.count!!.toInt() + 1
+
+                                    db.collection("hashtag/" + current_gender + "/name").document(ht).update(map)
+                                }
+                                else{
+                                    var new_count = 1
+                                    val new_htDTO = HashDTO(ht, new_count)
+                                    db.collection("hashtag/" + current_gender + "/name").document(ht).set(new_htDTO)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             map["content"] = content.text.trim().toString()
             db.collection("post").document(postDTO!!.registered.toString()).update(map)
                 .addOnCompleteListener {
                     if(it.isSuccessful) {
                        // imageUpload()
+                           /* 딜레이 잠시 주석처리
                         val loadingAnimDialog = CustomLodingDialog(this)
                         loadingAnimDialog.show()
                         Handler().postDelayed({
                             loadingAnimDialog.dismiss()
                             finish()
                         }, 13000)
+
+                            */
+                        finish() // 임시로 만듬
                     }
                 }
         }
-
+        // 취소버튼
         findViewById<Button>(R.id.cancel).setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("작성된 내용이 저장되지 않을수 있습니다.\n종료하시겠습니까? ")
@@ -168,7 +301,7 @@ class UpdateActivity : AppCompatActivity() {
             dialog.show()
 
         }
-
+        // 뒤로가기
         findViewById<ImageButton>(R.id.back).setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("작성된 내용이 저장되지 않을수 있습니다.\n종료하시겠습니까? ")
