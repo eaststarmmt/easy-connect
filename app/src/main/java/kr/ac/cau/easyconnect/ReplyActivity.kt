@@ -448,16 +448,15 @@ class ReplyActivity : AppCompatActivity() {
             || replyContent!!.text.contains("하이") ){
                 recomList.add("hello")
                 recomList.add("hi")
-
-            } else if (replyContent!!.text.contains("좋") || replyContent!!.text.contains("잘")
-                || replyContent!!.text.contains("죽이네")) {
+            } else if (replyContent!!.text.contains("좋") || replyContent!!.text.contains("잘했") || replyContent!!.text.contains("죽이네") ||
+                replyContent!!.text.contains("잘됐") || replyContent!!.text.contains("잘 됐")) {
                 recomList.add("good")
                 recomList.add("great")
                 recomList.add("good")
             } else if (replyContent!!.text.contains("궁금") || replyContent!!.text.contains("뭐")
-                || replyContent!!.text.contains("뭔") || replyContent!!.text.contains("?")) {
+                || replyContent!!.text.contains("뭔") || replyContent!!.text.contains("왜") || replyContent!!.text.contains("?")) {
                 recomList.add("curiosity")
-            } else if (replyContent!!.text.contains("사랑")) {
+            } else if (replyContent!!.text.contains("사랑") || replyContent!!.text.contains("좋아")) {
                 recomList.add("love")
             }
             var i = 1
