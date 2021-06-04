@@ -33,7 +33,7 @@ class ReplyActivity : AppCompatActivity() {
     var userData : UserDTO? = null
     var replyContent : EditText? = null
     var emoticonContainer : ScrollView? = null
-
+    var recomContainer : ScrollView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +90,7 @@ class ReplyActivity : AppCompatActivity() {
         var rootHeight = -1
         val rootView = findViewById<LinearLayout>(R.id.root_view)
         emoticonContainer = findViewById(R.id.emoticonContainer)
-
+        recomContainer = findViewById(R.id.recomContainer)
         // 키보드 높이만큼 이모티콘 위치 시키기 위해 값 측정
         rootView.viewTreeObserver.addOnGlobalLayoutListener {
 
@@ -102,6 +102,7 @@ class ReplyActivity : AppCompatActivity() {
             if (heightExceptKeyboard < rootHeight) {
                 keyBoardHeight = rootHeight - heightExceptKeyboard  // 키보드 높이
                 emoticonContainer!!.layoutParams.height = keyBoardHeight  // 이모티콘 컨테이너에 키보드 높이 입력
+                recomContainer!!.layoutParams.height = keyBoardHeight  // 이모티콘 컨테이너에 키보드 높이 입력
             }
         }
         // 이모티콘 버튼 눌렀을 때
@@ -115,17 +116,22 @@ class ReplyActivity : AppCompatActivity() {
             }, 90)
 
             hideKeyboard()
-
+            hideRecom()
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         }
         // 배경 클릭시 키보드 없애기
         rootView.setOnClickListener{
-            if (emoticonContainer!!.visibility == View.VISIBLE) hideEmoticon()
+            if (emoticonContainer!!.visibility == View.VISIBLE) {
+                hideEmoticon()
+                hideRecom()
+            }
             hideKeyboard()
         }
         // 댓글 입력창 클릭시 이모티콘 없애기
         replyContent!!.setOnClickListener {
-            if (emoticonContainer!!.visibility == View.VISIBLE) hideEmoticon()
+            hideEmoticon()
+            hideRecom()
+
         }
 
         // 이모티콘 사용시 바로 등록되게 함. 일단 하드코딩으로 처리.
@@ -146,6 +152,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -169,6 +176,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -192,6 +200,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -215,6 +224,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -239,6 +249,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -263,6 +274,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -287,6 +299,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -311,6 +324,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -335,6 +349,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -359,6 +374,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -382,6 +398,7 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
@@ -406,11 +423,17 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
                     hideKeyboard()
                     hideEmoticon()
+                    hideRecom()
                     replyContent!!.text = null
                 } else {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+        // 이모티콘 전체 보기
+        findViewById<Button>(R.id.emoticon).setOnClickListener {
+            hideRecom()
+            emoticonContainer!!.visibility = View.VISIBLE
         }
 
         //추천
@@ -419,45 +442,38 @@ class ReplyActivity : AppCompatActivity() {
             hideEmoticon()
             var recomList : MutableList<String> = mutableListOf()
             val recomContainer : ScrollView = findViewById(R.id.recomContainer)
-            val recom1 : ImageView = findViewById(R.id.recom1)
-            val recom2 : ImageView = findViewById(R.id.recom2)
-            val recom3 : ImageView = findViewById(R.id.recom3)
-            val recom4 : ImageView = findViewById(R.id.recom4)
-            val recom5 : ImageView = findViewById(R.id.recom5)
-            val recom6 : ImageView = findViewById(R.id.recom6)
-            val recom7 : ImageView = findViewById(R.id.recom7)
-            val recom8 : ImageView = findViewById(R.id.recom8)
-            val recom9 : ImageView = findViewById(R.id.recom9)
-            val recom10 : ImageView = findViewById(R.id.recom10)
-            val recom11 : ImageView = findViewById(R.id.recom11)
-            val recom12 : ImageView = findViewById(R.id.recom12)
             recomContainer.visibility = View.VISIBLE
             if (replyContent!!.text.contains("깜짝") || replyContent!!.text.contains("놀랍") ||
                 replyContent!!.text.contains("놀람") || replyContent!!.text.contains("놀라")) {
-                recomList.add("amazing")
-            } else if (replyContent!!.text.contains("짜증") || replyContent!!.text.contains("화") ||
+                    if ("amazing" !in recomList) recomList.add("amazing")
+            }
+            if (replyContent!!.text.contains("짜증") || replyContent!!.text.contains("화") ||
                 replyContent!!.text.contains("열받") || replyContent!!.text.contains("빡")) {
-                recomList.add("angry")
-                recomList.add("upset")
-            } else if (replyContent!!.text.contains("슬퍼") || replyContent!!.text.contains("울고") ||
+                if ("angry" !in recomList)recomList.add("angry")
+                if ("upset" !in recomList)recomList.add("upset")
+            }
+            if (replyContent!!.text.contains("슬퍼") || replyContent!!.text.contains("울고") ||
                 replyContent!!.text.contains("울거") || replyContent!!.text.contains("힘들")) {
-                recomList.add("cry")
-                recomList.add("sad")
-            } else if (replyContent!!.text.contains("안녕") || replyContent!!.text.contains("반가")
+                if ("cry" !in recomList) recomList.add("cry")
+                if ("sad" !in recomList) recomList.add("sad")
+            }
+            if (replyContent!!.text.contains("안녕") || replyContent!!.text.contains("반가")
                 || replyContent!!.text.contains("방가") || replyContent!!.text.contains("헬로")
             || replyContent!!.text.contains("하이") ){
-                recomList.add("hello")
-                recomList.add("hi")
-            } else if (replyContent!!.text.contains("좋") || replyContent!!.text.contains("잘했") || replyContent!!.text.contains("죽이네") ||
+                if ("hello" !in recomList) recomList.add("hello")
+                if ("hi" !in recomList) recomList.add("hi")
+            }
+            if (replyContent!!.text.contains("좋") || replyContent!!.text.contains("잘했") || replyContent!!.text.contains("죽이네") ||
                 replyContent!!.text.contains("잘됐") || replyContent!!.text.contains("잘 됐")) {
-                recomList.add("good")
-                recomList.add("great")
-                recomList.add("good")
-            } else if (replyContent!!.text.contains("궁금") || replyContent!!.text.contains("뭐")
+                if ("good" !in recomList) recomList.add("good")
+                if ("great" !in recomList) recomList.add("great")
+            }
+            if (replyContent!!.text.contains("궁금") || replyContent!!.text.contains("뭐")
                 || replyContent!!.text.contains("뭔") || replyContent!!.text.contains("왜") || replyContent!!.text.contains("?")) {
-                recomList.add("curiosity")
-            } else if (replyContent!!.text.contains("사랑") || replyContent!!.text.contains("좋아")) {
-                recomList.add("love")
+                if ("curiosity" !in recomList) recomList.add("curiosity")
+            }
+            if (replyContent!!.text.contains("사랑") || replyContent!!.text.contains("좋아")) {
+                if ("love" !in recomList) recomList.add("love")
             }
             var i = 1
             for (emo in recomList) {
@@ -514,8 +530,9 @@ class ReplyActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         // 이모티콘 켜있을 때 이모티콘 없애고 키보드로 돌아가기
-        if (emoticonContainer!!.visibility == View.VISIBLE) {
+        if (emoticonContainer!!.visibility == View.VISIBLE || recomContainer!!.visibility == View.VISIBLE) {
             emoticonContainer!!.visibility = View.GONE
+            recomContainer!!.visibility = View.GONE
             showKeyboard()
         }
         else {
@@ -534,6 +551,11 @@ class ReplyActivity : AppCompatActivity() {
     // 이모티콘 없애기
     fun hideEmoticon() {
         emoticonContainer!!.visibility = View.GONE
+    }
+
+    // 추천 이모티콘 없애기
+    fun hideRecom() {
+        recomContainer!!.visibility = View.GONE
     }
 
     fun showKeyboard() {
@@ -647,6 +669,7 @@ class ReplyActivity : AppCompatActivity() {
                replyLayout.setOnClickListener {
                     val intent = Intent(view.context, ReplyActivity::class.java).apply {
                         hideEmoticon()
+                        hideRecom()
                         hideKeyboard()
                     }
                 }
