@@ -412,6 +412,105 @@ class ReplyActivity : AppCompatActivity() {
                 }
             }
         }
+
+        //추천
+        findViewById<Button>(R.id.recommendation).setOnClickListener {
+            hideKeyboard()
+            hideEmoticon()
+            var recomList : MutableList<String> = mutableListOf()
+            val recomContainer : ScrollView = findViewById(R.id.recomContainer)
+            val recom1 : ImageView = findViewById(R.id.recom1)
+            val recom2 : ImageView = findViewById(R.id.recom2)
+            val recom3 : ImageView = findViewById(R.id.recom3)
+            val recom4 : ImageView = findViewById(R.id.recom4)
+            val recom5 : ImageView = findViewById(R.id.recom5)
+            val recom6 : ImageView = findViewById(R.id.recom6)
+            val recom7 : ImageView = findViewById(R.id.recom7)
+            val recom8 : ImageView = findViewById(R.id.recom8)
+            val recom9 : ImageView = findViewById(R.id.recom9)
+            val recom10 : ImageView = findViewById(R.id.recom10)
+            val recom11 : ImageView = findViewById(R.id.recom11)
+            val recom12 : ImageView = findViewById(R.id.recom12)
+            recomContainer.visibility = View.VISIBLE
+            if (replyContent!!.text.contains("깜짝") || replyContent!!.text.contains("놀랍") ||
+                replyContent!!.text.contains("놀람") || replyContent!!.text.contains("놀라")) {
+                recomList.add("amazing")
+            } else if (replyContent!!.text.contains("짜증") || replyContent!!.text.contains("화") ||
+                replyContent!!.text.contains("열받") || replyContent!!.text.contains("빡")) {
+                recomList.add("angry")
+                recomList.add("upset")
+            } else if (replyContent!!.text.contains("슬퍼") || replyContent!!.text.contains("울고") ||
+                replyContent!!.text.contains("울거") || replyContent!!.text.contains("힘들")) {
+                recomList.add("cry")
+                recomList.add("sad")
+            } else if (replyContent!!.text.contains("안녕") || replyContent!!.text.contains("반가")
+                || replyContent!!.text.contains("방가") || replyContent!!.text.contains("헬로")
+            || replyContent!!.text.contains("하이") ){
+                recomList.add("hello")
+                recomList.add("hi")
+
+            } else if (replyContent!!.text.contains("좋") || replyContent!!.text.contains("잘")
+                || replyContent!!.text.contains("죽이네")) {
+                recomList.add("good")
+                recomList.add("great")
+                recomList.add("good")
+            } else if (replyContent!!.text.contains("궁금") || replyContent!!.text.contains("뭐")
+                || replyContent!!.text.contains("뭔") || replyContent!!.text.contains("?")) {
+                recomList.add("curiosity")
+            } else if (replyContent!!.text.contains("사랑")) {
+                recomList.add("love")
+            }
+            var i = 1
+            for (emo in recomList) {
+                var recom : ImageView = findViewById<ImageView>(resources.getIdentifier("recom" + i, "id", "kr.ac.cau.easyconnect"))
+                recom.setOnClickListener {
+                    var inputReply = null
+                    var name = firebaseAuth!!.currentUser.email
+                    // 현재 시간 출력
+                    val currentDateTime : Long  = System.currentTimeMillis()
+                    var registered : Long = System.currentTimeMillis()
+                    var modified : String = SimpleDateFormat("MM월dd일 HH:mm:ss").format(currentDateTime)
+                    val emoticon : String = emo
+                    val replyDTO : ReplyDTO = ReplyDTO(inputReply, name, registered, modified, emoticon)
+                    db!!.collection("post/" + id + "/reply").document(registered.toString()).set(replyDTO).addOnCompleteListener(this) {
+                        //글이 정상적으로 작성 됐을 때
+                        if (it.isSuccessful) {
+                            Toast.makeText(this, "작성이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                recom.visibility = View.VISIBLE
+                when (emo) {
+                    "amazing" -> recom.setImageResource(R.drawable.emo_amazing)
+                    "angry" -> recom.setImageResource(R.drawable.emo_angry)
+                    "cry" -> recom.setImageResource(R.drawable.emo_cry)
+                    "hello" -> recom.setImageResource(R.drawable.emo_hello)
+                    "good" -> recom.setImageResource(R.drawable.emo_good)
+                    "great" -> recom.setImageResource(R.drawable.emo_great)
+                    "curiosity" -> recom.setImageResource(R.drawable.emo_curiosity)
+                    "hi" -> recom.setImageResource(R.drawable.emo_hi)
+                    "love" -> recom.setImageResource(R.drawable.emo_love)
+                    "nice" -> recom.setImageResource(R.drawable.emo_nice)
+                    "sad" -> recom.setImageResource(R.drawable.emo_sad)
+                    "upset" -> recom.setImageResource(R.drawable.emo_upset)
+                }
+                i += 1
+            }
+            if ((i - 1) % 3 == 1) {
+                var recom : ImageView = findViewById<ImageView>(resources.getIdentifier("recom" + i, "id", "kr.ac.cau.easyconnect"))
+                var recom2 : ImageView = findViewById<ImageView>(resources.getIdentifier("recom" + (i + 1), "id", "kr.ac.cau.easyconnect"))
+                recom.visibility = View.INVISIBLE
+                recom.setImageResource(R.drawable.emo_upset)
+                recom2.visibility = View.INVISIBLE
+                recom2.setImageResource(R.drawable.emo_upset)
+            } else if ((i - 1) % 3 == 2) {
+                var recom : ImageView = findViewById<ImageView>(resources.getIdentifier("recom" + i, "id", "kr.ac.cau.easyconnect"))
+                recom.visibility = View.INVISIBLE
+                recom.setImageResource(R.drawable.emo_upset)
+            }
+        }
     }
 
     override fun onBackPressed() {
