@@ -337,7 +337,7 @@ class WriteActivity : AppCompatActivity() {
         findViewById<Button>(R.id.record).setOnClickListener {
             startSTTUseActivityResult()
         }
-        /*
+
         //연령별 리스트 불러오기
         var myDTO = UserDTO()
         db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
@@ -388,18 +388,14 @@ class WriteActivity : AppCompatActivity() {
                     }
             }
         }
-
-         */
-/*
-        content.threshold = 1  // 두 글자부터 드롭다운
-        content.setAdapter(adapter)    // 어댑터 설정
-        content.setTokenizer(SpaceTokenizer()) // 공백으로 구분하기 위해
-
- */
-
-
+//
+//        content.threshold = 1  // 두 글자부터 드롭다운
+//        content.setAdapter(adapter)    // 어댑터 설정
+//        content.setTokenizer(SpaceTokenizer()) // 공백으로 구분하기 위해
 
     }
+
+
     // STT 구현
     private fun startSTTUseActivityResult() {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)

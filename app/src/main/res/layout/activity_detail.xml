@@ -93,6 +93,7 @@
             android:drawableLeft="@drawable/drawable_update"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:visibility="visible"
             android:text="수정"
             android:textSize="20dp" />
 
@@ -106,6 +107,7 @@
             android:drawableLeft="@drawable/drawable_delete"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:visibility="visible"
             android:text="삭제"
             android:textSize="20dp" />
     </RelativeLayout>

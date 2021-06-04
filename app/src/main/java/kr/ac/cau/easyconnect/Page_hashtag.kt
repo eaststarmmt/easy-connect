@@ -150,7 +150,14 @@ class Page_hashtag : AppCompatActivity() {
                 hashtagLayout.setOnClickListener{
                     val intentDetail = Intent(view.context, DetailMainActivity::class.java).apply{
                         val data = item.name + " " + item.modified
+                        var flag : String? = null
+                        if(item.name == firebaseAuth!!.currentUser.email){
+                            flag = "mine"
+                        }else{
+                            flag = "friend"
+                        }
                         putExtra("data", data)
+                        putExtra("flag", flag)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                     startActivity(intentDetail)
