@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -46,6 +47,8 @@ class UpdateActivity : AppCompatActivity() {
     var imgFileName2: String? = null
     var imgFileName3: String? = null
     var imgNameList: Array<String?> = arrayOfNulls(3)
+    lateinit var imageContainer : LinearLayout
+
     lateinit var imageView : ImageView
     lateinit var imageView2 : ImageView
     lateinit var imageView3 : ImageView
@@ -57,13 +60,14 @@ class UpdateActivity : AppCompatActivity() {
 
     var map = mutableMapOf<String, Any?>()
 
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update)
 
-
-
+        val id = intent.getStringExtra("id")
         // Firebase - Auth, Firestore의 인스턴스 받아오기
         firebaseAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
@@ -72,9 +76,11 @@ class UpdateActivity : AppCompatActivity() {
         imageView2 = findViewById(R.id.imageView2)
         imageView3 = findViewById(R.id.imageView3)
         content = findViewById(R.id.content)
+        imageContainer = findViewById(R.id.imageContainer)
+
         var postDTO: PostDTO? = null
 
-        db.collection("post").whereEqualTo("name", firebaseAuth!!.currentUser.email).get()
+        db.collection("post").whereEqualTo("registered", id).get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     // 파이어스토어에서 현재 게시글 정보 조회
@@ -93,7 +99,8 @@ class UpdateActivity : AppCompatActivity() {
                         imgFileName3 = postDTO!!.imageOfDetail3
 
                         if (imgFileName != null) {
-
+                            imageContainer.visibility = View.VISIBLE
+                            imageView.visibility = View.VISIBLE
                             storageReference.child("post/" + imgFileName).downloadUrl.addOnSuccessListener {
                                 Glide.with(this)
                                     .load(it)
@@ -102,6 +109,8 @@ class UpdateActivity : AppCompatActivity() {
 
                         }
                         if (imgFileName2 != null) {
+                            imageContainer.visibility = View.VISIBLE
+                            imageView2.visibility = View.VISIBLE
                             storageReference.child("post/" + imgFileName2).downloadUrl.addOnSuccessListener {
                                 Glide.with(this)
                                     .load(it)
@@ -109,6 +118,8 @@ class UpdateActivity : AppCompatActivity() {
                             }
                         }
                         if (imgFileName3 != null) {
+                            imageContainer.visibility = View.VISIBLE
+                            imageView3.visibility = View.VISIBLE
                             storageReference.child("post/" + imgFileName3).downloadUrl.addOnSuccessListener {
                                 Glide.with(this)
                                     .load(it)
@@ -119,19 +130,25 @@ class UpdateActivity : AppCompatActivity() {
                     }
                 }
             }
-        // 앨범버튼 눌렀을 때
-        findViewById<Button>(R.id.album).setOnClickListener {
-
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_GALLERY_TAKE)
-        }
-
-        // 카메라 촬영 버튼 눌렀을 때
-        findViewById<Button>(R.id.photoButton).setOnClickListener {
-            takePicture()
+        findViewById<Button>(R.id.photo).setOnClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("사진 추가할 방법 선택")
+            // 촬영 누른 경우
+            var cameraListener = DialogInterface.OnClickListener { dialog, i ->
+                takePicture()
+            }
+            // 앨범 누른 경우
+            var albumListener = DialogInterface.OnClickListener { dialog, i ->
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                intent.type = "image/*"
+                startActivityForResult(intent, REQUEST_GALLERY_TAKE)
+            }
+            dialog.setPositiveButton("촬영", cameraListener)
+            dialog.setNeutralButton("취소", null)
+            dialog.setNegativeButton("앨범", albumListener)
+            dialog.show()
         }
 
 
@@ -274,17 +291,17 @@ class UpdateActivity : AppCompatActivity() {
             db.collection("post").document(postDTO!!.registered.toString()).update(map)
                 .addOnCompleteListener {
                     if(it.isSuccessful) {
-                       // imageUpload()
-                           /* 딜레이 잠시 주석처리
-                        val loadingAnimDialog = CustomLodingDialog(this)
-                        loadingAnimDialog.show()
-                        Handler().postDelayed({
-                            loadingAnimDialog.dismiss()
-                            finish()
-                        }, 13000)
-
-                            */
-                        finish() // 임시로 만듬
+                        if (imageView.visibility != View.GONE || imageView2.visibility != View.GONE || imageView3.visibility != View.GONE) {
+                            imageUpload()
+                            val loadingAnimDialog = CustomLodingDialog(this)
+                            loadingAnimDialog.show()
+                            Handler().postDelayed({
+                                loadingAnimDialog.dismiss()
+                                finish()
+                            }, 13000)
+                        } else {
+                            finish() // 임시로 만듬
+                        }
                     }
                 }
         }
@@ -319,6 +336,7 @@ class UpdateActivity : AppCompatActivity() {
             startSTTUseActivityResult()
         }
 
+        // 첫 번째 사진 길게 누른 경우
         imageView.setOnLongClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("사진을 삭제 하시겠습니까? ")
@@ -326,11 +344,8 @@ class UpdateActivity : AppCompatActivity() {
             var listener = DialogInterface.OnClickListener { dialog, i ->
                 storage = FirebaseStorage.getInstance()
                 val storageReference = storage!!.reference
-                storageReference.child("post/null.PNG").downloadUrl.addOnSuccessListener {
-                    Glide.with(this)
-                        .load(it)
-                        .into(imageView)
-                }
+                imageView.visibility = View.GONE
+                if (imageView.visibility == View.GONE && imageView2.visibility == View.GONE && imageView3.visibility == View.GONE) imageContainer.visibility = View.GONE
                 map["imageOfDetail"] = null
             }
             dialog.setPositiveButton("확인", listener)
@@ -338,7 +353,7 @@ class UpdateActivity : AppCompatActivity() {
             dialog.show()
             return@setOnLongClickListener true
         }
-
+        // 두 번째 사진 길게 누른 경우
         imageView2.setOnLongClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("사진을 삭제 하시겠습니까? ")
@@ -346,11 +361,8 @@ class UpdateActivity : AppCompatActivity() {
             var listener = DialogInterface.OnClickListener { dialog, i ->
                 storage = FirebaseStorage.getInstance()
                 val storageReference = storage!!.reference
-                storageReference.child("post/null.PNG").downloadUrl.addOnSuccessListener {
-                    Glide.with(this)
-                        .load(it)
-                        .into(imageView2)
-                }
+                imageView2.visibility = View.GONE
+                if (imageView.visibility == View.GONE && imageView2.visibility == View.GONE && imageView3.visibility == View.GONE) imageContainer.visibility = View.GONE
                 map["imageOfDetail2"] = null
             }
             dialog.setPositiveButton("확인", listener)
@@ -358,7 +370,7 @@ class UpdateActivity : AppCompatActivity() {
             dialog.show()
             return@setOnLongClickListener true
         }
-
+        // 세 번째 사진 길게 누른 경우
         imageView3.setOnLongClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("사진을 삭제 하시겠습니까? ")
@@ -366,11 +378,8 @@ class UpdateActivity : AppCompatActivity() {
             var listener = DialogInterface.OnClickListener { dialog, i ->
                 storage = FirebaseStorage.getInstance()
                 val storageReference = storage!!.reference
-                storageReference.child("post/null.PNG").downloadUrl.addOnSuccessListener {
-                    Glide.with(this)
-                        .load(it)
-                        .into(imageView3)
-                }
+                imageView3.visibility = View.GONE
+                if (imageView.visibility == View.GONE && imageView2.visibility == View.GONE && imageView3.visibility == View.GONE) imageContainer.visibility = View.GONE
                 map["imageOfDetail3"] = null
             }
             dialog.setPositiveButton("확인", listener)
@@ -464,6 +473,8 @@ class UpdateActivity : AppCompatActivity() {
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     // 카메라로부터 받은 데이터 있을때
+                    imageView.visibility = View.VISIBLE
+                    imageContainer.visibility = View.VISIBLE
                     val file = File(currentPhotoPath)
                     val decode = ImageDecoder.createSource(
                         this.contentResolver,
@@ -473,8 +484,10 @@ class UpdateActivity : AppCompatActivity() {
                     imageView.setImageBitmap(bitmap)
                     uriList[0] = Uri.fromFile(file)
                     imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
-                    map["imageOfDetail"] = imgFileName
+                    map["imageOfDetail"] = imgNameList[0]
                 }
+                Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
+
             }
             // 앨범에서 가져왔을 때
 /*
@@ -492,24 +505,29 @@ class UpdateActivity : AppCompatActivity() {
                 if(data == null) {
                     Toast.makeText(applicationContext,"이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show()
                 } else {
+                    imageContainer.visibility = View.VISIBLE
                     clipData = data.clipData
                     if(data.clipData == null) {
+                        imageView.visibility = View.VISIBLE
                         uriList[0] = data.data
                         imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
                         imageView.setImageURI(uriList[0])
-                        map["imageOfDetail"] = imgFileName
+                        map["imageOfDetail"] = imgNameList[0]
                     } else {
                         for (i in 0 until clipData!!.itemCount) {
                             uriList[i] = clipData!!.getItemAt(i).uri
                             if (i == 0) {
+                                imageView.visibility = View.VISIBLE
                                 imgNameList[i] = "IMAGE_" + timestamp + "_.jpg"
                                 imageView.setImageURI(uriList[i])
                                 map["imageOfDetail"] = imgNameList[i]
                             } else if (i == 1) {
+                                imageView2.visibility = View.VISIBLE
                                 imgNameList[i] = "IMAGE_" + timestamp + "-" + (i+1) + "_.jpg"
                                 imageView2.setImageURI(uriList[i])
                                 map["imageOfDetail2"] = imgNameList[i]
                             } else if (i == 2) {
+                                imageView3.visibility = View.VISIBLE
                                 imgNameList[i] = "IMAGE_" + timestamp + "-" + (i+1) + "_.jpg"
                                 imageView3.setImageURI(uriList[i])
                                 map["imageOfDetail3"] = imgNameList[i]
@@ -517,8 +535,9 @@ class UpdateActivity : AppCompatActivity() {
                         }
                     }
                 }
-            }
+                Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
 
+            }
 
         }
 

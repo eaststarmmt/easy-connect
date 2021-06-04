@@ -336,7 +336,7 @@ class WriteActivity : AppCompatActivity() {
                 }
             }
         }
-
+        // 첫 번째 사진 길게 누른 경우
         imageView.setOnLongClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("사진을 삭제 하시겠습니까? ")
@@ -352,6 +352,8 @@ class WriteActivity : AppCompatActivity() {
             dialog.show()
             return@setOnLongClickListener true
         }
+
+        // 두 번째 사진 길게 누른 경우
         imageView2.setOnLongClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("사진을 삭제 하시겠습니까? ")
@@ -368,6 +370,7 @@ class WriteActivity : AppCompatActivity() {
             return@setOnLongClickListener true
         }
 
+        // 세 번째 사진 길게 누른 경우
         imageView3.setOnLongClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("사진을 삭제 하시겠습니까? ")
@@ -554,6 +557,7 @@ class WriteActivity : AppCompatActivity() {
                     uriList[0] = Uri.fromFile(file)
                     imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
                 }
+                Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
             }
             // 앨범에서 가져왔을 때
 /*
@@ -597,6 +601,7 @@ class WriteActivity : AppCompatActivity() {
                         }
                     }
                 }
+                Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
             }
 
 

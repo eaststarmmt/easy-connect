@@ -45,6 +45,8 @@ class DetailMainActivity : AppCompatActivity() {
     lateinit var imageView2 : ImageView
     lateinit var imageView3 : ImageView
 
+    var id : String? = null
+
     var bundle : Bundle? = null
     lateinit var transaction: FragmentTransaction
 
@@ -100,6 +102,7 @@ class DetailMainActivity : AppCompatActivity() {
                     imgFileName = thisData!!.imageOfDetail
                     imgFileName2 = thisData!!.imageOfDetail2
                     imgFileName3 = thisData!!.imageOfDetail3
+                    id = thisData!!.registered
 
                     // 해시태그 글자 다르게 표시
                     val splitArray = content.text.split(" ")
@@ -196,6 +199,7 @@ class DetailMainActivity : AppCompatActivity() {
             findViewById<Button>(R.id.update).setOnClickListener {
                 val intent = Intent(this, UpdateActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("id", id)
                 startActivity(intent)
                 finish()
             }
