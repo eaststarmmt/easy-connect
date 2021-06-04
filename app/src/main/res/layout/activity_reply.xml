@@ -84,7 +84,7 @@
             <Button
                 android:id="@+id/recommendation"
                 android:layout_width="match_parent"
-                android:text="이모티콘 추천"
+                android:text="추천하는 이모티콘 보기"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"/>
 
@@ -231,7 +231,7 @@
             <Button
                 android:id="@+id/emoticon"
                 android:layout_width="match_parent"
-                android:text="전체보기"
+                android:text="이모티콘 전체보기"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
