@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.core.view.marginLeft
 
 class AutoCompleteAdapter(private val c: Context, @LayoutRes private val layoutResource: Int, private val movies: MutableList<WriteActivity.Movie?>) :
 ArrayAdapter<WriteActivity.Movie>(c, layoutResource, movies) {

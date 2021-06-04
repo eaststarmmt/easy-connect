@@ -163,7 +163,9 @@ class Timeline_friend : Fragment() {
                 photoCardLayout.setOnClickListener{
                     val intentDetail = Intent(view.context, DetailMainActivity::class.java).apply{
                         val data = item.name + " " + item.modified
+                        val flag = "friend"
                         putExtra("data", data)
+                        putExtra("flag", flag)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                     startActivity(intentDetail)

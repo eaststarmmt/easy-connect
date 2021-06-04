@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -35,6 +36,7 @@ class DetailMainActivity : AppCompatActivity() {
     var imgFileName3: String? = null
     // 형석
     lateinit var item : String
+    lateinit var flag : String
 
     var thisData: PostDTO? = null
     var userData: UserDTO? = null
@@ -68,8 +70,13 @@ class DetailMainActivity : AppCompatActivity() {
         imageView2 = findViewById(R.id.imgView2)
         imageView3 = findViewById(R.id.imgView3)
 
+        var updateButton : Button = findViewById(R.id.update)
+        var deleteButton : Button = findViewById(R.id.delete)
+
         // 형석
         item = intent.getStringExtra("data") as String
+        flag = intent.getStringExtra("flag") as String
+
         var item_split = item.split(" ")
         var item_name = item_split[0]
         var item_modified = item_split[1]
@@ -180,26 +187,32 @@ class DetailMainActivity : AppCompatActivity() {
             val intent = Intent(this, DetailImage::class.java)
             startActivity(intent)
         }
-        // 수정하기
-        findViewById<Button>(R.id.update).setOnClickListener {
-            val intent = Intent(this, UpdateActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
-            finish()
-        }
-        // 삭제하기
-        findViewById<Button>(R.id.delete).setOnClickListener {
-            val dialog = AlertDialog.Builder(this)
-            dialog.setTitle("삭제하시겠습니까?")
-            // 확인시 종료 처리 할 리스너
-            var listener = DialogInterface.OnClickListener { dialog, i ->
-                db.collection("post").document(thisData!!.registered.toString()).delete()
+
+        if(flag == "friend"){
+            updateButton.visibility = View.GONE
+            deleteButton.visibility = View.GONE
+        }else{
+            // 수정하기
+            findViewById<Button>(R.id.update).setOnClickListener {
+                val intent = Intent(this, UpdateActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
                 finish()
             }
-            dialog.setPositiveButton("확인", listener)
-            dialog.setNegativeButton("취소", null)
-            dialog.show()
+            // 삭제하기
+            findViewById<Button>(R.id.delete).setOnClickListener {
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("삭제하시겠습니까?")
+                // 확인시 종료 처리 할 리스너
+                var listener = DialogInterface.OnClickListener { dialog, i ->
+                    db.collection("post").document(thisData!!.registered.toString()).delete()
+                    finish()
+                }
+                dialog.setPositiveButton("확인", listener)
+                dialog.setNegativeButton("취소", null)
+                dialog.show()
 
+            }
         }
 
         // 댓글보기. 일단 액티비티로 해둠
