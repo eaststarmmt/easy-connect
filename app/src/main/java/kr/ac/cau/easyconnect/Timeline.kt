@@ -104,6 +104,8 @@ class Timeline : Fragment() {
                                             db!!.collection("user_information").document(myDTO.uid!!).set(myDTO)
                                         } else {
                                             if(flag == 0){
+                                                flag = 2
+
                                                 myDTO.newPost = 0
                                                 db!!.collection("user_information").document(myDTO.uid!!).delete()
                                                 db!!.collection("user_information").document(myDTO.uid!!).set(myDTO)
@@ -111,6 +113,8 @@ class Timeline : Fragment() {
                                         }
                                     } else{
                                         if(flag == 0){
+                                            flag = 2
+
                                             myDTO.newPost = 0
                                             db!!.collection("user_information").document(myDTO.uid!!).delete()
                                             db!!.collection("user_information").document(myDTO.uid!!).set(myDTO)
@@ -118,6 +122,8 @@ class Timeline : Fragment() {
                                     }
                                 }else{
                                     if(flag == 0){
+                                        flag = 2
+
                                         myDTO.newPost = 0
                                         db!!.collection("user_information").document(myDTO.uid!!).delete()
                                         db!!.collection("user_information").document(myDTO.uid!!).set(myDTO)
