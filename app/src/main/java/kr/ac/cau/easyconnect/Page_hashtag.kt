@@ -63,7 +63,7 @@ class Page_hashtag : AppCompatActivity() {
                     // userDTO 리스트 초기화
                     arrayPostDTO!!.clear()
 
-                    for (snapshot in querySnapshot!!.documents) {
+                    for (snapshot in querySnapshot!!.documents.reversed()) {
                         var post = snapshot.toObject(PostDTO::class.java)
 
                         if(text in post!!.content.toString()){
@@ -116,10 +116,15 @@ class Page_hashtag : AppCompatActivity() {
                 val split_contents = content!!.split(" ").toMutableList() as java.util.ArrayList
                 if(item.imageOfDetail.isNullOrEmpty()){
                     var content_name : ArrayList<String> = arrayListOf()
-                    for (i in 0..1){
-                        content_name.add(split_contents.get(i))
+                    var final_content_name : String? = null
+                    if(split_contents.size == 1){
+                        final_content_name = split_contents.get(0)
+                    }else{
+                        for (i in 0..1){
+                            content_name.add(split_contents.get(i))
+                        }
+                        final_content_name = content_name.joinToString(separator = "\n")
                     }
-                    val final_content_name = content_name.joinToString(separator = "\n")
                     hashtagName.setText(final_content_name)
                 }
 

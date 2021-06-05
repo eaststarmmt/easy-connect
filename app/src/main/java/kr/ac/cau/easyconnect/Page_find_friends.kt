@@ -38,40 +38,40 @@ class Page_find_friends : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         // 검색 기본 옵션 = 이름!!
-        var searchOption = "name"
+//        var searchOption = "name"
 
         val recycler_view: RecyclerView = findViewById(R.id.recycler_friend)
         val button_goback : ImageButton = findViewById(R.id.bt_goback)
-        val spinner_Item: Spinner = findViewById(R.id.spinner)
+//        val spinner_Item: Spinner = findViewById(R.id.spinner)
         val button_searchFriend: Button = findViewById(R.id.bt_searchFriend)
         val editText_searchFriend: EditText = findViewById(R.id.edit_searchFriend)
 
         recycler_view.adapter = FriendAdapter()
         recycler_view.layoutManager = LinearLayoutManager(this)
 
-        // 선택 옵션 고를 수 있게! (이름 or 전화번호)
-        spinner_Item.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-            // 이름 선택?! 전화번호 선택?!
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                when (spinner_Item.getItemAtPosition(position)) {
-                    "이름" -> {
-                        searchOption = "name"
-                    }
-                    "전화번호" -> {
-                        searchOption = "phoneNumber"
-                    }
-                }
-            }
-        }
+//        // 선택 옵션 고를 수 있게! (이름 or 전화번호)
+//        spinner_Item.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            // 이름 선택?! 전화번호 선택?!
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                when (spinner_Item.getItemAtPosition(position)) {
+//                    "이름" -> {
+//                        searchOption = "name"
+//                    }
+//                    "전화번호" -> {
+//                        searchOption = "phoneNumber"
+//                    }
+//                }
+//            }
+//        }
 
         button_goback.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)
@@ -81,8 +81,7 @@ class Page_find_friends : AppCompatActivity() {
 
         button_searchFriend.setOnClickListener({
             (recycler_view.adapter as FriendAdapter).search(
-                editText_searchFriend.text.toString(),
-                searchOption
+                editText_searchFriend.text.toString()
             )
         })
     }
@@ -281,7 +280,7 @@ class Page_find_friends : AppCompatActivity() {
         }
 
         // 검색 함수
-        fun search(serachWord: String, option: String) {
+        fun search(searchWord: String) {
             db = FirebaseFirestore.getInstance()
             db!!.collection("user_information")
                 ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -290,7 +289,7 @@ class Page_find_friends : AppCompatActivity() {
 
                     for (snapshot in querySnapshot!!.documents) {
                         // searchWord로 들어온 정보가 포함된 계정을 리스트에 담는 과정!
-                        if (snapshot.getString(option)!!.contains(serachWord)) {
+                        if (snapshot.getString("name")!!.contains(searchWord) || snapshot.getString("phoneNumber")!!.contains(searchWord)) {
                             var item = snapshot.toObject(UserDTO::class.java)
                             if(item!!.email != firebaseAuth!!.currentUser.email){
                                 // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음

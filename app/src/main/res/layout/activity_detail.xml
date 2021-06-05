@@ -87,10 +87,13 @@
             />
     </LinearLayout>
 
+
+
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:bufferType="spannable"
         android:layout_weight="15"
         android:paddingLeft="5dp"
         android:paddingTop="10dp"

@@ -1,33 +1,32 @@
 package kr.ac.cau.easyconnect
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.text.method.ScrollingMovementMethod
+import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.FragmentTransaction
-import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.myhome.siviewpager.SIViewPager
-import me.relex.circleindicator.CircleIndicator
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
+
 
 class DetailMainActivity : AppCompatActivity() {
     private var vpAdapter: FragmentStatePagerAdapter? = null
@@ -129,8 +128,22 @@ class DetailMainActivity : AppCompatActivity() {
                             hashtagStart = nowIndex + a.indexOf("#")
                             nowIndex += a.length
                             hashtagEnd = nowIndex
+
+                            span.setSpan(object : ClickableSpan() {
+                                override fun onClick(widget: View) {
+                                    val intentHashtagPage = Intent(widget.context, Page_hashtag::class.java).apply{
+                                        val text = a
+                                        putExtra("text", text)
+                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    }
+                                    startActivity(intentHashtagPage)
+                                }
+                            }, hashtagStart, hashtagEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            content.setMovementMethod(LinkMovementMethod.getInstance())
+
                             span.setSpan(ForegroundColorSpan(Color.BLUE),
                                 hashtagStart, hashtagEnd, 0)
+                            content.setMovementMethod(LinkMovementMethod.getInstance())
                         } else {
                             nowIndex += a.length
                         }
@@ -251,6 +264,8 @@ class DetailMainActivity : AppCompatActivity() {
                 // 확인시 종료 처리 할 리스너
                 var listener = DialogInterface.OnClickListener { dialog, i ->
                     db.collection("post").document(thisData!!.registered.toString()).delete()
+                    val intentMain = Intent(this, MainActivity::class.java)
+                    startActivity(intentMain)
                     finish()
                 }
                 dialog.setPositiveButton("확인", listener)
