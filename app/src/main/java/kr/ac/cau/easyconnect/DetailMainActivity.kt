@@ -168,7 +168,7 @@ class DetailMainActivity : AppCompatActivity() {
                         imageView2 = findViewById(R.id.imgView2)
                         imageContainer!!.visibility = View.VISIBLE
                         border!!.visibility = View.VISIBLE
-                        imageView.visibility = View.VISIBLE
+                        imageView2.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName2).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
                                 .load(it)
@@ -179,7 +179,7 @@ class DetailMainActivity : AppCompatActivity() {
                         imageView3 = findViewById(R.id.imgView3)
                         imageContainer!!.visibility = View.VISIBLE
                         border!!.visibility = View.VISIBLE
-                        imageView.visibility = View.VISIBLE
+                        imageView3.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName3).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
                                 .load(it)
