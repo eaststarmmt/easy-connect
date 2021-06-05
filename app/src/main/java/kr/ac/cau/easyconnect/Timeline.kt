@@ -97,11 +97,13 @@ class Timeline : Fragment() {
                                     if (detailDateFromNow_month == 0) {
                                         // 같은 달
                                         if (detailDateFromNow_day == 0) {
-                                            flag = 1
+                                            if(flag == 0){
+                                                flag = 1
 
-                                            myDTO.newPost = 1
-                                            db!!.collection("user_information").document(myDTO.uid!!).delete()
-                                            db!!.collection("user_information").document(myDTO.uid!!).set(myDTO)
+                                                myDTO.newPost = 1
+                                                db!!.collection("user_information").document(myDTO.uid!!).delete()
+                                                db!!.collection("user_information").document(myDTO.uid!!).set(myDTO)
+                                            }
                                         } else {
                                             if(flag == 0){
                                                 flag = 2

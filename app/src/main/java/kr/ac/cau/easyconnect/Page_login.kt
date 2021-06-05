@@ -86,6 +86,11 @@ class Page_login : AppCompatActivity() {
                     }
                 }
             }
+        }else{
+            val sharedPreference = getSharedPreferences("logout", 0)
+            val editor = sharedPreference.edit()
+            editor.putBoolean("islogout", true)
+            editor.apply()
         }
 
         button_login.setOnClickListener({
@@ -199,8 +204,8 @@ class Page_login : AppCompatActivity() {
         var builder_dialog = AlertDialog.Builder(this);
         builder_dialog.setTitle("종료할까요?"); // 다이얼로그 제목
         builder_dialog.setIcon(R.drawable.exiticon)
-        var listener = DialogInterface.OnClickListener { dialog, which
-            -> ActivityCompat.finishAffinity(this)
+        var listener = DialogInterface.OnClickListener { dialog, which ->
+            ActivityCompat.finishAffinity(this)
             System.exit(0)
         }
         builder_dialog.setPositiveButton("종료", listener)

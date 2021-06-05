@@ -39,11 +39,9 @@ class Page_signup2 : AppCompatActivity() {
         radioGroup.setOnCheckedChangeListener{ group, checkId ->
             if(checkId == R.id.gender_male){
                 newGender = "male"
-                Toast.makeText(this, "남자", Toast.LENGTH_SHORT).show()
             }
             if(checkId == R.id.gender_female){
                 newGender = "female"
-                Toast.makeText(this, "여자", Toast.LENGTH_SHORT).show()
             }
         }
 

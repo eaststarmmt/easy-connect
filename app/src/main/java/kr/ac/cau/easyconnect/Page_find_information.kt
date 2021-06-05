@@ -37,6 +37,11 @@ class Page_find_information : AppCompatActivity() {
         var user_email : String
 
         button_goback.setOnClickListener({
+            val sharedPreference = getSharedPreferences("logout", 0)
+            val editor = sharedPreference.edit()
+            editor.putBoolean("islogout", true)
+            editor.apply()
+
             val intentLogin = Intent(this, Page_login::class.java)
             startActivity(intentLogin)
             finish()
@@ -152,6 +157,11 @@ class Page_find_information : AppCompatActivity() {
 
     override fun onBackPressed(){
         // 클릭 시 이전 페이지인 로그인으로!
+        val sharedPreference = getSharedPreferences("logout", 0)
+        val editor = sharedPreference.edit()
+        editor.putBoolean("islogout", true)
+        editor.apply()
+
         val intentLogin = Intent(this, Page_login::class.java)
         startActivity(intentLogin)
         finish()
