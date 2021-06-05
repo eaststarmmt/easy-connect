@@ -206,6 +206,8 @@ class DetailMainActivity : AppCompatActivity() {
                 // 확인시 종료 처리 할 리스너
                 var listener = DialogInterface.OnClickListener { dialog, i ->
                     db.collection("post").document(thisData!!.registered.toString()).delete()
+                    val intentMain = Intent(this, MainActivity::class.java)
+                    startActivity(intentMain)
                     finish()
                 }
                 dialog.setPositiveButton("확인", listener)

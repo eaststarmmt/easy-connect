@@ -339,62 +339,61 @@ class WriteActivity : AppCompatActivity() {
         }
 
         //연령별 리스트 불러오기
-        var myDTO = UserDTO()
-        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
-            if (it.isSuccessful) {
-                for (dc in it.result!!.documents) {
-                    myDTO = dc.toObject(UserDTO::class.java)!!
-                    break
-                }
-
-                val age = myDTO.age!!.toInt()
-                var current_age: String? = null
-                if (age < 20) {
-                    // 20세 미만
-                    current_age = "upto20"
-                } else if (age < 30) {
-                    // 20대
-                    current_age = "age20s"
-                } else if (age < 40) {
-                    // 30대
-                    current_age = "age30s"
-                } else if (age < 50) {
-                    // 40대
-                    current_age = "age40s"
-                } else {
-                    // 50대 이상
-                    current_age = "over50"
-                }
-                db.collection("hashtag/" + current_age + "/name").get()
-                    .addOnCompleteListener { query ->
-                        var hashDTO: HashDTO? = null
-                        var nameObject: MutableList<String> = mutableListOf()
-                        var countObject: MutableList<Int> = mutableListOf()
-                        var hashObject : MutableList<WriteActivity.Movie?> = mutableListOf()
-
-                        if (query.isSuccessful) {
-                            var i = 0
-                            for (dc in query.result!!.documents) {
-                                hashDTO = dc.toObject(HashDTO::class.java)
-                                hashObject.add(Movie(hashDTO!!.name.toString(), hashDTO!!.count!!.toInt()))
-
-                            }
-                            hashObject.sortByDescending { it!!.year }
-                            val adapter = AutoCompleteAdapter(this, R.layout.item_auto_complete_text_view, hashObject)
-                            content.threshold = 2  // 두 글자부터 드롭다운
-                            content.setAdapter(adapter)
-                            content.setTokenizer(SpaceTokenizer())
-                        }
-                    }
-            }
-        }
+//        var myDTO = UserDTO()
+//        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+//            if (it.isSuccessful) {
+//                for (dc in it.result!!.documents) {
+//                    myDTO = dc.toObject(UserDTO::class.java)!!
+//                    break
+//                }
+//
+//                val age = myDTO.age!!.toInt()
+//                var current_age: String? = null
+//                if (age < 20) {
+//                    // 20세 미만
+//                    current_age = "upto20"
+//                } else if (age < 30) {
+//                    // 20대
+//                    current_age = "age20s"
+//                } else if (age < 40) {
+//                    // 30대
+//                    current_age = "age30s"
+//                } else if (age < 50) {
+//                    // 40대
+//                    current_age = "age40s"
+//                } else {
+//                    // 50대 이상
+//                    current_age = "over50"
+//                }
+//                db.collection("hashtag/" + current_age + "/name").get()
+//                    .addOnCompleteListener { query ->
+//                        var hashDTO: HashDTO? = null
+//                        var nameObject: MutableList<String> = mutableListOf()
+//                        var countObject: MutableList<Int> = mutableListOf()
+//                        var hashObject : MutableList<WriteActivity.Movie?> = mutableListOf()
+//
+//                        if (query.isSuccessful) {
+//                            var i = 0
+//                            for (dc in query.result!!.documents) {
+//                                hashDTO = dc.toObject(HashDTO::class.java)
+//                                hashObject.add(Movie(hashDTO!!.name.toString(), hashDTO!!.count!!.toInt()))
+//
+//                            }
+//                            hashObject.sortByDescending { it!!.year }
+//                            val adapter = AutoCompleteAdapter(this, R.layout.item_auto_complete_text_view, hashObject)
+//                            content.threshold = 2  // 두 글자부터 드롭다운
+//                            content.setAdapter(adapter)
+//                            content.setTokenizer(SpaceTokenizer())
+//                        }
+//                    }
+//            }
+//        }
 //
 //        content.threshold = 1  // 두 글자부터 드롭다운
 //        content.setAdapter(adapter)    // 어댑터 설정
 //        content.setTokenizer(SpaceTokenizer()) // 공백으로 구분하기 위해
 
     }
-
 
     // STT 구현
     private fun startSTTUseActivityResult() {
