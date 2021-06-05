@@ -15,6 +15,8 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +42,47 @@ class MainActivity : AppCompatActivity() {
         val tabLayout : TabLayout = findViewById(R.id.tab_layout)
         tabLayout.setupWithViewPager(viewPager)
 
+        var arrayUserDTO: java.util.ArrayList<UserDTO> = arrayListOf()
+        var arrayRecommendUserDTO: java.util.ArrayList<UserDTO> = arrayListOf()
+
+        db!!.collection("user_information")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                // userDTO 리스트 초기화
+                arrayUserDTO!!.clear()
+                arrayRecommendUserDTO!!.clear()
+
+                for (snapshot in querySnapshot!!.documents) {
+                    var user = snapshot.toObject(UserDTO::class.java)
+                    if (user!!.email != firebaseAuth!!.currentUser.email) {
+                        // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음
+                        if (user!!.search == false) {
+                            // 검색 불허
+                        } else {
+                            arrayUserDTO!!.add(user!!)
+                        }
+                    }
+                }
+                arrayUserDTO.sortByDescending { it.followerCount }
+
+                for (index in 0..4) {
+                    arrayRecommendUserDTO.add(arrayUserDTO.get(index))
+                }
+
+                Collections.shuffle(arrayRecommendUserDTO)
+
+                val bundle = Bundle()
+                bundle.putString("photo1", arrayRecommendUserDTO.get(0).photo)
+                bundle.putString("photo2", arrayRecommendUserDTO.get(1).photo)
+                bundle.putString("photo3", arrayRecommendUserDTO.get(2).photo)
+                bundle.putString("name1", arrayRecommendUserDTO.get(0).name)
+                bundle.putString("name2", arrayRecommendUserDTO.get(1).name)
+                bundle.putString("name3", arrayRecommendUserDTO.get(2).name)
+                bundle.putString("email1", arrayRecommendUserDTO.get(0).email)
+                bundle.putString("email2", arrayRecommendUserDTO.get(1).email)
+                bundle.putString("email3", arrayRecommendUserDTO.get(2).email)
+                fragmentList[2].arguments = bundle
+            }
+
         // 환경 설정부분 (타인의 검색을 허용할 지에 대한 공유정보)
         db.collection("user_information").whereEqualTo("email", firebaseAuth.currentUser.email).get()
                 .addOnCompleteListener {
@@ -58,11 +101,13 @@ class MainActivity : AppCompatActivity() {
         button_menu.setOnClickListener({
             val intentMenu = Intent(this, Page_menu::class.java)
             startActivity(intentMenu)
+            finish()
         })
 
         button_post.setOnClickListener{
             val intent = Intent(this, WriteActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

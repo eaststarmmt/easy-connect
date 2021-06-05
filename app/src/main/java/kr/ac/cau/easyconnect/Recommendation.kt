@@ -31,8 +31,29 @@ class Recommendation : Fragment() {
 
     var myDTO : UserDTO? = null
 
+    private var photo1 : String? = null
+    private var photo2 : String? = null
+    private var photo3 : String? = null
+    private var name1 : String? = null
+    private var name2 : String? = null
+    private var name3 : String? = null
+    private var email1 : String? = null
+    private var email2 : String? = null
+    private var email3 : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let{
+            photo1 = it.getString("photo1")
+            photo2 = it.getString("photo2")
+            photo3 = it.getString("photo3")
+            name1 = it.getString("name1")
+            name2 = it.getString("name2")
+            name3 = it.getString("name3")
+            email1 = it.getString("email1")
+            email2 = it.getString("email2")
+            email3 = it.getString("email3")
+        }
 
         storage = FirebaseStorage.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
@@ -158,97 +179,71 @@ class Recommendation : Fragment() {
         val storageReference = storage!!.reference
         var arrayUserDTO: ArrayList<UserDTO> = arrayListOf()
 
-        db!!.collection("user_information")
-            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                // userDTO 리스트 초기화
-                arrayUserDTO!!.clear()
+        // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
+        storageReference.child("user_profile/" + photo1).downloadUrl.addOnSuccessListener {
+            Glide.with(this /* context */)
+                .load(it)
+                .into(image_influencer1)
+        }
+        image_influencer1.setBackground(ShapeDrawable(OvalShape()))
+        image_influencer1.setClipToOutline(true)
+        text_influencer1.setText(name1)
 
-                for (snapshot in querySnapshot!!.documents) {
-                    var user = snapshot.toObject(UserDTO::class.java)
-                    if(user!!.email != firebaseAuth!!.currentUser.email){
-                        // 자신의 정보는 출력할 필요가 없으므로 추가하지 않음
-                        if(user!!.search == false){
-                            // 검색 불허
-                        }else{
-                            arrayUserDTO!!.add(user!!)
-                        }
-                    }
-                }
-                arrayUserDTO.sortByDescending{it.followerCount}
-
-                var arrayRecommendUserDTO: ArrayList<UserDTO> = arrayListOf()
-                for(index in 0..2){
-                    arrayRecommendUserDTO.add(arrayUserDTO.get(index))
-                }
-
-                Collections.shuffle(arrayRecommendUserDTO)
-
-                // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
-                storageReference.child("user_profile/" + arrayRecommendUserDTO.get(0).photo).downloadUrl.addOnSuccessListener {
-                    Glide.with(this /* context */)
-                        .load(it)
-                        .into(image_influencer1)
-                }
-                image_influencer1.setBackground(ShapeDrawable(OvalShape()))
-                image_influencer1.setClipToOutline(true)
-                text_influencer1.setText(arrayRecommendUserDTO.get(0).name)
-
-                image_influencer1.setOnClickListener{
-                    // 친구의 마이 페이지로 가야함!
-                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
-                        val data = arrayRecommendUserDTO.get(0).email
-                        val flag = "friend"
-                        putExtra("friendEmail", data)
-                        putExtra("flag", flag)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    startActivity(intentFriendPage)
-                }
-
-                // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
-                storageReference.child("user_profile/" + arrayRecommendUserDTO.get(1).photo).downloadUrl.addOnSuccessListener {
-                    Glide.with(this /* context */)
-                        .load(it)
-                        .into(image_influencer2)
-                }
-                image_influencer2.setBackground(ShapeDrawable(OvalShape()))
-                image_influencer2.setClipToOutline(true)
-                text_influencer2.setText(arrayRecommendUserDTO.get(1).name)
-
-                image_influencer2.setOnClickListener{
-                    // 친구의 마이 페이지로 가야함!
-                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
-                        val data = arrayRecommendUserDTO.get(1).email
-                        val flag = "friend"
-                        putExtra("friendEmail", data)
-                        putExtra("flag", flag)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    startActivity(intentFriendPage)
-                }
-
-                // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
-                storageReference.child("user_profile/" + arrayRecommendUserDTO.get(2).photo).downloadUrl.addOnSuccessListener {
-                    Glide.with(this /* context */)
-                        .load(it)
-                        .into(image_influencer3)
-                }
-                image_influencer3.setBackground(ShapeDrawable(OvalShape()))
-                image_influencer3.setClipToOutline(true)
-                text_influencer3.setText(arrayRecommendUserDTO.get(2).name)
-
-                image_influencer3.setOnClickListener{
-                    // 친구의 마이 페이지로 가야함!
-                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
-                        val data = arrayRecommendUserDTO.get(2).email
-                        val flag = "friend"
-                        putExtra("friendEmail", data)
-                        putExtra("flag", flag)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    startActivity(intentFriendPage)
-                }
+        image_influencer1.setOnClickListener{
+            // 친구의 마이 페이지로 가야함!
+            val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                val data = email1
+                val flag = "friend"
+                putExtra("friendEmail", data)
+                putExtra("flag", flag)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
+            startActivity(intentFriendPage)
+        }
+
+        // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
+        storageReference.child("user_profile/" + photo2).downloadUrl.addOnSuccessListener {
+            Glide.with(this /* context */)
+                .load(it)
+                .into(image_influencer2)
+        }
+        image_influencer2.setBackground(ShapeDrawable(OvalShape()))
+        image_influencer2.setClipToOutline(true)
+        text_influencer2.setText(name2)
+
+        image_influencer2.setOnClickListener{
+            // 친구의 마이 페이지로 가야함!
+            val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                val data = email2
+                val flag = "friend"
+                putExtra("friendEmail", data)
+                putExtra("flag", flag)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentFriendPage)
+        }
+
+        // Url을 참조하여 해당 경로의 이미지를 읽어와서 Glide를 사용해 이미지뷰에 띄워주는 역할
+        storageReference.child("user_profile/" + photo3).downloadUrl.addOnSuccessListener {
+            Glide.with(this /* context */)
+                .load(it)
+                .into(image_influencer3)
+        }
+        image_influencer3.setBackground(ShapeDrawable(OvalShape()))
+        image_influencer3.setClipToOutline(true)
+        text_influencer3.setText(name3)
+
+        image_influencer3.setOnClickListener{
+            // 친구의 마이 페이지로 가야함!
+            val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                val data = email3
+                val flag = "friend"
+                putExtra("friendEmail", data)
+                putExtra("flag", flag)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intentFriendPage)
+        }
 
         button_age1.setOnClickListener({
             val intentHashtagPage = Intent(view.context, Page_hashtag::class.java).apply{

@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import java.lang.Thread.sleep
-import java.util.ArrayList
+import java.util.*
 
 // UI만 손보면 될 듯!
 
@@ -86,11 +86,6 @@ class Page_login : AppCompatActivity() {
                     }
                 }
             }
-        }else{
-            val sharedPreference = getSharedPreferences("logout", 0)
-            val editor = sharedPreference.edit()
-            editor.putBoolean("islogout", true)
-            editor.apply()
         }
 
         button_login.setOnClickListener({
@@ -150,6 +145,7 @@ class Page_login : AppCompatActivity() {
                             val intentMain = Intent(this, MainActivity::class.java)
                             startActivity(intentMain)
                             finish()
+
                         }else{
                             // 인증이 되지 않았다!
                             Toast.makeText(this, "이메일 인증 후 이용 가능합니다", Toast.LENGTH_SHORT).show()
