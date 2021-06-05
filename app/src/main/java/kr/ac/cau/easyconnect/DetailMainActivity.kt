@@ -3,6 +3,8 @@ package kr.ac.cau.easyconnect
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -49,9 +51,12 @@ class DetailMainActivity : AppCompatActivity() {
     lateinit var imageView3 : ImageView
 
     var id : String? = null
+    var writer: String? = null
 
     var bundle : Bundle? = null
     lateinit var transaction: FragmentTransaction
+
+    var writerImage : ImageView? = null
 
     init {
         bundle = Bundle(1)
@@ -77,6 +82,8 @@ class DetailMainActivity : AppCompatActivity() {
         imageView3 = findViewById(R.id.imgView3)
         imageContainer = findViewById(R.id.imageContainer)
         border = findViewById(R.id.border)
+        writerImage = findViewById(R.id.writerImage)
+
 
         var updateButton : Button = findViewById(R.id.update)
         var deleteButton : Button = findViewById(R.id.delete)
@@ -109,6 +116,7 @@ class DetailMainActivity : AppCompatActivity() {
                     imgFileName2 = thisData!!.imageOfDetail2
                     imgFileName3 = thisData!!.imageOfDetail3
                     id = thisData!!.registered
+                    writer = thisData!!.name
 
                     // 해시태그 글자 다르게 표시
                     val splitArray = content.text.split(" ")
@@ -177,8 +185,27 @@ class DetailMainActivity : AppCompatActivity() {
 
                     }
                 }
+                // 글쓴이 사진 가져오기
+                db.collection("user_information").whereEqualTo("email", writer).get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        var writerData : UserDTO? = null
+                        for (document in it.result!!.documents) {
+                            writerData = document.toObject(UserDTO::class.java)
+                            break
+                        }
+
+                        storageReference.child("user_profile/" + writerData!!.photo.toString()).downloadUrl.addOnSuccessListener {
+                            Glide.with(this /* context */)
+                                .load(it)
+                                .into(writerImage!!)
+                        }
+                        writerImage!!.setBackground(ShapeDrawable(OvalShape()))
+                        findViewById<TextView>(R.id.writerName).text = writerData.name
+                    }
+                }
             }
         }
+
 
         imageView.setOnClickListener {
             val sharedPreference = getSharedPreferences("detailImage", 0)
