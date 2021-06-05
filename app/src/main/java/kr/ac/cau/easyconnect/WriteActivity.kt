@@ -607,6 +607,8 @@ class WriteActivity : AppCompatActivity() {
                     imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
                 }
                 Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                val labels = ImageAnnotator.batchAnnotateImages(applicationContext, uriList.toList())
+                content.text.append(labels.joinToString(" #", " #"))
             }
             // 앨범에서 가져왔을 때
 /*
@@ -651,9 +653,9 @@ class WriteActivity : AppCompatActivity() {
                     }
                 }
                 Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                val labels = ImageAnnotator.batchAnnotateImages(applicationContext, uriList.toList())
+                content.text.append(labels.joinToString(" #", " #"))
             }
-
-
         }
 
 
