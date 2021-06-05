@@ -177,7 +177,7 @@ class Recommendation : Fragment() {
                 arrayUserDTO.sortByDescending{it.followerCount}
 
                 var arrayRecommendUserDTO: ArrayList<UserDTO> = arrayListOf()
-                for(index in 0..2){
+                for(index in 0..4){
                     arrayRecommendUserDTO.add(arrayUserDTO.get(index))
                 }
 

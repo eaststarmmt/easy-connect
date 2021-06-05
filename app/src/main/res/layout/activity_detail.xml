@@ -73,6 +73,7 @@
         android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
         android:background="@color/hardgray"/>
+
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -81,6 +82,7 @@
         android:paddingTop="3dp"
         android:paddingLeft="5dp"
         android:textSize="30sp"
+        android:bufferType="spannable"
         android:layout_weight="15"
         android:gravity="center|left"
         android:text="내용"/>

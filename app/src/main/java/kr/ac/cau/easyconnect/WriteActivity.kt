@@ -495,7 +495,6 @@ class WriteActivity : AppCompatActivity() {
         }
 
  */
->>>>>>> ae41d93623e225c20f8afd7b93e2d30194879d0a
 //
 //        content.threshold = 1  // 두 글자부터 드롭다운
 //        content.setAdapter(adapter)    // 어댑터 설정
