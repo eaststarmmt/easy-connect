@@ -393,7 +393,6 @@ class WriteActivity : AppCompatActivity() {
         }
 /*
         //연령별 리스트 불러오기
-<<<<<<< HEAD
 //        var myDTO = UserDTO()
 //        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
 //            if (it.isSuccessful) {
@@ -443,7 +442,7 @@ class WriteActivity : AppCompatActivity() {
 //                    }
 //            }
 //        }
-=======
+
         var myDTO = UserDTO()
         db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
             if (it.isSuccessful) {
