@@ -21,7 +21,8 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
 
                 <TextView
                     android:id="@+id/name"
@@ -33,7 +34,6 @@
                     android:paddingLeft="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-
                     android:text="글쓴이" />
 
                 <TextView
@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="생성일"
+                    android:textAlignment="textEnd"
                     android:layout_alignParentRight="true"
                     android:paddingRight="40dp"
                     android:textSize="15sp" />
@@ -72,7 +73,7 @@
                     android:text="내용"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -81,30 +82,29 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/replyDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:background="@drawable/button_round"
-                android:drawableLeft="@drawable/drawable_delete_reply"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:visibility="invisible"
-                android:text="삭제" />
-
-            <Button
+            <ImageButton
                 android:id="@+id/replyUpdate"
-                android:layout_width="wrap_content"
+                android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/button_round"
-                android:drawableLeft="@drawable/drawable_update_reply"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:visibility="invisible"
-                android:text="수정" />
+                android:src="@drawable/drawable_update"
+                android:adjustViewBounds="true"
+                android:background="#00FF0000"
+                android:scaleType="fitCenter"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:id="@+id/replyDelete"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/drawable_delete"
+                android:adjustViewBounds="true"
+                android:background="#00FF0000"
+                android:scaleType="fitCenter"
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 

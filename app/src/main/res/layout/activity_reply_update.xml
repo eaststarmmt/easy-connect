@@ -23,6 +23,11 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hardgray"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +43,7 @@
 
         <EditText
             android:id="@+id/editReply"
-            android:layout_width="220dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
@@ -57,10 +62,11 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/button_round"
             android:drawableLeft="@drawable/drawable_update"
             android:text="수정"
-            android:textSize="15dp"/>
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/cancel"
@@ -68,12 +74,13 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/button_round"
             android:drawableLeft="@drawable/drawable_cancel"
             android:text="취소"
             android:textSize="15dp"/>
 
-
     </LinearLayout>
+
 
 </LinearLayout>

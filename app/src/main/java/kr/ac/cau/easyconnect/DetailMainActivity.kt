@@ -37,7 +37,7 @@ class DetailMainActivity : AppCompatActivity() {
     var imgFileName2: String? = null
     var imgFileName3: String? = null
     var imageContainer : LinearLayout? = null
-    var border : View? = null
+    var button_reply : Button? = null
     // 형석
     lateinit var item : String
     lateinit var flag : String
@@ -80,7 +80,7 @@ class DetailMainActivity : AppCompatActivity() {
         imageView2 = findViewById(R.id.imgView2)
         imageView3 = findViewById(R.id.imgView3)
         imageContainer = findViewById(R.id.imageContainer)
-        border = findViewById(R.id.border)
+        button_reply = findViewById(R.id.replyList)
         writerImage = findViewById(R.id.writerImage)
 
 
@@ -107,6 +107,14 @@ class DetailMainActivity : AppCompatActivity() {
                         thisData = data
                         break
                     }
+                }
+
+                db.collection("post/" + thisData!!.registered + "/reply").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    var count = 0
+                    for (snapshot in querySnapshot!!.documents.reversed()) {
+                        count += 1
+                    }
+                    button_reply!!.setText("댓글 보기 (" + count + ")")
                 }
 
                 if (thisData != null) {
@@ -141,7 +149,7 @@ class DetailMainActivity : AppCompatActivity() {
                             }, hashtagStart, hashtagEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                             content.setMovementMethod(LinkMovementMethod.getInstance())
 
-                            span.setSpan(ForegroundColorSpan(Color.BLUE),
+                            span.setSpan(ForegroundColorSpan(resources.getColor(R.color.hash)),
                                 hashtagStart, hashtagEnd, 0)
                             content.setMovementMethod(LinkMovementMethod.getInstance())
                         } else {
@@ -155,7 +163,6 @@ class DetailMainActivity : AppCompatActivity() {
 
                     if (imgFileName != null) {
                         imageContainer!!.visibility = View.VISIBLE
-                        border!!.visibility = View.VISIBLE
                         imageView.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
@@ -167,7 +174,6 @@ class DetailMainActivity : AppCompatActivity() {
                     if (imgFileName2 != null) {
                         imageView2 = findViewById(R.id.imgView2)
                         imageContainer!!.visibility = View.VISIBLE
-                        border!!.visibility = View.VISIBLE
                         imageView2.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName2).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
@@ -178,7 +184,6 @@ class DetailMainActivity : AppCompatActivity() {
                     if (imgFileName3 != null) {
                         imageView3 = findViewById(R.id.imgView3)
                         imageContainer!!.visibility = View.VISIBLE
-                        border!!.visibility = View.VISIBLE
                         imageView3.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName3).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
@@ -213,6 +218,7 @@ class DetailMainActivity : AppCompatActivity() {
                                 .into(writerImage!!)
                         }
                         writerImage!!.setBackground(ShapeDrawable(OvalShape()))
+                        writerImage!!.setClipToOutline(true)
                         findViewById<TextView>(R.id.writerName).text = writerData.name
                     }
                 }
@@ -276,7 +282,7 @@ class DetailMainActivity : AppCompatActivity() {
         }
 
         // 댓글보기. 일단 액티비티로 해둠
-        findViewById<TextView>(R.id.replyList).setOnClickListener {
+        button_reply!!.setOnClickListener {
             val intent = Intent(this, ReplyActivity::class.java)
             intent.putExtra("id", thisData!!.registered)  // reply 액티비티에 값 전달
             startActivity(intent)

@@ -35,6 +35,8 @@ class ReplyActivity : AppCompatActivity() {
     var emoticonContainer : ScrollView? = null
     var recomContainer : ScrollView? = null
 
+    lateinit var button_emoticon : Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //binding = ActivityReplyBinding.inflate(layoutInflater)
@@ -48,6 +50,8 @@ class ReplyActivity : AppCompatActivity() {
         val replyRecyclerview : RecyclerView = findViewById(R.id.reply_recyclerview)
         replyContent = findViewById(R.id.reply_content)
 
+        button_emoticon = findViewById(R.id.emoticonButton)
+
         // 액티비티 실행 시 키보드 바로 올려줌
         // replyContent!!.requestFocus()
         var keyBoardHeight = 0
@@ -55,6 +59,11 @@ class ReplyActivity : AppCompatActivity() {
         // 어댑터 연결 해야 나옴
         replyRecyclerview.adapter = ReplyAdapter()
         replyRecyclerview.layoutManager = LinearLayoutManager(this)
+
+        findViewById<ImageButton>(R.id.back).setOnClickListener{
+            finish()
+        }
+
         //댓글 등록시
         findViewById<Button>(R.id.reply_button).setOnClickListener {
 
@@ -78,10 +87,17 @@ class ReplyActivity : AppCompatActivity() {
                     //글이 정상적으로 작성 됐을 때
                     if (it.isSuccessful) {
                         Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                        if (emoticonContainer!!.visibility == View.VISIBLE) {
+                            hideEmoticon()
+                            hideRecom()
+                            button_emoticon.visibility = View.VISIBLE
+                        }
                         hideKeyboard()
+                        button_emoticon.visibility = View.VISIBLE
                         replyContent!!.text = null
                     } else {
                         Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+                        button_emoticon.visibility = View.VISIBLE
                     }
                 }
             }
@@ -106,7 +122,7 @@ class ReplyActivity : AppCompatActivity() {
             }
         }
         // 이모티콘 버튼 눌렀을 때
-        findViewById<Button>(R.id.emoticonButton).setOnClickListener {
+        button_emoticon.setOnClickListener {
 
             // 키보드에 따라 딸려오는거 해제
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
@@ -118,6 +134,8 @@ class ReplyActivity : AppCompatActivity() {
             hideKeyboard()
             hideRecom()
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+            button_emoticon.visibility = View.GONE
         }
         // 배경 클릭시 키보드 없애기
         rootView.setOnClickListener{
@@ -126,12 +144,13 @@ class ReplyActivity : AppCompatActivity() {
                 hideRecom()
             }
             hideKeyboard()
+            button_emoticon.visibility = View.VISIBLE
         }
         // 댓글 입력창 클릭시 이모티콘 없애기
         replyContent!!.setOnClickListener {
             hideEmoticon()
             hideRecom()
-
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 이모티콘 사용시 바로 등록되게 함. 일단 하드코딩으로 처리.
@@ -158,6 +177,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
         // 화났소 이모티콘 클릭
         findViewById<ImageView>(R.id.angry).setOnClickListener {
@@ -182,6 +203,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
         // 울고싶소 이모티콘 클릭
         findViewById<ImageView>(R.id.cry).setOnClickListener {
@@ -206,6 +229,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
         // 안녕하소 이모티콘 클릭
         findViewById<ImageView>(R.id.hello).setOnClickListener {
@@ -230,6 +255,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 좋소 이모티콘 클릭
@@ -255,6 +282,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 좋아 이모티콘 클릭
@@ -280,6 +309,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 궁금 이모티콘 클릭
@@ -305,6 +336,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 안녕 이모티콘 클릭
@@ -330,6 +363,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 사랑 이모티콘 클릭
@@ -355,6 +390,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 멋지소 이모티콘 클릭
@@ -380,6 +417,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
         // 슬퍼 이모티콘 클릭
         findViewById<ImageView>(R.id.sad).setOnClickListener {
@@ -404,6 +443,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
 
         // 화나 이모티콘 클릭
@@ -429,6 +470,8 @@ class ReplyActivity : AppCompatActivity() {
                     Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            button_emoticon.visibility = View.VISIBLE
         }
         // 이모티콘 전체 보기
         findViewById<Button>(R.id.emoticon).setOnClickListener {
@@ -498,18 +541,18 @@ class ReplyActivity : AppCompatActivity() {
                 }
                 recom.visibility = View.VISIBLE
                 when (emo) {
-                    "amazing" -> recom.setImageResource(R.drawable.emo_amazing)
-                    "angry" -> recom.setImageResource(R.drawable.emo_angry)
-                    "cry" -> recom.setImageResource(R.drawable.emo_cry)
                     "hello" -> recom.setImageResource(R.drawable.emo_hello)
                     "good" -> recom.setImageResource(R.drawable.emo_good)
                     "great" -> recom.setImageResource(R.drawable.emo_great)
-                    "curiosity" -> recom.setImageResource(R.drawable.emo_curiosity)
+                    "amazing" -> recom.setImageResource(R.drawable.emo_amazing)
+                    "angry" -> recom.setImageResource(R.drawable.emo_angry)
+                    "cry" -> recom.setImageResource(R.drawable.emo_cry)
                     "hi" -> recom.setImageResource(R.drawable.emo_hi)
                     "love" -> recom.setImageResource(R.drawable.emo_love)
                     "nice" -> recom.setImageResource(R.drawable.emo_nice)
-                    "sad" -> recom.setImageResource(R.drawable.emo_sad)
+                    "curiosity" -> recom.setImageResource(R.drawable.emo_curiosity)
                     "upset" -> recom.setImageResource(R.drawable.emo_upset)
+                    "sad" -> recom.setImageResource(R.drawable.emo_sad)
                 }
                 i += 1
             }
@@ -534,10 +577,11 @@ class ReplyActivity : AppCompatActivity() {
             emoticonContainer!!.visibility = View.GONE
             recomContainer!!.visibility = View.GONE
             showKeyboard()
+            button_emoticon.visibility = View.VISIBLE
         }
         else {
             super.onBackPressed()
-
+            button_emoticon.visibility = View.VISIBLE
         }
 
     }
@@ -610,12 +654,11 @@ class ReplyActivity : AppCompatActivity() {
             var name: TextView = view.findViewById(R.id.name)
             var registration: TextView = view.findViewById(R.id.registration)
             var content: TextView = view.findViewById(R.id.content)
-            var replyDelete : Button = view.findViewById(R.id.replyDelete)
-            var replyUpdate : Button = view.findViewById(R.id.replyUpdate)
+            var replyDelete : ImageButton = view.findViewById(R.id.replyDelete)
+            var replyUpdate : ImageButton = view.findViewById(R.id.replyUpdate)
             var emoticon : ImageView = view.findViewById(R.id.emoticon)
             var replyLayout : View = view.findViewById(R.id.replyLayout)
 //            var emoticonContainer : View = parent.findViewById(R.id.emoticonContainer)
-
 
 
             fun bind(reply: ReplyDTO) {
@@ -630,21 +673,23 @@ class ReplyActivity : AppCompatActivity() {
                 if (reply.emoticon != null) {
                     emoticon.visibility = View.VISIBLE
                     when (reply.emoticon) {
-                        "amazing" -> emoticon.setImageResource(R.drawable.emo_amazing)
-                        "angry" -> emoticon.setImageResource(R.drawable.emo_angry)
-                        "cry" -> emoticon.setImageResource(R.drawable.emo_cry)
                         "hello" -> emoticon.setImageResource(R.drawable.emo_hello)
                         "good" -> emoticon.setImageResource(R.drawable.emo_good)
                         "great" -> emoticon.setImageResource(R.drawable.emo_great)
-                        "curiosity" -> emoticon.setImageResource(R.drawable.emo_curiosity)
+                        "amazing" -> emoticon.setImageResource(R.drawable.emo_amazing)
+                        "angry" -> emoticon.setImageResource(R.drawable.emo_angry)
+                        "cry" -> emoticon.setImageResource(R.drawable.emo_cry)
                         "hi" -> emoticon.setImageResource(R.drawable.emo_hi)
                         "love" -> emoticon.setImageResource(R.drawable.emo_love)
                         "nice" -> emoticon.setImageResource(R.drawable.emo_nice)
-                        "sad" -> emoticon.setImageResource(R.drawable.emo_sad)
+                        "curiosity" -> emoticon.setImageResource(R.drawable.emo_curiosity)
                         "upset" -> emoticon.setImageResource(R.drawable.emo_upset)
+                        "sad" -> emoticon.setImageResource(R.drawable.emo_sad)
                     }
                     // 이모티콘 사용시 수정버튼 비활성화
+                    replyUpdate.visibility = View.INVISIBLE
                     replyUpdate.isEnabled = false
+
                 }
 
 

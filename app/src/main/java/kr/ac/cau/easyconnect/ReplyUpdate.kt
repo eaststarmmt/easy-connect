@@ -2,8 +2,10 @@ package kr.ac.cau.easyconnect
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -43,6 +45,11 @@ class ReplyUpdate : AppCompatActivity() {
                 }
             }
         }
+
+        findViewById<ImageButton>(R.id.back).setOnClickListener{
+            finish()
+        }
+
         // 수정버튼 눌렀을 때
         findViewById<Button>(R.id.replyUpdate).setOnClickListener {
             // 수정할때는 map 사용 해야됨
@@ -56,5 +63,9 @@ class ReplyUpdate : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 }

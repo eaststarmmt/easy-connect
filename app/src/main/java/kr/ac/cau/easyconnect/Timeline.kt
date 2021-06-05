@@ -52,6 +52,7 @@ class Timeline : Fragment() {
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     inner class PhotoCardAdapter() : RecyclerView.Adapter<PhotoCardAdapter.PhotoCardViewHolder>(){
         // 로그인 한 유저의 작성 글 정보를 가져와서 배열에 담아두기 위한 것
         var arrayPostDTO : ArrayList<PostDTO> = arrayListOf()
@@ -225,8 +226,6 @@ class Timeline : Fragment() {
                         }
                     }
                 }
-
-
 
                 nameOfDetail.setText(item.content)
 

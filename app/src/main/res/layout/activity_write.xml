@@ -73,7 +73,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:orientation="horizontal">
@@ -86,7 +87,7 @@
             android:background="@drawable/button_round"
             android:drawableLeft="@drawable/drawable_album"
             android:layout_weight="1"
-            android:text="사진추가"
+            android:text="사진 추가"
             android:textSize="15dp" />
 
         <Button
@@ -98,42 +99,51 @@
             android:layout_weight="1"
             android:background="@drawable/button_round"
             android:drawableLeft="@drawable/drawable_record"
-            android:text="음성입력"
+            android:text="음성 입력"
             android:textSize="15dp"/>
 
     </LinearLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="60dp"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/post"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="55dp"
-            android:background="@drawable/button_post"
-            android:drawableLeft="@drawable/drawable_post"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="20dp"
-            android:text="게시"
-            />
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
+            android:layout_weight="1">
+            <Button
+                android:id="@+id/post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@drawable/button_round"
+                android:drawableLeft="@drawable/drawable_post"
+                android:text=" 게시"
+                android:textSize="18dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="55dp"
-            android:background="@drawable/button_post"
-            android:drawableLeft="@drawable/drawable_cancel"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="20dp"
-            android:text="취소" />
-    </RelativeLayout>
+            android:layout_weight="1">
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@drawable/button_round"
+                android:drawableLeft="@drawable/drawable_cancel"
+                android:textSize="18dp"
+                android:text=" 취소"/>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
