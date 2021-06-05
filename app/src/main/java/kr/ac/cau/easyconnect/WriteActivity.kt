@@ -17,11 +17,13 @@ import android.provider.MediaStore
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -49,6 +51,7 @@ class WriteActivity : AppCompatActivity() {
     var uriList: Array<Uri?> = arrayOfNulls(3)
 
     lateinit var currentPhotoPath : String
+    lateinit var imageContainer : LinearLayout
     lateinit var imageView : ImageView
     lateinit var imageView2 : ImageView
     lateinit var imageView3 : ImageView
@@ -82,6 +85,7 @@ class WriteActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageView)
         imageView2 = findViewById(R.id.imageView2)
         imageView3 = findViewById(R.id.imageView3)
+        imageContainer = findViewById(R.id.imageContainer)
 
         //연령대 미리 받아두기
         db.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
@@ -332,13 +336,64 @@ class WriteActivity : AppCompatActivity() {
                 }
             }
         }
+        // 첫 번째 사진 길게 누른 경우
+        imageView.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("사진을 삭제 하시겠습니까? ")
+
+            var listener = DialogInterface.OnClickListener { dialog, i ->
+                storage = FirebaseStorage.getInstance()
+                imageView.visibility = View.GONE
+                imgNameList[0] = null
+                if (imgNameList[0] == null && imgNameList[1] == null && imgNameList[2] == null) imageContainer.visibility = View.GONE
+            }
+            dialog.setPositiveButton("확인", listener)
+            dialog.setNegativeButton("취소", null)
+            dialog.show()
+            return@setOnLongClickListener true
+        }
+
+        // 두 번째 사진 길게 누른 경우
+        imageView2.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("사진을 삭제 하시겠습니까? ")
+
+            var listener = DialogInterface.OnClickListener { dialog, i ->
+                storage = FirebaseStorage.getInstance()
+                imageView2.visibility = View.GONE
+                imgNameList[1] = null
+                if (imgNameList[0] == null && imgNameList[1] == null && imgNameList[2] == null) imageContainer.visibility = View.GONE
+            }
+            dialog.setPositiveButton("확인", listener)
+            dialog.setNegativeButton("취소", null)
+            dialog.show()
+            return@setOnLongClickListener true
+        }
+
+        // 세 번째 사진 길게 누른 경우
+        imageView3.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("사진을 삭제 하시겠습니까? ")
+
+            var listener = DialogInterface.OnClickListener { dialog, i ->
+                storage = FirebaseStorage.getInstance()
+                imageView3.visibility = View.GONE
+                imgNameList[2] = null
+                if (imgNameList[0] == null && imgNameList[1] == null && imgNameList[2] == null) imageContainer.visibility = View.GONE
+            }
+            dialog.setPositiveButton("확인", listener)
+            dialog.setNegativeButton("취소", null)
+            dialog.show()
+            return@setOnLongClickListener true
+        }
 
         // 녹음버튼
         findViewById<Button>(R.id.record).setOnClickListener {
             startSTTUseActivityResult()
         }
-
+/*
         //연령별 리스트 불러오기
+<<<<<<< HEAD
 //        var myDTO = UserDTO()
 //        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
 //            if (it.isSuccessful) {
@@ -388,6 +443,59 @@ class WriteActivity : AppCompatActivity() {
 //                    }
 //            }
 //        }
+=======
+        var myDTO = UserDTO()
+        db!!.collection("user_information").whereEqualTo("email", firebaseAuth!!.currentUser.email).get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                for (dc in it.result!!.documents) {
+                    myDTO = dc.toObject(UserDTO::class.java)!!
+                    break
+                }
+
+                val age = myDTO.age!!.toInt()
+                var current_age: String? = null
+                if (age < 20) {
+                    // 20세 미만
+                    current_age = "upto20"
+                } else if (age < 30) {
+                    // 20대
+                    current_age = "age20s"
+                } else if (age < 40) {
+                    // 30대
+                    current_age = "age30s"
+                } else if (age < 50) {
+                    // 40대
+                    current_age = "age40s"
+                } else {
+                    // 50대 이상
+                    current_age = "over50"
+                }
+                db.collection("hashtag/" + current_age + "/name").get()
+                    .addOnCompleteListener { query ->
+                        var hashDTO: HashDTO? = null
+                        var nameObject: MutableList<String> = mutableListOf()
+                        var countObject: MutableList<Int> = mutableListOf()
+                        var hashObject : MutableList<WriteActivity.Movie?> = mutableListOf()
+
+                        if (query.isSuccessful) {
+                            var i = 0
+                            for (dc in query.result!!.documents) {
+                                hashDTO = dc.toObject(HashDTO::class.java)
+                                hashObject.add(Movie(hashDTO!!.name.toString(), hashDTO!!.count!!.toInt()))
+
+                            }
+                            hashObject.sortByDescending { it!!.year }
+                            val adapter = AutoCompleteAdapter(this, R.layout.item_auto_complete_text_view, hashObject)
+                            content.threshold = 2  // 두 글자부터 드롭다운
+                            content.setAdapter(adapter)
+                            content.setTokenizer(SpaceTokenizer())
+                        }
+                    }
+            }
+        }
+
+ */
+>>>>>>> ae41d93623e225c20f8afd7b93e2d30194879d0a
 //
 //        content.threshold = 1  // 두 글자부터 드롭다운
 //        content.setAdapter(adapter)    // 어댑터 설정
@@ -488,6 +596,8 @@ class WriteActivity : AppCompatActivity() {
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     // 카메라로부터 받은 데이터 있을때
+                    imageView.visibility = View.VISIBLE
+                    imageContainer.visibility = View.VISIBLE
                     val file = File(currentPhotoPath)
                     val decode = ImageDecoder.createSource(
                             this.contentResolver,
@@ -498,6 +608,7 @@ class WriteActivity : AppCompatActivity() {
                     uriList[0] = Uri.fromFile(file)
                     imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
                 }
+                Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
             }
             // 앨범에서 가져왔을 때
 /*
@@ -515,8 +626,10 @@ class WriteActivity : AppCompatActivity() {
                 if(data == null) {
                     Toast.makeText(applicationContext,"이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show()
                 } else {
+                    imageContainer.visibility = View.VISIBLE
                     clipData = data.clipData
                     if(data.clipData == null) {
+                        imageView.visibility = View.VISIBLE
                         uriList[0] = data.data
                         imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
                         imageView.setImageURI(uriList[0])
@@ -524,18 +637,22 @@ class WriteActivity : AppCompatActivity() {
                         for (i in 0 until clipData!!.itemCount) {
                             uriList[i] = clipData!!.getItemAt(i).uri
                             if (i == 0) {
+                                imageView.visibility = View.VISIBLE
                                 imgNameList[i] = "IMAGE_" + timestamp + "_.jpg"
                                 imageView.setImageURI(uriList[i])
                             } else if (i == 1) {
+                                imageView2.visibility = View.VISIBLE
                                 imgNameList[i] = "IMAGE_" + timestamp + "-" + (i+1) + "_.jpg"
                                 imageView2.setImageURI(uriList[i])
                             } else if (i == 2) {
+                                imageView3.visibility = View.VISIBLE
                                 imgNameList[i] = "IMAGE_" + timestamp + "-" + (i+1) + "_.jpg"
                                 imageView3.setImageURI(uriList[i])
                             }
                         }
                     }
                 }
+                Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
             }
 
 
@@ -562,6 +679,7 @@ class WriteActivity : AppCompatActivity() {
                 .addOnSuccessListener {
 
                     riversRef.downloadUrl.addOnSuccessListener { uri ->
+                        imageView.visibility = View.VISIBLE
                         db.collection("user_information")
                             .whereEqualTo("email", firebaseAuth!!.currentUser.email).get()
                             .addOnCompleteListener {

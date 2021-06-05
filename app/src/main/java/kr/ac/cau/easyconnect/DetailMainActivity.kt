@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.method.ScrollingMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.*
@@ -34,6 +35,8 @@ class DetailMainActivity : AppCompatActivity() {
     var imgFileName: String? = null
     var imgFileName2: String? = null
     var imgFileName3: String? = null
+    var imageContainer : LinearLayout? = null
+    var border : View? = null
     // 형석
     lateinit var item : String
     lateinit var flag : String
@@ -44,6 +47,8 @@ class DetailMainActivity : AppCompatActivity() {
     lateinit var imageView : ImageView
     lateinit var imageView2 : ImageView
     lateinit var imageView3 : ImageView
+
+    var id : String? = null
 
     var bundle : Bundle? = null
     lateinit var transaction: FragmentTransaction
@@ -60,6 +65,7 @@ class DetailMainActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
         val content : TextView = findViewById(R.id.content)
+        content.setMovementMethod(ScrollingMovementMethod())
 // 잠시 가림        val replyContent : EditText = findViewById(R.id.reply_content)
         var postDTO : PostDTO? = null
 //        imgView = findViewById(R.id.imgView) 뷰페이저 때문에 잠시 가림
@@ -69,6 +75,8 @@ class DetailMainActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imgView)
         imageView2 = findViewById(R.id.imgView2)
         imageView3 = findViewById(R.id.imgView3)
+        imageContainer = findViewById(R.id.imageContainer)
+        border = findViewById(R.id.border)
 
         var updateButton : Button = findViewById(R.id.update)
         var deleteButton : Button = findViewById(R.id.delete)
@@ -100,6 +108,7 @@ class DetailMainActivity : AppCompatActivity() {
                     imgFileName = thisData!!.imageOfDetail
                     imgFileName2 = thisData!!.imageOfDetail2
                     imgFileName3 = thisData!!.imageOfDetail3
+                    id = thisData!!.registered
 
                     // 해시태그 글자 다르게 표시
                     val splitArray = content.text.split(" ")
@@ -124,7 +133,9 @@ class DetailMainActivity : AppCompatActivity() {
                     content.text = span
 
                     if (imgFileName != null) {
-
+                        imageContainer!!.visibility = View.VISIBLE
+                        border!!.visibility = View.VISIBLE
+                        imageView.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
                                 .load(it)
@@ -134,6 +145,9 @@ class DetailMainActivity : AppCompatActivity() {
                     }
                     if (imgFileName2 != null) {
                         imageView2 = findViewById(R.id.imgView2)
+                        imageContainer!!.visibility = View.VISIBLE
+                        border!!.visibility = View.VISIBLE
+                        imageView.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName2).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
                                 .load(it)
@@ -142,6 +156,9 @@ class DetailMainActivity : AppCompatActivity() {
                     }
                     if (imgFileName3 != null) {
                         imageView3 = findViewById(R.id.imgView3)
+                        imageContainer!!.visibility = View.VISIBLE
+                        border!!.visibility = View.VISIBLE
+                        imageView.visibility = View.VISIBLE
                         storageReference.child("post/" + imgFileName3).downloadUrl.addOnSuccessListener {
                             Glide.with(this)
                                 .load(it)
@@ -196,6 +213,7 @@ class DetailMainActivity : AppCompatActivity() {
             findViewById<Button>(R.id.update).setOnClickListener {
                 val intent = Intent(this, UpdateActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("id", id)
                 startActivity(intent)
                 finish()
             }

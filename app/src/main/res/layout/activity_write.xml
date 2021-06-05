@@ -29,8 +29,10 @@
         android:background="@color/hardgray"/>
 
     <LinearLayout
+        android:id="@+id/imageContainer"
         android:layout_width="match_parent"
         android:layout_height="133dp"
+        android:visibility="gone"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -39,19 +41,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:visibility="gone"
             />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <MultiAutoCompleteTextView
