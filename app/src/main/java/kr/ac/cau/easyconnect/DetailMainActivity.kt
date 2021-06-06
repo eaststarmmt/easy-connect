@@ -69,7 +69,7 @@ class DetailMainActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
         val content : TextView = findViewById(R.id.content)
-        content.setMovementMethod(ScrollingMovementMethod())
+//        content.setMovementMethod(ScrollingMovementMethod())
 // 잠시 가림        val replyContent : EditText = findViewById(R.id.reply_content)
         var postDTO : PostDTO? = null
 //        imgView = findViewById(R.id.imgView) 뷰페이저 때문에 잠시 가림
@@ -83,7 +83,7 @@ class DetailMainActivity : AppCompatActivity() {
         button_reply = findViewById(R.id.replyList)
         writerImage = findViewById(R.id.writerImage)
 
-
+        var update_delete_container : LinearLayout = findViewById(R.id.update_delete_container)
         var updateButton : Button = findViewById(R.id.update)
         var deleteButton : Button = findViewById(R.id.delete)
 
@@ -225,7 +225,6 @@ class DetailMainActivity : AppCompatActivity() {
             }
         }
 
-
         imageView.setOnClickListener {
             val sharedPreference = getSharedPreferences("detailImage", 0)
             val editor = sharedPreference.edit()
@@ -252,8 +251,9 @@ class DetailMainActivity : AppCompatActivity() {
         }
 
         if(flag == "friend"){
-            updateButton.visibility = View.GONE
-            deleteButton.visibility = View.GONE
+            update_delete_container.visibility = View.GONE
+//            updateButton.visibility = View.GONE
+//            deleteButton.visibility = View.GONE
         }else{
             // 수정하기
             findViewById<Button>(R.id.update).setOnClickListener {
