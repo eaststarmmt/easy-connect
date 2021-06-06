@@ -107,6 +107,8 @@ class WriteActivity : AppCompatActivity() {
             dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까? ")
             // 확인시 종료 처리 할 리스너
             var listener = DialogInterface.OnClickListener { dialog, i ->
+                val intentMain = Intent(this, MainActivity::class.java)
+                startActivity(intentMain)
                 finish()
             }
             dialog.setPositiveButton("확인", listener)
@@ -119,6 +121,8 @@ class WriteActivity : AppCompatActivity() {
             dialog.setTitle("작성된 내용이 저장되지 않습니다. \n종료하시겠습니까? ")
             // 확인시 종료 처리 할 리스너
             var listener = DialogInterface.OnClickListener { dialog, i ->
+                val intentMain = Intent(this, MainActivity::class.java)
+                startActivity(intentMain)
                 finish()
             }
             dialog.setPositiveButton("확인", listener)
