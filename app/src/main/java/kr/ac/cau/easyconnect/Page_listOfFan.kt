@@ -143,7 +143,7 @@ class Page_listOfFan : AppCompatActivity() {
                 fanLayout.setOnClickListener({
                     val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
                         val data = item.email
-                        val flag = "friend"
+                        val flag = "find"
                         putExtra("friendEmail", data)
                         putExtra("flag", flag)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
