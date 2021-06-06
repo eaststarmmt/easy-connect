@@ -60,6 +60,8 @@ class UpdateActivity : AppCompatActivity() {
 
     var map = mutableMapOf<String, Any?>()
 
+    var change : Boolean = false
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -291,7 +293,7 @@ class UpdateActivity : AppCompatActivity() {
             db.collection("post").document(postDTO!!.registered.toString()).update(map)
                 .addOnCompleteListener {
                     if(it.isSuccessful) {
-                        if (imageView.visibility != View.GONE || imageView2.visibility != View.GONE || imageView3.visibility != View.GONE) {
+                        if (change) {
                             imageUpload()
                             val loadingAnimDialog = CustomLodingDialog(this)
                             loadingAnimDialog.show()
@@ -475,6 +477,7 @@ class UpdateActivity : AppCompatActivity() {
                     // 카메라로부터 받은 데이터 있을때
                     imageView.visibility = View.VISIBLE
                     imageContainer.visibility = View.VISIBLE
+                    change = true
                     val file = File(currentPhotoPath)
                     val decode = ImageDecoder.createSource(
                         this.contentResolver,
@@ -512,6 +515,7 @@ class UpdateActivity : AppCompatActivity() {
                         uriList[0] = data.data
                         imgNameList[0] = "IMAGE_" + timestamp + "_.jpg"
                         imageView.setImageURI(uriList[0])
+                        change = true
                         map["imageOfDetail"] = imgNameList[0]
                     } else {
                         for (i in 0 until clipData!!.itemCount) {
@@ -533,6 +537,7 @@ class UpdateActivity : AppCompatActivity() {
                                 map["imageOfDetail3"] = imgNameList[i]
                             }
                         }
+                        change = true
                     }
                 }
                 Toast.makeText(this, "사진을 길게 누르시면 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
