@@ -15,10 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -142,6 +139,17 @@ class Page_listOfFan : AppCompatActivity() {
                 // 이미지 배경 동그랗게 !
                 fanImage.setBackground(ShapeDrawable(OvalShape()))
                 fanImage.setClipToOutline(true)
+
+                fanLayout.setOnClickListener({
+                    val intentFriendPage = Intent(view.context, Page_friendpage::class.java).apply{
+                        val data = item.email
+                        val flag = "friend"
+                        putExtra("friendEmail", data)
+                        putExtra("flag", flag)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intentFriendPage)
+                })
             }
         }
     }

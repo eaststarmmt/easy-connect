@@ -40,7 +40,7 @@ class DetailMainActivity : AppCompatActivity() {
     var button_reply : Button? = null
     // 형석
     lateinit var item : String
-    lateinit var flag : String
+    lateinit var whereFlag : String
 
     var thisData: PostDTO? = null
     var userData: UserDTO? = null
@@ -82,6 +82,7 @@ class DetailMainActivity : AppCompatActivity() {
         imageContainer = findViewById(R.id.imageContainer)
         button_reply = findViewById(R.id.replyList)
         writerImage = findViewById(R.id.writerImage)
+        var writerName : TextView = findViewById(R.id.writerName)
 
         var update_delete_container : LinearLayout = findViewById(R.id.update_delete_container)
         var updateButton : Button = findViewById(R.id.update)
@@ -89,7 +90,7 @@ class DetailMainActivity : AppCompatActivity() {
 
         // 형석
         item = intent.getStringExtra("data") as String
-        flag = intent.getStringExtra("flag") as String
+        whereFlag = intent.getStringExtra("flag") as String
 
         var item_split = item.split(" ")
         var item_name = item_split[0]
@@ -220,6 +221,37 @@ class DetailMainActivity : AppCompatActivity() {
                         writerImage!!.setBackground(ShapeDrawable(OvalShape()))
                         writerImage!!.setClipToOutline(true)
                         findViewById<TextView>(R.id.writerName).text = writerData.name
+
+                        writerImage!!.setOnClickListener({
+                            val data = writerData.email
+
+                            if(data == firebaseAuth!!.currentUser.email){
+                                Toast.makeText(this, "내 글입니다.", Toast.LENGTH_SHORT).show()
+                            }else{
+                                val intentFriendPage = Intent(this, Page_friendpage::class.java).apply{
+                                    val flag = "friend"
+                                    putExtra("friendEmail", data)
+                                    putExtra("flag", flag)
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                                startActivity(intentFriendPage)
+                            }
+                        })
+                        writerName.setOnClickListener({
+                            val data = writerData.email
+
+                            if(data == firebaseAuth!!.currentUser.email){
+                                Toast.makeText(this, "내 글입니다.", Toast.LENGTH_SHORT).show()
+                            }else{
+                                val intentFriendPage = Intent(this, Page_friendpage::class.java).apply{
+                                    val flag = "friend"
+                                    putExtra("friendEmail", data)
+                                    putExtra("flag", flag)
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                                startActivity(intentFriendPage)
+                            }
+                        })
                     }
                 }
             }
@@ -250,7 +282,7 @@ class DetailMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        if(flag == "friend"){
+        if(whereFlag == "friend"){
             update_delete_container.visibility = View.GONE
 //            updateButton.visibility = View.GONE
 //            deleteButton.visibility = View.GONE
@@ -293,6 +325,12 @@ class DetailMainActivity : AppCompatActivity() {
 
     override fun onBackPressed(){
         // 클릭 시 이전 페이지로
-        finish()
+        if(whereFlag == "mine"){
+            val intentMain = Intent(this, MainActivity::class.java)
+            startActivity(intentMain)
+            finish()
+        }else{
+            finish()
+        }
     }
 }
