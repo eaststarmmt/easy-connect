@@ -447,8 +447,6 @@ class UpdateActivity : AppCompatActivity() {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
         }
-
-
     }
 
     override fun onBackPressed(){

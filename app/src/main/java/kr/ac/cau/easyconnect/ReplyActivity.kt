@@ -716,6 +716,7 @@ class ReplyActivity : AppCompatActivity() {
                         hideEmoticon()
                         hideRecom()
                         hideKeyboard()
+                        button_emoticon.visibility = View.VISIBLE
                     }
                 }
 

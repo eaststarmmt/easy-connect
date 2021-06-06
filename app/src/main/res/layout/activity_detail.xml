@@ -32,110 +32,128 @@
 
     </RelativeLayout>
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/hardgray"/>
 
-    <LinearLayout
-        android:id="@+id/imageContainer"
+    <ScrollView
+        android:id="@+id/emoticonContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:gravity="center">
+        android:layout_weight="5">
 
-        <ImageView
-            android:id="@+id/imgView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-             />
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/imageContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:gravity="center">
 
-        <ImageView
-            android:id="@+id/imgView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            />
+                <ImageView
+                    android:id="@+id/imgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    />
 
-        <ImageView
-            android:id="@+id/imgView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            />
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/imgView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    />
 
+                <ImageView
+                    android:id="@+id/imgView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"/>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:bufferType="spannable"
-        android:layout_weight="15"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:scrollbars="vertical"
-        android:text="내용"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:bufferType="spannable"
+                android:layout_weight="15"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="내용"
+                android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/replyList"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="댓글"
-        android:layout_marginBottom="10dp"
-        android:textAlignment="center"
-        android:background="@color/softskyblue"
-        android:textSize="20dp" />
+        </LinearLayout>
 
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="0.05">
+        <Button
+            android:id="@+id/replyList"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="댓글"
+            android:textAlignment="center"
+            android:background="@color/softskyblue"
+            android:textSize="20dp" />
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/update_delete_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <Button
-                android:id="@+id/update"
-                android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:background="@drawable/button_round"
-                android:drawableLeft="@drawable/drawable_update"
-                android:text=" 수정"
-                android:textSize="18dp" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <Button
-                android:id="@+id/delete"
-                android:layout_width="wrap_content"
+                android:layout_weight="1">
+                <Button
+                    android:id="@+id/update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@drawable/button_round"
+                    android:drawableLeft="@drawable/drawable_update"
+                    android:text=" 수정"
+                    android:textSize="18dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:background="@drawable/button_round"
-                android:drawableLeft="@drawable/drawable_delete"
-                android:textSize="18dp"
-                android:text=" 삭제"/>
-        </RelativeLayout>
+                android:layout_weight="1">
+                <Button
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@drawable/button_round"
+                    android:drawableLeft="@drawable/drawable_delete"
+                    android:textSize="18dp"
+                    android:text=" 삭제"/>
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>
