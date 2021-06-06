@@ -87,7 +87,7 @@ object ImageAnnotator {
                 })
             }
         }
-        await().atMost(10, TimeUnit.SECONDS).until { callsOnboard == 0 }
+        await().atMost(13, TimeUnit.SECONDS).until { callsOnboard == 0 }
         callsOnboard = 0
 
 
